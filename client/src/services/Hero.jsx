@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const baseUrl = 'http://localhost:3000/';
+const baseUrl = 'http://34.142.247.224/';
 
 export const heroService = Axios.create({
     baseURL: baseUrl,

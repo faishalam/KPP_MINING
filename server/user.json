@@ -48,12 +48,12 @@
         "department": "Fat"
     },
     {
-        "username": "headI",
+        "username": "headIct",
         "password": "headIct",
-        "email": "headFat@gmail.com",
+        "email": "headIct@gmail.com",
         "role": "head",
         "district": "Jakarta",
-        "department": "Fat"
+        "department": "Ict"
     },
     {
         "username": "headSHE",
