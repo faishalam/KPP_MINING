@@ -31,7 +31,7 @@ export default function LoginPages() {
             })
 
             setError('')
-            navigate('/home')
+            navigate('/')
         } catch (error) {
             setError(error)
         }

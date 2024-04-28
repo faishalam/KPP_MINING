@@ -16,12 +16,12 @@ const router = createBrowserRouter([
         loader: () => localStorage.getItem('access_token') && redirect('/')
     },
     {
-        path: "/home",
+        path: "/",
         element: <HomePages type={"all"} />,
         loader: () => !localStorage.getItem('access_token') && redirect('/login')
     },
     {
-        path: "/home/:filter",
+        path: "/:filter",
         element: <HomePages type={"department"} />,
         loader: () => !localStorage.getItem('access_token') && redirect('/login')
     },

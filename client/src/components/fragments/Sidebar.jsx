@@ -49,7 +49,7 @@ export default function Sidebar() {
                 <p className="text-2xl leading-6 text-white">KPP Mining</p>
             </div>
             <div className="mt-6 flex flex-col justify-start items-center  pl-4 w-full border-white border-b space-y-3 pb-5 ">
-                <Link to={'/home'} className="flex jusitfy-start items-center space-x-6 w-full  focus:outline-none  focus:text-green-300  text-white rounded ">
+                <Link to={'/'} className="flex jusitfy-start items-center space-x-6 w-full  focus:outline-none  focus:text-green-300  text-white rounded ">
                     <svg
                         className="fill-stroke "
                         width={24}
@@ -123,7 +123,7 @@ export default function Sidebar() {
 
                 {
                     userMe.role === "head" && (
-                        <Link to={`/home/filter=${userMe.department}`} onClick={() => handleOnFilter(userMe.department)} className="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-green-300 rounded ">
+                        <Link to={`/filter=${userMe.department}`} onClick={() => handleOnFilter(userMe.department)} className="flex jusitfy-start items-center w-full  space-x-6 focus:outline-none text-white focus:text-green-300 rounded ">
                             <svg
                                 className="fill-stroke"
                                 width={24}
