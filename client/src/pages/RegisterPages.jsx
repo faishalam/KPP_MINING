@@ -201,10 +201,10 @@ export default function RegisterPages() {
                                 onChange={handleChange}
                             >
                                 <option value="">Select department</option>
-                                <option value="Plant">Plant</option>
+                                <option value="PLANT">PLANT</option>
                                 <option value="SM">SM</option>
-                                <option value="Eng">Eng</option>
-                                <option value="Prod">Prod</option>
+                                <option value="ENG">Eng</option>
+                                <option value="PROD">Prod</option>
                                 <option value="HCGS">HCGS</option>
                                 <option value="FAT">FAT</option>
                                 <option value="ICT">ICT</option>
