@@ -1,0 +1,66 @@
+[
+    {
+        "username": "headPlant",
+        "password": "headPlant",
+        "email": "headPlant@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Plant"
+    },
+    {
+        "username": "headSM",
+        "password": "headSM",
+        "email": "headSM@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SM"
+    },
+    {
+        "username": "headEng",
+        "password": "headEng",
+        "email": "headEng@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Eng"
+    },
+    {
+        "username": "headProd",
+        "password": "headProd",
+        "email": "headProd@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Prod"
+    },
+    {
+        "username": "headHCSS",
+        "password": "headHCSS",
+        "email": "headHCSS@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "HCGS"
+    },
+    {
+        "username": "headFat",
+        "password": "headFat",
+        "email": "headFat@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Fat"
+    },
+    {
+        "username": "headI",
+        "password": "headIct",
+        "email": "headFat@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Fat"
+    },
+    {
+        "username": "headSHE",
+        "password": "headhSHE",
+        "email": "headSH@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SHE"
+    }
+]
