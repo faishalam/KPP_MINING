@@ -9,7 +9,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      site : {
+        type: Sequelize.STRING
+      },
       namaAsset: {
+        type: Sequelize.STRING
+      },
+      kodePN : {
         type: Sequelize.STRING
       },
       nilaiAsset: {
@@ -21,8 +27,20 @@ module.exports = {
       totalNilaiAsset: {
         type: Sequelize.INTEGER
       },
+      actionPlan : {
+        type: Sequelize.STRING
+      },
+      userDept  :{
+        type: Sequelize.STRING
+      },
       depresiasi: {
         type: Sequelize.INTEGER
+      },
+      remark : {
+        type: Sequelize.STRING
+      },
+      areaKerja : {
+        type: Sequelize.STRING
       },
       benefit: {
         type: Sequelize.STRING
@@ -33,7 +51,6 @@ module.exports = {
       status: {
         type: Sequelize.STRING
       },
-      
       userId: {
         type: Sequelize.INTEGER,
         references : {

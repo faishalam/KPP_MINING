@@ -13,6 +13,7 @@ export default function HomePages(props) {
     const { type } = props
     const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState("")
 
     const asset = useSelector((state) => {
         if (type === "all" || type === "department") {
@@ -25,24 +26,22 @@ export default function HomePages(props) {
     useEffect(() => {
         const getData = async () => {
             setIsLoading(true)
-            try {
-                setTimeout(async () => {
+            setTimeout(async () => {
+                try {
                     if (type === "all") {
                         await dispatch(getAllAsset())
                     }
                     if (type === "byUser") {
                         await dispatch(getAssetByUser())
                     }
-                    setIsLoading(false)
-                }, 500)
-            } catch (error) {
-                console.log(error)
-            }
+                } catch (error) {
+                    setError(error)
+                }
+            }, 500)
+            setIsLoading(false)
         }
-
         getData()
     }, [dispatch, type])
-
 
 
     const totalAssets = asset?.length || 0;
@@ -56,8 +55,6 @@ export default function HomePages(props) {
     return (
         <>
             <div className="w-full h-screen flex">
-
-
                 <div className="w-1/5 h-screen">
                     <Sidebar />
                 </div>
@@ -67,6 +64,13 @@ export default function HomePages(props) {
                         isLoading && (
                             <div className="w-full h-screen flex justify-center items-center">
                                 <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-green-700"></div>
+                            </div>
+                        )
+                    }
+                    {
+                        error && (
+                            <div className="w-full h-screen flex justify-center items-center">
+                                <p>{error}</p>
                             </div>
                         )
                     }

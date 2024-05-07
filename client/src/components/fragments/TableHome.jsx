@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 export default function TableHome(props) {
     const { data, type, loading } = props
     const dispatch = useDispatch()
+    console.log(data)
 
     const onHandleDelete = async (id) => {
         try {
@@ -63,14 +64,12 @@ export default function TableHome(props) {
                 dispatch(approveAsset(id))
             }
         });
-
     }
 
     return (
         <>
-           
-            <div className="flex flex-col bg-white mt-10 rounded-md shadow-md p-2 overflow-auto">
 
+            <div className="flex flex-col bg-white mt-10 rounded-md shadow-md p-2 overflow-auto">
                 <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full sm:px-6 lg:px-8">
                         <div className="overflow-hidden">
@@ -87,7 +86,17 @@ export default function TableHome(props) {
                                         <th
                                             scope="col"
                                             className="border-e border-neutral-200 px-6 py-4">
+                                            Site
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="border-e border-neutral-200 px-6 py-4">
                                             Nama
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="border-e border-neutral-200 px-6 py-4">
+                                            Kode PN
                                         </th>
                                         <th
                                             scope="col"
@@ -107,7 +116,27 @@ export default function TableHome(props) {
                                         <th
                                             scope="col"
                                             className="border-e border-neutral-200 px-6 py-4">
+                                            Action Plan
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="border-e border-neutral-200 px-6 py-4">
+                                            User Dept
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="border-e border-neutral-200 px-6 py-4">
                                             Depresiasi
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="border-e border-neutral-200 px-6 py-4">
+                                            Remark
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="border-e border-neutral-200 px-6 py-4">
+                                            Area Kerja
                                         </th>
                                         <th
                                             scope="col"
@@ -164,7 +193,15 @@ export default function TableHome(props) {
                                             </td>
                                             <td
                                                 className="whitespace-nowrap border-e border-neutral-200 px-6 py-4">
+                                                {item.site}
+                                            </td>
+                                            <td
+                                                className="whitespace-nowrap border-e border-neutral-200 px-6 py-4">
                                                 {item.namaAsset}
+                                            </td>
+                                            <td
+                                                className="whitespace-nowrap border-e border-neutral-200 px-6 py-4">
+                                                {item.kodePN}
                                             </td>
                                             <td
                                                 className="whitespace-nowrap border-e border-neutral-200 px-6 py-4">
@@ -180,7 +217,23 @@ export default function TableHome(props) {
                                             </td>
                                             <td
                                                 className="whitespace-nowrap border-e border-neutral-200 px-6 py-4">
+                                                {item.actionPlan}
+                                            </td>
+                                            <td
+                                                className="whitespace-nowrap border-e border-neutral-200 px-6 py-4">
+                                                {/* {item.userDept} */}
+                                            </td>
+                                            <td
+                                                className="whitespace-nowrap border-e border-neutral-200 px-6 py-4">
                                                 {item.depresiasi}
+                                            </td>
+                                            <td
+                                                className="whitespace-nowrap border-e border-neutral-200 px-6 py-4">
+                                                {item.remark}
+                                            </td>
+                                            <td
+                                                className="whitespace-nowrap border-e border-neutral-200 px-6 py-4">
+                                                {item.areaKerja}
                                             </td>
                                             <td
                                                 className="whitespace-wrap border-e border-neutral-200 px-6 py-4">
