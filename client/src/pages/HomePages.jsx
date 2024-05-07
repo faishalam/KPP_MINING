@@ -6,12 +6,13 @@ import { TEChart } from "tw-elements-react";
 import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "../components/fragments/Sidebar";
 import { getAllAsset, getAssetByUser } from "../features/asset/asyncAction";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import TableHome from "../components/fragments/TableHome"
 
 export default function HomePages(props) {
     const { type } = props
     const dispatch = useDispatch()
+    const [isLoading, setIsLoading] = useState(false)
 
     const asset = useSelector((state) => {
         if (type === "all" || type === "department") {
@@ -23,13 +24,17 @@ export default function HomePages(props) {
 
     useEffect(() => {
         const getData = async () => {
+            setIsLoading(true)
             try {
-                if (type === "all") {
-                    await dispatch(getAllAsset())
-                }
-                if (type === "byUser") {
-                    await dispatch(getAssetByUser())
-                }
+                setTimeout(async () => {
+                    if (type === "all") {
+                        await dispatch(getAllAsset())
+                    }
+                    if (type === "byUser") {
+                        await dispatch(getAssetByUser())
+                    }
+                    setIsLoading(false)
+                }, 500)
             } catch (error) {
                 console.log(error)
             }
@@ -38,23 +43,33 @@ export default function HomePages(props) {
         getData()
     }, [dispatch, type])
 
-    const totalAssets = asset?.length || 0; // Total jumlah asset
 
-    const waitingCount = asset?.filter((a) => a.status === "waiting").length; // Jumlah asset yang menunggu
-    const approveCount = asset?.filter((a) => a.status === "approved").length; // Jumlah asset yang disetujui
 
-    const waitingPercentage = (waitingCount / totalAssets) * 100; // Persentase asset yang menunggu
-    const approvePercentage = (approveCount / totalAssets) * 100; // Persentase asset yang disetujui
+    const totalAssets = asset?.length || 0;
 
+    const waitingCount = asset?.filter((a) => a.status === "waiting").length;
+    const approveCount = asset?.filter((a) => a.status === "approved").length;
+
+    const waitingPercentage = (waitingCount / totalAssets) * 100;
+    const approvePercentage = (approveCount / totalAssets) * 100;
 
     return (
         <>
             <div className="w-full h-screen flex">
+
+
                 <div className="w-1/5 h-screen">
                     <Sidebar />
                 </div>
 
                 <div className="w-full h-screen bg-[#f1f5f8] p-6 overflow-y-scroll">
+                    {
+                        isLoading && (
+                            <div className="w-full h-screen flex justify-center items-center">
+                                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-green-700"></div>
+                            </div>
+                        )
+                    }
                     <div>
                         <h1 className="text-xl font-bold mb-6">Dashboard |</h1>
                     </div>
@@ -127,7 +142,7 @@ export default function HomePages(props) {
                         </div>
 
                     </div>
-                    <TableHome data={asset} type={type} />
+                    <TableHome data={asset} type={type} loading={isLoading} />
                 </div>
             </div >
         </>

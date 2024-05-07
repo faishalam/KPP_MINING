@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 
 
 export default function TableHome(props) {
-    const { data, type } = props
+    const { data, type, loading } = props
     const dispatch = useDispatch()
 
     const onHandleDelete = async (id) => {
@@ -68,7 +68,9 @@ export default function TableHome(props) {
 
     return (
         <>
+           
             <div className="flex flex-col bg-white mt-10 rounded-md shadow-md p-2 overflow-auto">
+
                 <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full sm:px-6 lg:px-8">
                         <div className="overflow-hidden">
@@ -151,7 +153,9 @@ export default function TableHome(props) {
 
                                     </tr>
                                 </thead>
+
                                 <tbody>
+
                                     {data?.map((item, i) => (
                                         <tr className="border-b border-neutral-200">
                                             <td

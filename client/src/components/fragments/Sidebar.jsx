@@ -43,7 +43,7 @@ export default function Sidebar() {
     return (
         <div
             id="Main"
-            className="bg-[#164427] w-full h-full flex justify-start items-start flex-col"
+            className="bg-[#164427] w-full h-full flex justify-start items-start flex-col shadow-lg rounded-sm"
         >
             <div className="hidden xl:flex justify-start p-6 items-center space-x-3">
                 <p className="text-2xl leading-6 text-white">KPP Mining</p>
