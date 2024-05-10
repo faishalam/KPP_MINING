@@ -45,6 +45,9 @@ module.exports = {
       benefit: {
         type: Sequelize.STRING
       },
+      realisasiAsset : {
+        type: Sequelize.DATE
+      },
       planRealisasi: {
         type: Sequelize.DATE
       },

@@ -18,7 +18,8 @@ async function authentication(req, res, next) {
             id: user.id,
             username: user.username,
             email : user.email,
-            role : user.role
+            role : user.role,
+            dept : user.department
         }
 
         next()

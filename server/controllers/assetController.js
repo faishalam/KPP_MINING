@@ -109,20 +109,59 @@ class AssetController {
 
     static async addAsset(req, res) {
         try {
-            const { namaAsset, nilaiAsset, quantityAsset, benefit, planRealisasi } = req.body
+            const { site, namaAsset, kodePN, nilaiAsset, quantityAsset, actionPlan, remark, areaKerja, benefit, planRealisasi } = req.body
 
             const totalAsset = quantityAsset * nilaiAsset
             const plan = moment.tz(planRealisasi, 'Asia/Jakarta').format('YYYY-MM-DD');
 
+            if (quantityAsset <= 0) return res.status(400).json({ message: "Quantity Asset must be greater than 0" })
+
             const now = moment.tz(nowWIB, 'Asia/Jakarta').format('YYYY-MM-DD');
             if (plan < now) return res.status(400).json({ message: "Plan date must be in the future" })
-            if(nilaiAsset < 0) return res.status(400).json({ message: "Nilai Asset must be greater than 0" })
-            if(quantityAsset < 0) return res.status(400).json({ message: "Quantity Asset must be greater than 0" })
+            if (nilaiAsset < 0) return res.status(400).json({ message: "Nilai Asset must be greater than 0" })
+            if (quantityAsset < 0) return res.status(400).json({ message: "Quantity Asset must be greater than 0" })
 
-            let newAsset = await Asset.create({ namaAsset, nilaiAsset, quantityAsset, totalNilaiAsset: totalAsset, benefit, planRealisasi: plan, userId: req.user.id })
+            let assetRealisasi;
+
+            switch (kodePN) {
+                case 'WORKSHOP':
+                    assetRealisasi = moment(plan).add(90, 'days').format('YYYY-MM-DD');
+                    break;
+                case 'FIXTURE N FITTING':
+                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    break;
+                case 'BUILDING':
+                    assetRealisasi = moment(plan).add(90, 'days').format('YYYY-MM-DD');
+                    break;
+                case 'COMPUTER EQUIPMENT':
+                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    break;
+                case 'SAFETY EQUIPMENT':
+                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    break;
+                case 'OFFICE EQUIPMENT':
+                    assetRealisasi = moment(plan).add(30, 'days').format('YYYY-MM-DD');
+                    break;
+                case 'LEASEHOLD':
+                    assetRealisasi = moment(plan).add(90, 'days').format('YYYY-MM-DD');
+                    break;
+                case 'PRODUCTION EQUIPMENT':
+                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    break;
+                case 'SUPPORT EQUIPMENT':
+                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    break;
+                case 'ENGINEERING EQUIPMENT':
+                    assetRealisasi = moment(plan).add(30, 'days').format('YYYY-MM-DD');
+                    break;
+                default:
+                    return res.status(400).json({ message: "Invalid kodePN" });
+            }
+
+            let newAsset = await Asset.create({ site, namaAsset, kodePN, nilaiAsset, quantityAsset, actionPlan, userDept: req.user.dept, remark, areaKerja, totalNilaiAsset: totalAsset, benefit, planRealisasi: plan, realisasiAsset: assetRealisasi, userId: req.user.id })
             res.status(201).json(newAsset)
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             if (error.name === "SequelizeValidationError") {
                 return res.status(400).json({ message: error.errors[0].message })
             }
@@ -151,20 +190,63 @@ class AssetController {
     static async updateAsset(req, res) {
         try {
             const { id } = req.params
-            const { namaAsset, nilaiAsset, quantityAsset, benefit, planRealisasi } = req.body
+            const { site, namaAsset, kodePN, nilaiAsset, quantityAsset, actionPlan, remark, areaKerja, benefit, planRealisasi } = req.body
 
             const totalAsset = quantityAsset * nilaiAsset
 
+            const plan = moment.tz(planRealisasi, 'Asia/Jakarta').format('YYYY-MM-DD');
+
+            if (quantityAsset <= 0) return res.status(400).json({ message: "Quantity Asset must be greater than 0" })
+
+            const now = moment.tz(nowWIB, 'Asia/Jakarta').format('YYYY-MM-DD');
+            if (plan < now) return res.status(400).json({ message: "Plan date must be in the future" })
+            if (nilaiAsset < 0) return res.status(400).json({ message: "Nilai Asset must be greater than 0" })
+            if (quantityAsset < 0) return res.status(400).json({ message: "Quantity Asset must be greater than 0" })
+
             const asset = await Asset.findOne({ where: { id } })
-            console.log(asset)
             if (asset.userId !== req.user.id) return res.status(403).json({ message: "Cannot update other user's asset" })
 
-            
+            let assetRealisasi;
 
-            await asset.update({ namaAsset, nilaiAsset, quantityAsset, totalNilaiAsset: totalAsset, benefit, planRealisasi, userId: req.user.id }, { where: { id } })
+            switch (kodePN) {
+                case 'WORKSHOP':
+                    assetRealisasi = moment(plan).add(90, 'days').format('YYYY-MM-DD');
+                    break;
+                case 'FIXTURE N FITTING':
+                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    break;
+                case 'BUILDING':
+                    assetRealisasi = moment(plan).add(90, 'days').format('YYYY-MM-DD');
+                    break;
+                case 'COMPUTER EQUIPMENT':
+                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    break;
+                case 'SAFETY EQUIPMENT':
+                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    break;
+                case 'OFFICE EQUIPMENT':
+                    assetRealisasi = moment(plan).add(30, 'days').format('YYYY-MM-DD');
+                    break;
+                case 'LEASEHOLD':
+                    assetRealisasi = moment(plan).add(90, 'days').format('YYYY-MM-DD');
+                    break;
+                case 'PRODUCTION EQUIPMENT':
+                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    break;
+                case 'SUPPORT EQUIPMENT':
+                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    break;
+                case 'ENGINEERING EQUIPMENT':
+                    assetRealisasi = moment(plan).add(30, 'days').format('YYYY-MM-DD');
+                    break;
+                default:
+                    return res.status(400).json({ message: "Invalid kodePN" });
+            }
+
+            await asset.update({ site, namaAsset, kodePN, nilaiAsset, quantityAsset, actionPlan, userDept: req.user.dept, remark, areaKerja, totalNilaiAsset: totalAsset, benefit, planRealisasi: plan, realisasiAsset: assetRealisasi, userId: req.user.id }, { where: { id } })
             res.status(200).json({ message: "Asset updated successfully" })
         } catch (error) {
-            // console.log(error)
+            console.log(error)
             if (error.name === "SequelizeValidationError") {
                 return res.status(400).json({ message: error.errors[0].message })
             }

@@ -9,9 +9,15 @@ import Swal from 'sweetalert2'
 export default function ModalEditAsset(props) {
     const { id } = props
     const [form, setForm] = useState({
+        site: '',
         namaAsset: '',
+        kodePN: '',
         nilaiAsset: '',
         quantityAsset: '',
+        actionPlan: '',
+        userDept: '',
+        remark: '',
+        areaKerja: '',
         benefit: '',
         planRealisasi: ''
     })
@@ -33,11 +39,24 @@ export default function ModalEditAsset(props) {
 
     useEffect(() => {
         setForm({
+            site: assetById?.site,
             namaAsset: assetById?.namaAsset,
+            kodePN: assetById?.kodePN,
             nilaiAsset: assetById?.nilaiAsset,
             quantityAsset: assetById?.quantityAsset,
+            actionPlan: assetById?.actionPlan,
+            userDept: assetById?.userDept,
+            remark: assetById?.remark,
+            areaKerja: assetById?.areaKerja,
             benefit: assetById?.benefit,
             planRealisasi: assetById?.planRealisasi ? new Date(assetById.planRealisasi).toISOString().split('T')[0] : ''
+            // site: assetById?.site,
+            // kodePN: assetById?.kodePN,
+            // namaAsset: assetById?.namaAsset,
+            // nilaiAsset: assetById?.nilaiAsset,
+            // quantityAsset: assetById?.quantityAsset,
+            // benefit: assetById?.benefit,
+            // planRealisasi: assetById?.planRealisasi ? new Date(assetById.planRealisasi).toISOString().split('T')[0] : ''
         })
     }, [assetById])
 
@@ -67,11 +86,17 @@ export default function ModalEditAsset(props) {
                     Swal.fire("Changes are not saved", "", "info");
                 }
             });
-            
+
             setForm({
+                site: '',
                 namaAsset: '',
+                kodePN: '',
                 nilaiAsset: '',
                 quantityAsset: '',
+                actionPlan: '',
+                userDept: '',
+                remark: '',
+                areaKerja: '',
                 benefit: '',
                 planRealisasi: ''
             })
@@ -79,7 +104,7 @@ export default function ModalEditAsset(props) {
         } catch (error) {
             setError(error)
         } finally {
-            
+
         }
     }
 
@@ -91,6 +116,29 @@ export default function ModalEditAsset(props) {
                 <form onSubmit={handleSubmit} className="bg-white p-6 mb-4">
                     <h1 className="text-gray-800 font-bold text-xl mb-8 border-b-2 border-black">Edit Asset!</h1>
                     {error && <p className="text-red-500 text-xs">*{error}</p>}
+                    <label className="text-sm font-semibold mb-2">Site</label>
+                    <div className="relative">
+                        <select
+                            className="w-full rounded-lg border-gray-200 text-sm shadow-sm border border-grey-200 mb-4 p-2 flex items-start"
+                            name="site"
+                            id="site"
+                            onChange={handleChange}
+                            value={form.site}
+                        >
+                            <option value="">{form.site}</option>
+                            <option value="TMRB">TMRB</option>
+                            <option value="INDE">INDE</option>
+                            <option value="RANT">RANT</option>
+                            <option value="AGMR">AGMR</option>
+                            <option value="SJRP">SJRP</option>
+                            <option value="SPRL">SPRL</option>
+                            <option value="BDMA">BDMA</option>
+                            <option value="SPUT">SPUT</option>
+                            <option value="MASS">MASS</option>
+                            <option value="PELH">PELH</option>
+                            <option value="AOC">AOC</option>
+                        </select>
+                    </div>
                     <ModalInput
                         label="Nama Asset"
                         type="text"
@@ -99,6 +147,29 @@ export default function ModalEditAsset(props) {
                         onChange={handleChange}
                         value={form.namaAsset}
                     />
+
+                    <label className="text-sm font-semibold mb-2">Kode PN</label>
+                    <div className="relative">
+                        <select
+                            className="w-full rounded-lg border-gray-200 text-sm shadow-sm border border-grey-200 mb-4 p-2 flex items-start"
+                            name="kodePN"
+                            id="kodePN"
+                            onChange={handleChange}
+                            value={form.kodePN}
+                        >
+                            <option value="">{form.kodePN}</option>
+                            <option value="WORKSHOP">WORKSHOP</option>
+                            <option value="FIXTURE N FITTING">FIXTURE N FITTING</option>
+                            <option value="BUILDING">BUILDING</option>
+                            <option value="COMPUTER EQUIPMENT">COMPUTER EQUIPMENT</option>
+                            <option value="SAFETY EQUIPMENT">SAFETY EQUIPMENT</option>
+                            <option value="OFFICE EQUIPMENT">OFFICE EQUIPMENT</option>
+                            <option value="LEASEHOLD">LEASEHOLD</option>
+                            <option value="PRODUCTION EQUIPMENT">PRODUCTION EQUIPMENT</option>
+                            <option value="SUPPORT EQUIPMENT">SUPPORT EQUIPMENT</option>
+                            <option value="ENGINEERING EQUIPMENT">ENGINEERING EQUIPMENT</option>
+                        </select>
+                    </div>
 
                     <ModalInput
                         label="Nilai Asset"
@@ -117,6 +188,39 @@ export default function ModalEditAsset(props) {
                         id="quantityAsset"
                         onChange={handleChange}
                         value={form.quantityAsset}
+                    />
+
+                    <label className="text-sm font-semibold mb-2">Action Plan</label>
+                    <div className="relative">
+                        <select
+                            className="w-full rounded-lg border-gray-200 text-sm shadow-sm border border-grey-200 mb-4 p-2 flex items-start"
+                            name="actionPlan"
+                            id="actionPlan"
+                            onChange={handleChange}
+                            value={form.actionPlan}
+                        >
+                            <option value="">{form.actionPlan}</option>
+                            <option value="HIGH PRIORITY">HIGH PRIORITY</option>
+                            <option value="CLOSED">CLOSED</option>
+                        </select>
+                    </div>
+
+                    <ModalInput
+                        label="Remark"
+                        type="text"
+                        name="remark"
+                        id="remark"
+                        onChange={handleChange}
+                        value={form.remark}
+                    />
+
+                    <ModalInput
+                        label="Area Kerja"
+                        type="text"
+                        name="areaKerja"
+                        id="areaKerja"
+                        onChange={handleChange}
+                        value={form.areaKerja}
                     />
 
                     <ModalInput

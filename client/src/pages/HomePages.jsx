@@ -34,14 +34,17 @@ export default function HomePages(props) {
                     if (type === "byUser") {
                         await dispatch(getAssetByUser())
                     }
+                    setIsLoading(false)
                 } catch (error) {
                     setError(error)
                 }
             }, 500)
-            setIsLoading(false)
+            
         }
         getData()
     }, [dispatch, type])
+
+    console.log(isLoading)
 
 
     const totalAssets = asset?.length || 0;
@@ -67,15 +70,22 @@ export default function HomePages(props) {
                             </div>
                         )
                     }
-                    {
+                    {/* {
                         error && (
                             <div className="w-full h-screen flex justify-center items-center">
                                 <p>{error}</p>
                             </div>
                         )
-                    }
+                    } */}
                     <div>
-                        <h1 className="text-xl font-bold mb-6">Dashboard |</h1>
+                        {
+                            type === "byUser" ? (
+                                <h1 className="text-xl font-bold mb-6">Your Asset |</h1>
+                            ) : (
+
+                                <h1 className="text-xl font-bold mb-6">Dashboard |</h1>
+                            )
+                        }
                     </div>
                     <div className="flex gap-6">
                         <div className="w-1/5 h-20 bg-white rounded-md flex justify-center items-center shadow-md">

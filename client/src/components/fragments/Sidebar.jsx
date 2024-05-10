@@ -39,6 +39,8 @@ export default function Sidebar() {
         dispatch(getAllAsset(params))
     }
 
+    console.log(userMe)
+
 
     return (
         <div

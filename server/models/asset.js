@@ -173,6 +173,18 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    realisasiAsset : {
+      type : DataTypes.DATE,
+      allowNull : false,
+      validate : {
+        notNull : {
+          msg : 'Realisasi Asset is required'
+        },
+        notEmpty : {
+          msg : 'Realisasi Asset is required'
+        }
+      }
+    },  
     status: {
       type: DataTypes.STRING,
       allowNull: false,

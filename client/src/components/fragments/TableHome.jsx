@@ -6,9 +6,8 @@ import Swal from 'sweetalert2'
 
 
 export default function TableHome(props) {
-    const { data, type, loading } = props
+    const { data, type } = props
     const dispatch = useDispatch()
-    console.log(data)
 
     const onHandleDelete = async (id) => {
         try {
@@ -65,6 +64,8 @@ export default function TableHome(props) {
             }
         });
     }
+
+    console.log(data, '<<<<')
 
     return (
         <>
@@ -157,7 +158,12 @@ export default function TableHome(props) {
                                         <th
                                             scope="col"
                                             className="border-e border-neutral-200 px-6 py-4">
-                                            Realisasi
+                                            Plan Realisasi
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="border-e border-neutral-200 px-6 py-4">
+                                            Asset Realisasi
                                         </th>
 
                                         {
@@ -221,7 +227,7 @@ export default function TableHome(props) {
                                             </td>
                                             <td
                                                 className="whitespace-nowrap border-e border-neutral-200 px-6 py-4">
-                                                {/* {item.userDept} */}
+                                                {item.userDept}
                                             </td>
                                             <td
                                                 className="whitespace-nowrap border-e border-neutral-200 px-6 py-4">
@@ -250,6 +256,12 @@ export default function TableHome(props) {
                                                 className="whitespace-nowrap border-e border-neutral-200 px-6 py-4">
                                                 {new Date(item.planRealisasi).toISOString().split('T')[0]}
                                             </td>
+                                            <td
+                                                className="whitespace-nowrap border-e border-neutral-200 px-6 py-4">
+                                                {new Date(item.realisasiAsset).toISOString().split('T')[0]}
+                                            </td>
+                                        
+                                        
 
                                             {
                                                 type === "byUser" && (
