@@ -198,6 +198,53 @@ export default function Sidebar() {
                         </ButtonElement>
                     )}
 
+                    <Link to={'https://drive.google.com/file/d/1GV3-7JIeVjCmHsYLA__bi7NK5ZO5z891/view?usp=sharing'} className="flex justify-start items-center space-x-6 text-white focus:text-green-300  rounded px-3 py-2  w-full md:w-52">
+                        <svg
+                            width={24}
+                            height={24}
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M4 19.5C4 18.1193 5.11929 17 6.5 17H20"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                            <path
+                                d="M4 4.5C4 5.88071 5.11929 7 6.5 7H20"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                            <path
+                                d="M20 4.5V19.5"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                            <path
+                                d="M4 19.5C4 18.1193 5.11929 17 6.5 17H13"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                            <path
+                                d="M13 7H6.5C5.11929 7 4 5.88071 4 4.5V19.5"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                        </svg>
+                        <p className="text-base leading-4">Panduan</p>
+                    </Link>
+
 
                     <ButtonElement handleClick={onHandleLogout} classname="flex justify-start items-center space-x-6 text-white focus:text-green-300 rounded px-3 py-2  w-full md:w-52">
                         <svg

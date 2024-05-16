@@ -23,7 +23,7 @@ cron.schedule('0 9 * * *', async () => {
             if (response.length === 0) return ("Asset not found");
 
             response.map((item) => {
-                const planRealisasiTime = moment(item.planRealisasi).subtract(1, 'days').format('YYYY-MM-DD');
+                const planRealisasiTime = moment(item.realisasiAsset).subtract(1, 'days').format('YYYY-MM-DD');
                 if (planRealisasiTime === nowWIB) {
                     console.log('h1 realisasi', item.User.dataValues.email, item.namaAsset);
                     sendEmail(item.User.dataValues.email)
@@ -125,34 +125,34 @@ class AssetController {
 
             switch (kodePN) {
                 case 'WORKSHOP':
-                    assetRealisasi = moment(plan).add(90, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(120, 'days').format('YYYY-MM-DD');
                     break;
                 case 'FIXTURE N FITTING':
-                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
                     break;
                 case 'BUILDING':
-                    assetRealisasi = moment(plan).add(90, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(90, 'days').format('YYYY-MM-DD');
                     break;
                 case 'COMPUTER EQUIPMENT':
-                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
                     break;
                 case 'SAFETY EQUIPMENT':
-                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
                     break;
                 case 'OFFICE EQUIPMENT':
-                    assetRealisasi = moment(plan).add(30, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(30, 'days').format('YYYY-MM-DD');
                     break;
                 case 'LEASEHOLD':
-                    assetRealisasi = moment(plan).add(90, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(90, 'days').format('YYYY-MM-DD');
                     break;
                 case 'PRODUCTION EQUIPMENT':
-                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
                     break;
                 case 'SUPPORT EQUIPMENT':
-                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
                     break;
                 case 'ENGINEERING EQUIPMENT':
-                    assetRealisasi = moment(plan).add(30, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(30, 'days').format('YYYY-MM-DD');
                     break;
                 default:
                     return res.status(400).json({ message: "Invalid kodePN" });
@@ -210,34 +210,34 @@ class AssetController {
 
             switch (kodePN) {
                 case 'WORKSHOP':
-                    assetRealisasi = moment(plan).add(90, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(120, 'days').format('YYYY-MM-DD');
                     break;
                 case 'FIXTURE N FITTING':
-                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
                     break;
                 case 'BUILDING':
-                    assetRealisasi = moment(plan).add(90, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(90, 'days').format('YYYY-MM-DD');
                     break;
                 case 'COMPUTER EQUIPMENT':
-                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
                     break;
                 case 'SAFETY EQUIPMENT':
-                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
                     break;
                 case 'OFFICE EQUIPMENT':
-                    assetRealisasi = moment(plan).add(30, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(30, 'days').format('YYYY-MM-DD');
                     break;
                 case 'LEASEHOLD':
-                    assetRealisasi = moment(plan).add(90, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(90, 'days').format('YYYY-MM-DD');
                     break;
                 case 'PRODUCTION EQUIPMENT':
-                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
                     break;
                 case 'SUPPORT EQUIPMENT':
-                    assetRealisasi = moment(plan).add(60, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
                     break;
                 case 'ENGINEERING EQUIPMENT':
-                    assetRealisasi = moment(plan).add(30, 'days').format('YYYY-MM-DD');
+                    assetRealisasi = moment(plan).subtract(30, 'days').format('YYYY-MM-DD');
                     break;
                 default:
                     return res.status(400).json({ message: "Invalid kodePN" });

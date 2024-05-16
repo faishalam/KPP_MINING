@@ -4,7 +4,6 @@ import { approveAsset, getAssetById, removeAsset } from "../../features/asset/as
 import ModalEditAsset from "../../pages/ModalEditAsset"
 import Swal from 'sweetalert2'
 
-
 export default function TableHome(props) {
     const { data, type } = props
     const dispatch = useDispatch()
@@ -65,11 +64,8 @@ export default function TableHome(props) {
         });
     }
 
-    console.log(data, '<<<<')
-
     return (
         <>
-
             <div className="flex flex-col bg-white mt-10 rounded-md shadow-md p-2 overflow-auto">
                 <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full sm:px-6 lg:px-8">
@@ -163,7 +159,7 @@ export default function TableHome(props) {
                                         <th
                                             scope="col"
                                             className="border-e border-neutral-200 px-6 py-4">
-                                            Asset Realisasi
+                                            Plan PR
                                         </th>
 
                                         {
@@ -188,7 +184,6 @@ export default function TableHome(props) {
 
                                     </tr>
                                 </thead>
-
                                 <tbody>
 
                                     {data?.map((item, i) => (
@@ -309,10 +304,7 @@ export default function TableHome(props) {
                                                     </td>
                                                 )
                                             }
-
-
                                         </tr>
-
                                     ))}
                                 </tbody>
                             </table>

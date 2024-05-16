@@ -70,8 +70,8 @@ export default function ModalEditAsset(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            document.getElementById('editAsset').close()
-            await Swal.fire({
+            await dispatch(updateAsset(id, form))
+            Swal.fire({
                 title: "Do you want to save the changes?",
                 showDenyButton: true,
                 showCancelButton: true,
@@ -81,7 +81,7 @@ export default function ModalEditAsset(props) {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
                     Swal.fire("Saved!", "", "success");
-                    dispatch(updateAsset(id, form))
+                    
                 } else if (result.isDenied) {
                     Swal.fire("Changes are not saved", "", "info");
                 }
@@ -101,6 +101,7 @@ export default function ModalEditAsset(props) {
                 planRealisasi: ''
             })
             setError('')
+            document.getElementById('editAsset').close()
         } catch (error) {
             setError(error)
         } finally {

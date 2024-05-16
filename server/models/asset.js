@@ -51,7 +51,6 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-   
     nilaiAsset: {
       type: DataTypes.INTEGER,
       allowNull: false,
