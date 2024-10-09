@@ -12,7 +12,6 @@ export const addAsset = (form) => {
                 }
             })
 
-
             if (response.data !== null) {
                 dispatch(setAsset(response.data.access_token))
                 dispatch(getAssetByUser())

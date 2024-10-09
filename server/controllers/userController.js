@@ -7,7 +7,6 @@ class UserController {
         try {
             try {
                 const { username, email, password, district, department } = req.body
-                console.log(req.body)
 
                 let newUser = await User.create({ username, email, password, district, department })
                 const withoutPassword = {

@@ -7,7 +7,7 @@ const { Op } = require("sequelize");
 const nowWIB = moment().format('YYYY-MM-DD');
 moment.tz.setDefault('Asia/Jakarta');
 
-cron.schedule('0 9 * * *', async () => {
+cron.schedule('0 09 * * *', () => { 
     const getData = async () => {
         try {
             const response = await Asset.findAll({
@@ -23,18 +23,23 @@ cron.schedule('0 9 * * *', async () => {
             if (response.length === 0) return ("Asset not found");
 
             response.map((item) => {
-                const planRealisasiTime = moment(item.realisasiAsset).subtract(1, 'days').format('YYYY-MM-DD');
-                if (planRealisasiTime === nowWIB) {
-                    console.log('h1 realisasi', item.User.dataValues.email, item.namaAsset);
-                    sendEmail(item.User.dataValues.email)
+                const nowWIB = moment().tz('Asia/Jakarta').format('YYYY-MM-DD');
+                const planRealisasiTime = moment(item.realisasiAsset).subtract(1, 'days').format('YYYY-MM-DD')
+                console.log(nowWIB, '=', planRealisasiTime);
+
+                if (nowWIB == planRealisasiTime) {
+                    console.log('H-1 realisasi', item.User.dataValues.email, item.namaAsset);
+                    sendEmail(item.User.dataValues.email, item.namaAsset);
                 }
-            })
+            });
 
         } catch (error) {
             console.log(error)
         }
     }
     getData();
+}, {
+    timezone: 'Asia/Jakarta'
 });
 
 class AssetController {

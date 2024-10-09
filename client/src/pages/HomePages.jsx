@@ -44,9 +44,6 @@ export default function HomePages(props) {
         getData()
     }, [dispatch, type])
 
-    console.log(isLoading)
-
-
     const totalAssets = asset?.length || 0;
 
     const waitingCount = asset?.filter((a) => a.status === "waiting").length;
