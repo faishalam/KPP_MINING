@@ -25,10 +25,8 @@ cron.schedule('0 09 * * *', () => {
             response.map((item) => {
                 const nowWIB = moment().tz('Asia/Jakarta').format('YYYY-MM-DD');
                 const planRealisasiTime = moment(item.realisasiAsset).subtract(1, 'days').format('YYYY-MM-DD')
-                console.log(nowWIB, '=', planRealisasiTime);
 
                 if (nowWIB == planRealisasiTime) {
-                    console.log('H-1 realisasi', item.User.dataValues.email, item.namaAsset);
                     sendEmail(item.User.dataValues.email, item.namaAsset);
                 }
             });
