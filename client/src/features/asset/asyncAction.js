@@ -26,8 +26,8 @@ export const addAsset = (form) => {
 export const getAllAsset = (params) => {
     return async (dispatch) => {
         try {
-            let response; 
-            if(!params) {
+            let response;
+            if (!params) {
                 response = await heroService.get("/asset", {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("access_token")}`
@@ -35,7 +35,7 @@ export const getAllAsset = (params) => {
                 })
             }
 
-            if(params) {
+            if (params) {
                 response = await heroService.get("/asset", {
                     params,
                     headers: {
@@ -96,9 +96,9 @@ export const updateAsset = (id, form) => {
                     Authorization: `Bearer ${localStorage.getItem("access_token")}`
                 }
             })
-            
+
             if (response.data !== null) {
-               
+
                 dispatch(getAssetByUser())
                 dispatch(getAllAsset())
             }
@@ -135,7 +135,26 @@ export const approveAsset = (id) => {
                 }
             })
             if (response.data !== null) {
-                
+
+                dispatch(getAssetByUser())
+                dispatch(getAllAsset())
+            }
+        } catch (error) {
+            throw error.response.data.message
+        }
+    }
+}
+
+export const updateActionAsset = (id, body) => {
+    return async (dispatch) => {
+        try {
+            const response = await heroService.patch(`/asset-action/${id}`, body, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("access_token")}`
+                }
+            })
+
+            if (response.data !== null) {
                 dispatch(getAssetByUser())
                 dispatch(getAllAsset())
             }

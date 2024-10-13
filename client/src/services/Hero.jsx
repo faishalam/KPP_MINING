@@ -1,7 +1,7 @@
 import Axios from "axios";
 
-const baseUrl = 'https://server.kppmonitoring.online/';
-// const baseUrl = 'http://localhost:3000/';
+// const baseUrl = 'https://server.kppmonitoring.online/';
+const baseUrl = 'http://localhost:3000/';
 
 export const heroService = Axios.create({
     baseURL: baseUrl,

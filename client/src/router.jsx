@@ -30,6 +30,11 @@ const router = createBrowserRouter([
         element: <HomePages type={'byUser'} />,
         loader: () => !localStorage.getItem('access_token') && redirect('/login')
     },
+    {
+        path: "/your-asset/:id",
+        element: <HomePages type={'byUser'} />,
+        loader: () => !localStorage.getItem('access_token') && redirect('/login')
+    },
 
 ]);
 

@@ -24,7 +24,6 @@ export default function Search() {
         dispatch(getAll(params));
     }
 
-    console.log(form)
     return (
         <>
             <form onSubmit={handleOnSubmit} className="relative flex">
