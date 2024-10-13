@@ -23,7 +23,6 @@ cron.schedule('* * * * * *', () => {
             response.map((item) => {
                 const planRealisasiTime = moment(item.planRealisasi).subtract(1, 'days').format('YYYY-MM-DD');
                 if (planRealisasiTime === nowWIB) {
-                    console.log('h1 realisasi', item.User.dataValues.email, item.namaAsset);
                     sendEmail(item.User.dataValues.email)
                 }
             })

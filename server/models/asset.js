@@ -197,6 +197,19 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    action : {
+      type : DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'realisasi waiting',
+      validate : {
+        notNull : {
+          msg : 'Action is required'
+        },
+        notEmpty : {
+          msg: 'Action is required'
+        }
+      }
+    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,

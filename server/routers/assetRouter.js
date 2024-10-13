@@ -12,5 +12,6 @@ assetRouter.get("/asset/:id", AssetController.getAssetById)
 assetRouter.delete("/asset/:id", AssetController.deleteAsset)
 assetRouter.put("/asset/:id", AssetController.updateAsset)
 assetRouter.patch("/asset/:id", AssetController.updateAssetStatus)
+assetRouter.patch("/asset-action/:id", AssetController.updateAction)
 
 module.exports = assetRouter

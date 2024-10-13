@@ -12,7 +12,6 @@ async function authorization(req, res, next) {
             next()
         } else {
             const lodging = await Lodging.findByPk(req.params.id) 
-            // console.log(lodging.authorId, '<<< ini id lodging')
             if(user.id === lodging.authorId) {
                 next()
             } else {

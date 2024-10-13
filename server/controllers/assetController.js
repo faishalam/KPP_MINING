@@ -2,12 +2,12 @@ const { Asset, User } = require('../models')
 const moment = require('moment-timezone');
 const cron = require('node-cron');
 const { sendEmail } = require('../helpers/nodemailer');
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 
 const nowWIB = moment().format('YYYY-MM-DD');
 moment.tz.setDefault('Asia/Jakarta');
 
-cron.schedule('0 09 * * *', () => { 
+cron.schedule('0 09 * * *', () => {
     const getData = async () => {
         try {
             const response = await Asset.findAll({
@@ -25,7 +25,6 @@ cron.schedule('0 09 * * *', () => {
             response.map((item) => {
                 const nowWIB = moment().tz('Asia/Jakarta').format('YYYY-MM-DD');
                 const planRealisasiTime = moment(item.realisasiAsset).subtract(1, 'days').format('YYYY-MM-DD')
-
                 if (nowWIB == planRealisasiTime) {
                     sendEmail(item.User.dataValues.email, item.namaAsset);
                 }
@@ -272,6 +271,68 @@ class AssetController {
             await asset.update({ status: "approved" }, { where: { id } })
 
             res.status(200).json({ message: "Asset status updated successfully" })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    static async updateAction(req, res) {
+        try {
+            const { id } = req.params
+            const { action } = req.body
+            const { hold, planRealisasi } = req.body
+
+            const asset = await Asset.findOne({ where: { id } })
+            if (asset.userId !== req.user.id) return res.status(403).json({ message: "Cannot update action other user's asset" })
+
+            const kodePN = asset.dataValues.kodePN
+
+
+            if (action) {
+                await asset.update({ action: action }, { where: { id } })
+            } else {
+                const plan = moment.tz(planRealisasi, 'Asia/Jakarta').format('YYYY-MM-DD');
+                let assetRealisasi;
+
+                switch (kodePN) {
+                    case 'WORKSHOP':
+                        assetRealisasi = moment(plan).subtract(120, 'days').format('YYYY-MM-DD');
+                        break;
+                    case 'FIXTURE N FITTING':
+                        assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
+                        break;
+                    case 'BUILDING':
+                        assetRealisasi = moment(plan).subtract(90, 'days').format('YYYY-MM-DD');
+                        break;
+                    case 'COMPUTER EQUIPMENT':
+                        assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
+                        break;
+                    case 'SAFETY EQUIPMENT':
+                        assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
+                        break;
+                    case 'OFFICE EQUIPMENT':
+                        assetRealisasi = moment(plan).subtract(30, 'days').format('YYYY-MM-DD');
+                        break;
+                    case 'LEASEHOLD':
+                        assetRealisasi = moment(plan).subtract(90, 'days').format('YYYY-MM-DD');
+                        break;
+                    case 'PRODUCTION EQUIPMENT':
+                        assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
+                        break;
+                    case 'SUPPORT EQUIPMENT':
+                        assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
+                        break;
+                    case 'ENGINEERING EQUIPMENT':
+                        assetRealisasi = moment(plan).subtract(30, 'days').format('YYYY-MM-DD');
+                        break;
+                    default:
+                        return res.status(400).json({ message: "Invalid kodePN" });
+                }
+                await asset.update({ action: hold, planRealisasi: planRealisasi, realisasiAsset: assetRealisasi }, { where: { id } })
+            }
+
+
+            res.status(200).json({ message: "Asset action updated successfully" })
         } catch (error) {
             console.log(error)
         }
