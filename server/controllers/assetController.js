@@ -45,13 +45,14 @@ class AssetController {
             const { filter } = req.query
             let response;
 
+
             if (filter) {
                 response = await Asset.findAll({
                     include: {
                         model: User,
                         where: {
                             department: {
-                                [Op.like]: `%${filter}%`
+                                [Op.like]: `%${filter.toUpperCase()}%`
                             }
                         },
                     },
