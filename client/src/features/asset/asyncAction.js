@@ -44,6 +44,7 @@ export const getAllAsset = (params) => {
                 })
             }
 
+
             if (response.data !== null) {
                 dispatch(setAsset(response.data))
             }

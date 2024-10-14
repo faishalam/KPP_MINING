@@ -52,6 +52,7 @@ export default function HomePages(props) {
     const waitingPercentage = (waitingCount / totalAssets) * 100;
     const approvePercentage = (approveCount / totalAssets) * 100;
 
+
     return (
         <>
             <div className="w-full h-screen flex">

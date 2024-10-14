@@ -40,7 +40,8 @@ export default function Sidebar() {
     }
 
 
-    return (
+    console.log(userMe.role)
+    return (   
         <div
             id="Main"
             className="bg-[#164427] w-full h-full flex justify-start items-start flex-col shadow-lg rounded-sm"
