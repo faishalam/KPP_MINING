@@ -301,7 +301,7 @@ export default function TableHome(props) {
                                             </td>
                                             <td
                                                 className="whitespace-nowrap border-e border-neutral-200 px-6 py-4">
-                                                {new Date(item.realisasiAsset).toISOString().split('T')[0]} fsdf
+                                                {new Date(item.realisasiAsset).toISOString().split('T')[0]}
                                             </td>
 
                                             <td
