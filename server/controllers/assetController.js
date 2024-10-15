@@ -23,9 +23,24 @@ cron.schedule('0 09 * * *', () => {
             if (response.length === 0) return ("Asset not found");
 
             response.map((item) => {
+                // reminder h-1
                 const nowWIB = moment().tz('Asia/Jakarta').format('YYYY-MM-DD');
                 const planRealisasiTime = moment(item.realisasiAsset).subtract(1, 'days').format('YYYY-MM-DD')
                 if (nowWIB == planRealisasiTime) {
+                    sendEmail(item.User.dataValues.email, item.namaAsset);
+                }
+
+                // reminder h-0
+                const todayRealisasiTime = moment(item.realisasiAsset).format('YYYY-MM-DD');
+
+                if (nowWIB === todayRealisasiTime && item.action === 'realisasi waiting') {
+                    sendEmail(item.User.dataValues.email, item.namaAsset);
+                }
+
+                // reminder melebih h-0 dan item.action === 'realisasi waiting'
+                const pastRealisasiTime = moment(item.realisasiAsset).isBefore(nowWIB);
+
+                if (pastRealisasiTime && item.action === 'realisasi waiting') {
                     sendEmail(item.User.dataValues.email, item.namaAsset);
                 }
             });
@@ -53,7 +68,7 @@ class AssetController {
                             department: {
                                 [Op.like]: `%${filter.toUpperCase()}%`,
                             },
-                            site : {
+                            site: {
                                 [Op.like]: `${req.user.site}`
                             }
                         },
