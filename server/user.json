@@ -1,66 +1,795 @@
 [
     {
-        "username": "headPlant",
-        "password": "headPlant",
-        "email": "headPlant@gmail.com",
+        "username": "head-plant-tmrb",
+        "password": "headplanttmrb",
+        "email": "headplanttmrb@gmail.com",
         "role": "head",
         "district": "Jakarta",
-        "department": "Plant"
+        "department": "Plant",
+        "site": "TMRB"
     },
     {
-        "username": "headSM",
-        "password": "headSM",
-        "email": "headSM@gmail.com",
+        "username": "head-plant-inde",
+        "password": "headplantinde",
+        "email": "headplantindeb@gmail.com",
         "role": "head",
         "district": "Jakarta",
-        "department": "SM"
+        "department": "Plant",
+        "site": "INDE"
     },
     {
-        "username": "headEng",
-        "password": "headEng",
-        "email": "headEng@gmail.com",
+        "username": "head-plant-rant",
+        "password": "headplantrant",
+        "email": "headplantrant@gmail.com",
         "role": "head",
         "district": "Jakarta",
-        "department": "Eng"
+        "department": "Plant",
+        "site": "RANT"
     },
     {
-        "username": "headProd",
-        "password": "headProd",
-        "email": "headProd@gmail.com",
+        "username": "head-plant-agmr",
+        "password": "headplantagmr",
+        "email": "headplantagmr@gmail.com",
         "role": "head",
         "district": "Jakarta",
-        "department": "Prod"
+        "department": "Plant",
+        "site": "AGMR"
     },
     {
-        "username": "headHCSS",
-        "password": "headHCSS",
-        "email": "headHCSS@gmail.com",
+        "username": "head-plant-sjrp",
+        "password": "headplantsjrp",
+        "email": "headplantsjrp@gmail.com",
         "role": "head",
         "district": "Jakarta",
-        "department": "HCGS"
+        "department": "Plant",
+        "site": "SJRP"
     },
     {
-        "username": "headFat",
-        "password": "headFat",
-        "email": "headFat@gmail.com",
+        "username": "head-plant-sprl",
+        "password": "headplantsprl",
+        "email": "headplantsprl@gmail.com",
         "role": "head",
         "district": "Jakarta",
-        "department": "Fat"
+        "department": "Plant",
+        "site": "SPRL"
     },
     {
-        "username": "headIct",
-        "password": "headIct",
-        "email": "headIct@gmail.com",
+        "username": "head-plant-bdma",
+        "password": "headplantbdma",
+        "email": "headplantbdma@gmail.com",
         "role": "head",
         "district": "Jakarta",
-        "department": "Ict"
+        "department": "Plant",
+        "site": "BDMA"
     },
     {
-        "username": "headSHE",
-        "password": "headhSHE",
-        "email": "headSH@gmail.com",
+        "username": "head-plant-sput",
+        "password": "headplantsput",
+        "email": "headplantsput@gmail.com",
         "role": "head",
         "district": "Jakarta",
-        "department": "SHE"
+        "department": "Plant",
+        "site": "SPUT"
+    },
+    {
+        "username": "head-plant-mass",
+        "password": "headplantmass",
+        "email": "headplantmass@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Plant",
+        "site": "MASS"
+    },
+    {
+        "username": "head-plant-pelh",
+        "password": "headplantpelh",
+        "email": "headplantpelh@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Plant",
+        "site": "PELH"
+    },
+    {
+        "username": "head-plant-aoc",
+        "password": "headplantaoc",
+        "email": "headplantaoc@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Plant",
+        "site": "AOC"
+    },
+    {
+        "username": "head-sm-tmrb",
+        "password": "headsm_tmrb",
+        "email": "headsmtmrb@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SM",
+        "site": "TMRB"
+    },
+    {
+        "username": "head-sm-inde",
+        "password": "headsm_inde",
+        "email": "headsminde@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SM",
+        "site": "INDE"
+    },
+    {
+        "username": "head-sm-rant",
+        "password": "headsm_rant",
+        "email": "headsmrant@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SM",
+        "site": "RANT"
+    },
+    {
+        "username": "head-sm-agmr",
+        "password": "headsm_agmr",
+        "email": "headsmagmr@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SM",
+        "site": "AGMR"
+    },
+    {
+        "username": "head-sm-sjrp",
+        "password": "headsm_sjrp",
+        "email": "headsmsjrp@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SM",
+        "site": "SJRP"
+    },
+    {
+        "username": "head-sm-sprl",
+        "password": "headsm_sprl",
+        "email": "headsmsprl@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SM",
+        "site": "SPRL"
+    },
+    {
+        "username": "head-sm-bdma",
+        "password": "headsm_bdma",
+        "email": "headsmbdma@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SM",
+        "site": "BDMA"
+    },
+    {
+        "username": "head-sm-sput",
+        "password": "headsm_sput",
+        "email": "headsmsput@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SM",
+        "site": "SPUT"
+    },
+    {
+        "username": "head-sm-mass",
+        "password": "headsm_mass",
+        "email": "headsmmass@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SM",
+        "site": "MASS"
+    },
+    {
+        "username": "head-sm-pelh",
+        "password": "headsm_pelh",
+        "email": "headsmpelh@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SM",
+        "site": "PELH"
+    },
+    {
+        "username": "head-sm-aoc",
+        "password": "headsm_aoc",
+        "email": "headsmaoc@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SM",
+        "site": "AOC"
+    },
+    {
+        "username": "head-eng-tmrb",
+        "password": "headeng_tmrb",
+        "email": "headengtmrb@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Eng",
+        "site": "TMRB"
+    },
+    {
+        "username": "head-eng-inde",
+        "password": "headeng_inde",
+        "email": "headenginde@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Eng",
+        "site": "INDE"
+    },
+    {
+        "username": "head-eng-rant",
+        "password": "headeng_rant",
+        "email": "headengrant@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Eng",
+        "site": "RANT"
+    },
+    {
+        "username": "head-eng-agmr",
+        "password": "headeng_agmr",
+        "email": "headengagmr@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Eng",
+        "site": "AGMR"
+    },
+    {
+        "username": "head-eng-sjrp",
+        "password": "headeng_sjrp",
+        "email": "headengsjrp@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Eng",
+        "site": "SJRP"
+    },
+    {
+        "username": "head-eng-sprl",
+        "password": "headeng_sprl",
+        "email": "headengsprl@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Eng",
+        "site": "SPRL"
+    },
+    {
+        "username": "head-eng-bdma",
+        "password": "headeng_bdma",
+        "email": "headengbdma@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Eng",
+        "site": "BDMA"
+    },
+    {
+        "username": "head-eng-sput",
+        "password": "headeng_sput",
+        "email": "headengsput@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Eng",
+        "site": "SPUT"
+    },
+    {
+        "username": "head-eng-mass",
+        "password": "headeng_mass",
+        "email": "headengmass@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Eng",
+        "site": "MASS"
+    },
+    {
+        "username": "head-eng-pelh",
+        "password": "headeng_pelh",
+        "email": "headengpelh@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Eng",
+        "site": "PELH"
+    },
+    {
+        "username": "head-eng-aoc",
+        "password": "headeng_aoc",
+        "email": "headengaoc@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Eng",
+        "site": "AOC"
+    },
+    {
+        "username": "head-prod-tmrb",
+        "password": "headprod_tmrb",
+        "email": "headprodtmrb@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Prod",
+        "site": "TMRB"
+
+    },
+    {
+        "username": "head-prod-inde",
+        "password": "headprod_inde",
+        "email": "headprodinde@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Prod",
+        "site": "INDE"
+    },
+    {
+        "username": "head-prod-rant",
+        "password": "headprod_rant",
+        "email": "headprodrant@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Prod",
+        "site": "RANT"
+    },
+    {
+        "username": "head-prod-agmr",
+        "password": "headprod_agmr",
+        "email": "headprodagmr@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Prod",
+        "site": "AGMR"
+    },
+    {
+        "username": "head-prod-sjrp",
+        "password": "headprod_sjrp",
+        "email": "headprodsjrp@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Prod",
+        "site": "SJRP"
+    },
+    {
+        "username": "head-prod-sprl",
+        "password": "headprod_sprl",
+        "email": "headprodsprl@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Prod",
+        "site": "SPRL"
+    },
+    {
+        "username": "head-prod-bdma",
+        "password": "headprod_bdma",
+        "email": "headprodbdma@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Prod",
+        "site": "BDMA"
+    },
+    {
+        "username": "head-prod-sput",
+        "password": "headprod_sput",
+        "email": "headprodsput@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Prod",
+        "site": "SPUT"
+    },
+    {
+        "username": "head-prod-mass",
+        "password": "headprod_mass",
+        "email": "headprodmass@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Prod",
+        "site": "MASS"
+    },
+    {
+        "username": "head-prod-pelh",
+        "password": "headprod_pelh",
+        "email": "headprodpelh@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Prod",
+        "site": "PELH"
+    },
+    {
+        "username": "head-prod-aoc",
+        "password": "headprod_aoc",
+        "email": "headprodaoc@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "Prod",
+        "site": "AOC"
+    },
+    {
+        "username": "head-hcgs-tmrb",
+        "password": "headhcgstmrb",
+        "email": "headhcgstmrb@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "HCGS",
+        "site": "TMRB"
+    },
+    {
+        "username": "head-hcgs-inde",
+        "password": "headhcgsinde",
+        "email": "headhcgsinde@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "HCGS",
+        "site": "INDE"
+    },
+    {
+        "username": "head-hcgs-rant",
+        "password": "headhcgsgant",
+        "email": "headhcgsran@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "HCGS",
+        "site": "RANT"
+    },
+    {
+        "username": "head-hcgs-agmr",
+        "password": "headhcgsagmr",
+        "email": "headhcgsagmr@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "HCGS",
+        "site": "AGMR"
+    },
+    {
+        "username": "head-hcgs-sjrp",
+        "password": "headhcgssjrp",
+        "email": "headhcgssjrp@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "HCGS",
+        "site": "SJRP"
+    },
+    {
+        "username": "head-hcgs-sprl",
+        "password": "headhcgssprl",
+        "email": "headhcgssprl@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "HCGS",
+        "site": "SPRL"
+    },
+    {
+        "username": "head-hcgs-bdma",
+        "password": "headhcgsbdma",
+        "email": "headhcgsbdma@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "HCGS",
+        "site": "BDMA"
+    },
+    {
+        "username": "head-hcgs-sput",
+        "password": "headhcgssput",
+        "email": "headhcgssput@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "HCGS",
+        "site": "SPUT"
+    },
+    {
+        "username": "head-hcgs-mass",
+        "password": "headhcgsmass",
+        "email": "headhcgsmass@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "HCGS",
+        "site": "MASS"
+    },
+    {
+        "username": "head-hcgs-pelh",
+        "password": "headhcgspelh",
+        "email": "headhcgspelh@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "HCGS",
+        "site": "PELH"
+    },
+    {
+        "username": "head-hcgs-aoc",
+        "password": "headhcgs_aoc",
+        "email": "headhcgsaoc@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "HCGS",
+        "site": "AOC"
+    },
+    {
+        "username": "head-fat-tmrb",
+        "password": "headfattmrb",
+        "email": "headfattmrb@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "FAT",
+        "site": "TMRB"
+    },
+    {
+        "username": "head-fat-inde",
+        "password": "headfatinde",
+        "email": "headfatinde@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "FAT",
+        "site": "INDE"
+    },
+    {
+        "username": "head-fat-rant",
+        "password": "headfatrant",
+        "email": "headfatrant@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "FAT",
+        "site": "RANT"
+    },
+    {
+        "username": "head-fat-agmr",
+        "password": "headfatagmr",
+        "email": "headfatagmr@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "FAT",
+        "site": "AGMR"
+    },
+    {
+        "username": "head-fat-sjrp",
+        "password": "headfatsjrp",
+        "email": "headfatsjrp@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "FAT",
+        "site": "SJRP"
+    },
+    {
+        "username": "head-fat-sprl",
+        "password": "headfatsprl",
+        "email": "headfatsprl@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "FAT",
+        "site": "SPRL"
+    },
+    {
+        "username": "head-fat-bdma",
+        "password": "headfatbdma",
+        "email": "headfatbdma@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "FAT",
+        "site": "BDMA"
+    },
+    {
+        "username": "head-fat-sput",
+        "password": "headfatsput",
+        "email": "headfatsput@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "FAT",
+        "site": "SPUT"
+    },
+    {
+        "username": "head-fat-mass",
+        "password": "headfatmass",
+        "email": "headfatmass@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "FAT",
+        "site": "MASS"
+    },
+    {
+        "username": "head-fat-pelh",
+        "password": "headfatpelh",
+        "email": "headfatpelh@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "FAT",
+        "site": "PELH"
+    },
+    {
+        "username": "head-fat-aoc",
+        "password": "headfataoc",
+        "email": "headfataoc@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "FAT",
+        "site": "AOC"
+    },
+    {
+        "username": "head-ict-tmrb",
+        "password": "headicttmrb",
+        "email": "headicttmrb@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "ICT",
+        "site": "TMRB"
+    },
+    {
+        "username": "head-ict-inde",
+        "password": "headictinde",
+        "email": "headictinde@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "ICT",
+        "site": "INDE"
+    },
+    {
+        "username": "head-ict-rant",
+        "password": "headictrant",
+        "email": "headictrant@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "ICT",
+        "site": "RANT"
+    },
+    {
+        "username": "head-ict-agmr",
+        "password": "headictagmr",
+        "email": "headictagmr@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "ICT",
+        "site": "AGMR"
+    },
+    {
+        "username": "head-ict-sjrp",
+        "password": "headictsjrp",
+        "email": "headictsjrp@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "ICT",
+        "site": "SJRP"
+    },
+    {
+        "username": "head-ict-sprl",
+        "password": "headictsprl",
+        "email": "headictsprl@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "ICT",
+        "site": "SPRL"
+    },
+    {
+        "username": "head-ict-bdma",
+        "password": "headictbdma",
+        "email": "headictbdma@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "ICT",
+        "site": "BDMA"
+    },
+    {
+        "username": "head-ict-sput",
+        "password": "headictsput",
+        "email": "headictsput@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "ICT",
+        "site": "SPUT"
+    },
+    {
+        "username": "head-ict-mass",
+        "password": "headictmass",
+        "email": "headictmass@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "ICT",
+        "site": "MASS"
+    },
+    {
+        "username": "head-ict-pelh",
+        "password": "headictpelh",
+        "email": "headictpelh@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "ICT",
+        "site": "PELH"
+    },
+    {
+        "username": "head-ict-aoc",
+        "password": "headictaoc",
+        "email": "headictaoc@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "ICT",
+        "site": "AOC"
+    },
+    {
+        "username": "head-she-tmrb",
+        "password": "headshetmrb",
+        "email": "headshetmrb@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SHE",
+        "site": "TMRB"
+    },
+    {
+        "username": "head-she-inde",
+        "password": "headsheinde",
+        "email": "headsheinde@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SHE",
+        "site": "INDE"
+    },
+    {
+        "username": "head-she-rant",
+        "password": "headsherant",
+        "email": "headsherant@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SHE",
+        "site": "RANT"
+    },
+    {
+        "username": "head-she-agmr",
+        "password": "headsheagmr",
+        "email": "headsheagmr@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SHE",
+        "site": "AGMR"
+    },
+    {
+        "username": "head-she-sjrp",
+        "password": "headshejrp",
+        "email": "headshesjrp@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SHE",
+        "site": "SJRP"
+    },
+    {
+        "username": "head-she-sprl",
+        "password": "headshe_sprl",
+        "email": "headshesprl@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SHE",
+        "site": "SPRL"
+    },
+    {
+        "username": "head-she-bdma",
+        "password": "headshebdma",
+        "email": "headshebdma@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SHE",
+        "site": "BDMA"
+    },
+    {
+        "username": "head-she-sput",
+        "password": "headshe_sput",
+        "email": "headshesput@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SHE",
+        "site": "SPUT"
+    },
+    {
+        "username": "head-she-mass",
+        "password": "headshemass",
+        "email": "headshemass@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SHE",
+        "site": "MASS"
+    },
+    {
+        "username": "head-she-pelh",
+        "password": "headshepelh",
+        "email": "headshepelh@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SHE",
+        "site": "PELH"
+    },
+    {
+        "username": "head-she-aoc",
+        "password": "headsheaoc",
+        "email": "headsheaoc@gmail.com",
+        "role": "head",
+        "district": "Jakarta",
+        "department": "SHE",
+        "site": "AOC"
     }
 ]

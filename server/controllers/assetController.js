@@ -45,14 +45,16 @@ class AssetController {
             const { filter } = req.query
             let response;
 
-
             if (filter) {
                 response = await Asset.findAll({
                     include: {
                         model: User,
                         where: {
                             department: {
-                                [Op.like]: `%${filter.toUpperCase()}%`
+                                [Op.like]: `%${filter.toUpperCase()}%`,
+                            },
+                            site : {
+                                [Op.like]: `${req.user.site}`
                             }
                         },
                     },
@@ -83,7 +85,7 @@ class AssetController {
     static async getAssetByUser(req, res) {
         try {
             const response = await Asset.findAll({
-                where: { userId: req.user.id },
+                where: { userId: req.user.id, site: req.user.site },
                 include: {
                     model: User,
                     attributes: ["username", "email"]
@@ -112,7 +114,7 @@ class AssetController {
 
     static async addAsset(req, res) {
         try {
-            const { site, namaAsset, kodePN, nilaiAsset, quantityAsset, actionPlan, remark, areaKerja, benefit, planRealisasi } = req.body
+            const { namaAsset, kodePN, nilaiAsset, quantityAsset, actionPlan, remark, areaKerja, benefit, planRealisasi } = req.body
 
             const totalAsset = quantityAsset * nilaiAsset
             const plan = moment.tz(planRealisasi, 'Asia/Jakarta').format('YYYY-MM-DD');
@@ -161,7 +163,7 @@ class AssetController {
                     return res.status(400).json({ message: "Invalid kodePN" });
             }
 
-            let newAsset = await Asset.create({ site, namaAsset, kodePN, nilaiAsset, quantityAsset, actionPlan, userDept: req.user.dept, remark, areaKerja, totalNilaiAsset: totalAsset, benefit, planRealisasi: plan, realisasiAsset: assetRealisasi, userId: req.user.id })
+            let newAsset = await Asset.create({ site: req.user.site, namaAsset, kodePN, nilaiAsset, quantityAsset, actionPlan, userDept: req.user.dept, remark, areaKerja, totalNilaiAsset: totalAsset, benefit, planRealisasi: plan, realisasiAsset: assetRealisasi, userId: req.user.id })
             res.status(201).json(newAsset)
         } catch (error) {
             // console.log(error)

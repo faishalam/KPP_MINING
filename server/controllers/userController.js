@@ -6,14 +6,15 @@ class UserController {
     static async register(req, res) {
         try {
             try {
-                const { username, email, password, district, department } = req.body
+                const { username, email, password, district, department, site } = req.body
 
-                let newUser = await User.create({ username, email, password, district, department })
+                let newUser = await User.create({ username, email, password, district, department, site })
                 const withoutPassword = {
                     username: newUser.username,
                     email: newUser.email,
                     district: newUser.district,
-                    department: newUser.department
+                    department: newUser.department,
+                    site: newUser.site
                 };
 
                 res.status(201).json(withoutPassword)

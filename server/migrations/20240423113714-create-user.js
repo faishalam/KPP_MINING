@@ -22,10 +22,13 @@ module.exports = {
       role: {
         type: Sequelize.STRING
       },
-      district : {
+      district: {
         type: Sequelize.STRING
       },
-      department : {
+      department: {
+        type: Sequelize.STRING
+      },
+      site: {
         type: Sequelize.STRING
       },
       createdAt: {

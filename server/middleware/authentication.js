@@ -17,9 +17,10 @@ async function authentication(req, res, next) {
         req.user = {
             id: user.id,
             username: user.username,
-            email : user.email,
-            role : user.role,
-            dept : user.department
+            email: user.email,
+            role: user.role,
+            dept: user.department,
+            site: user.site
         }
 
         next()
