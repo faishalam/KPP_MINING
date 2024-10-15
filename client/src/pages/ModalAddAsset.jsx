@@ -40,7 +40,6 @@ export default function ModalAddAsset() {
                 timer: 1500
             });
             setForm({
-                site: '',
                 namaAsset: '',
                 kodePN: '',
                 nilaiAsset: '',
@@ -66,29 +65,6 @@ export default function ModalAddAsset() {
                 <form onSubmit={handleSubmit} className="bg-white p-6 mb-4">
                     <h1 className="text-gray-800 font-bold text-xl mb-8 border-b-2 border-black">Add Asset!</h1>
                     {error && <p className="text-red-500 text-xs">*{error}</p>}
-                    <label className="text-sm font-semibold mb-2">Site</label>
-                    <div className="relative">
-                        <select
-                            className="w-full rounded-lg border-gray-200 text-sm shadow-sm border border-grey-200 mb-4 p-2 flex items-start"
-                            name="site"
-                            id="site"
-                            onChange={handleChange}
-                            value={form.site}
-                        >
-                            <option value="">Select Site</option>
-                            <option value="TMRB">TMRB</option>
-                            <option value="INDE">INDE</option>
-                            <option value="RANT">RANT</option>
-                            <option value="AGMR">AGMR</option>
-                            <option value="SJRP">SJRP</option>
-                            <option value="SPRL">SPRL</option>
-                            <option value="BDMA">BDMA</option>
-                            <option value="SPUT">SPUT</option>
-                            <option value="MASS">MASS</option>
-                            <option value="PELH">PELH</option>
-                            <option value="AOC">AOC</option>
-                        </select>
-                    </div>
 
                     <ModalInput
                         label="Nama Asset"

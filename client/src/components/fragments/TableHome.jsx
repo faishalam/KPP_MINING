@@ -7,6 +7,7 @@ import ModalFeedback from "./ModalFeedback"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import ModalHold from "./ModalHold"
+import Dropdown from "./Dropdown"
 
 export default function TableHome(props) {
     const { data, type } = props
@@ -103,6 +104,8 @@ export default function TableHome(props) {
             <div className="flex flex-col bg-white mt-10 rounded-md shadow-md p-2 overflow-auto">
                 <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full sm:px-6 lg:px-8">
+                        <Dropdown />
+
                         <div className="overflow-hidden">
                             <table
                                 className="min-w-full border border-neutral-200 text-start text-sm font-light text-surface border:black text-black">

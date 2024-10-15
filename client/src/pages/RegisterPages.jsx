@@ -13,6 +13,7 @@ export default function RegisterPages() {
         password: '',
         district: '',
         department: '',
+        site: ''
     })
 
     const [error, setError] = useState('')
@@ -35,6 +36,7 @@ export default function RegisterPages() {
                 password: '',
                 district: '',
                 department: '',
+                site: ''
             })
             setError('')
             navigate('/login')
@@ -42,7 +44,6 @@ export default function RegisterPages() {
             setError(error)
         }
     };
-
 
 
     return (
@@ -209,6 +210,30 @@ export default function RegisterPages() {
                                 <option value="FAT">FAT</option>
                                 <option value="ICT">ICT</option>
                                 <option value="SHE">SHE</option>
+                            </select>
+                        </div>
+
+
+                        <label className="sr-only">Site</label>
+                        <div className="relative">
+                            <select
+                                className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                name="site"
+                                value={form.site}
+                                onChange={handleChange}
+                            >
+                                <option value="">Select Site</option>
+                                <option value="TMRB">TMRB</option>
+                                <option value="INDE">INDE</option>
+                                <option value="RANT">RANT</option>
+                                <option value="AGMR">AGMR</option>
+                                <option value="SJRP">SJRP</option>
+                                <option value="SPRL">SPRL</option>
+                                <option value="BDMA">BDMA</option>
+                                <option value="SPUT">SPUT</option>
+                                <option value="MASS">MASS</option>
+                                <option value="PELH">PELH</option>
+                                <option value="AOC">AOC</option>
                             </select>
                         </div>
 
