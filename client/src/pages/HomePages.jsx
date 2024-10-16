@@ -39,7 +39,7 @@ export default function HomePages(props) {
                     setError(error)
                 }
             }, 500)
-            
+
         }
         getData()
     }, [dispatch, type])
@@ -51,6 +51,14 @@ export default function HomePages(props) {
 
     const waitingPercentage = (waitingCount / totalAssets) * 100;
     const approvePercentage = (approveCount / totalAssets) * 100;
+
+    const workedCount = asset?.filter((a) => a.action === "worked").length;
+    const canceledCount = asset?.filter((a) => a.action === "canceled" || a.action === "rejected").length;
+    const holdCount = asset?.filter((a) => a.action === "hold").length;
+
+    const workedPercentage = (workedCount / totalAssets) * 100;
+    const canceledPercentage = (canceledCount / totalAssets) * 100;
+    const holdPercentage = (holdCount / totalAssets) * 100;
 
 
     return (
@@ -85,29 +93,29 @@ export default function HomePages(props) {
                             )
                         }
                     </div>
-                    <div className="flex gap-6">
-                        <div className="w-1/5 h-20 bg-white rounded-md flex justify-center items-center shadow-md">
+                    <div className="grid grid-cols-6 gap-6">
+                        <div className="w-full h-28 bg-white rounded-md flex justify-center items-center shadow-md">
                             <RiFileReduceLine className="text-4xl mr-2" />
                             <p className="text-sm">Total Asset : {asset?.length}</p>
                         </div>
-                        <div className="w-1/5 h-20 bg-white rounded-md flex justify-center items-center shadow-md">
+                        <div className="w-full h-28 bg-white rounded-md flex justify-center items-center shadow-md">
                             <BsCashCoin className="text-4xl mr-4" fill="green" />
                             <div className="flex flex-col">
                                 <p className="text-sm">Total Nilai</p>
                                 <p className="text-sm">Rp. {asset?.reduce((a, b) => a + b.totalNilaiAsset, 0).toLocaleString('id-ID')}</p>
                             </div>
                         </div>
-                        <div className="w-1/5 h-20 bg-white rounded-md flex justify-center items-center shadow-md">
+                        <div className="w-full h-28 bg-white rounded-md flex justify-center items-center shadow-md">
                             <CiNoWaitingSign className="text-4xl mr-2" fill="red" />
                             <p className="text-sm">Waiting : {asset?.filter((a) => a.status === "waiting").length}</p>
                         </div>
-                        <div className="w-1/5 h-20 bg-white rounded-md flex justify-center items-center shadow-md">
+                        <div className="w-full h-28 bg-white rounded-md flex justify-center items-center shadow-md">
                             <FcAcceptDatabase
                                 className="text-4xl mr-2" />
                             <p className="text-sm">Approve : {asset?.filter((a) => a.status === "approved").length}</p>
                         </div>
 
-                        <div className="w-1/5 h-20 bg-white rounded-md flex justify-center items-center shadow-md p-2">
+                        <div className="w-full h-28 bg-white rounded-md flex justify-center items-center shadow-md p-2">
                             <div className="w-full h-full ">
                                 <TEChart
                                     type="pie"
@@ -149,6 +157,55 @@ export default function HomePages(props) {
                                         maxHeight: "100%",
                                     }}
                                     className="w-full h-10"
+                                />
+                            </div>
+                        </div>
+
+
+                        <div className="w-full h-28 bg-white rounded-md flex justify-center items-center shadow-md p-2">
+                            <div className="w-full h-full">
+                                <TEChart
+                                    type="pie"
+                                    data={{
+                                        labels: ["Worked", "Canceled", "Hold"],
+                                        datasets: [
+                                            {
+                                                label: "Status",
+                                                data: [workedPercentage, canceledPercentage, holdPercentage],
+                                                backgroundColor: [
+                                                    "rgba(255, 99, 132, 0.5)",
+                                                    "rgba(77, 182, 172, 0.5)",
+                                                    "rgba(255, 205, 86, 0.5)", // Pastikan ada warna untuk setiap data
+                                                ],
+                                            },
+                                        ],
+                                    }}
+                                    options={{
+                                        plugins: {
+                                            legend: {
+                                                position: "right", // Atur posisi label di samping chart
+                                            },
+                                            tooltip: {
+                                                callbacks: {
+                                                    label: (context) => {
+                                                        let label = context.label || "";
+                                                        if (label) {
+                                                            label += ": ";
+                                                        }
+                                                        if (context.parsed) {
+                                                            label += context.parsed.toFixed(2) + "%";
+                                                        }
+                                                        return label;
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        maintainAspectRatio: false, // Biarkan aspek tidak terjaga
+                                        responsive: true, // Buat chart responsif
+                                        maxWidth: "100%",
+                                        maxHeight: "100%",
+                                    }}
+                                    style={{ width: "100%", height: "80%" }} // Atur ukuran chart di sini
                                 />
                             </div>
                         </div>
