@@ -1,27 +1,26 @@
-import { InputsLogin } from "@/app/providers/authProviders/loginProviders/LoginProviders";
-import { RegisterOptions, UseFormRegister } from "react-hook-form";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 interface InputFormAuthProps {
     type: string;
     label: string;
     placeholder: string;
-    register: UseFormRegister<InputsLogin>; // Use the appropriate type here
+    register: UseFormRegisterReturn
     name: string;
+    errors?: string
 }
 
-export default function InputFormAuth({ type, name, label, placeholder, register }: InputFormAuthProps) {
-
+export default function InputFormAuth({ type, label, placeholder, register, errors }: InputFormAuthProps) {
     return (
         <>
-            <label htmlFor="email" className="sr-only">{label}</label>
+            <label htmlFor={type} className="sr-only">{label}</label>
             <div className="relative">
+                {errors && <p className=" mt-1 text-red-500 text-xs">*{errors}</p>}
                 <input
                     type={type}
-                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                    className="w-full rounded-lg border p-4 pe-12 text-sm shadow text-black"
                     placeholder={placeholder}
-                // {...register({ name }, { required: true })}
+                    {...register}
                 />
-
                 {/* <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

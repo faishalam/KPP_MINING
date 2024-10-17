@@ -1,18 +1,27 @@
-"use client";
-import { LoginProvider } from "@/app/providers/authProviders/loginProviders/LoginProviders";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactNode } from "react";
-import { ToastContainer } from 'react-toastify';
+'use client';
 
-const queryClient = new QueryClient();
+import { LoginProvider } from "@/app/providers/authProviders/LoginProviders";
+import { RegisterProvider } from "@/app/providers/authProviders/RegisterProviders";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ToastContainer } from "react-toastify";
 
-export default function QueryProvider({ children }: { children: ReactNode }) {
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+        },
+    },
+});
+
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return (
         <QueryClientProvider client={queryClient}>
             <LoginProvider>
-                {children}
+                <RegisterProvider>
+                    {children}
+                </RegisterProvider>
             </LoginProvider>
             <ToastContainer />
         </QueryClientProvider>
     );
-}
+};

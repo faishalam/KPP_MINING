@@ -15,7 +15,7 @@ interface ButtonSubmitProps {
 
 export default function ButtonSubmit({ type, onClick, btnText, disabled, classname, btnLoading, iconOnly, btnIcon, showing }: ButtonSubmitProps) {
     const isShowing = showing === undefined ? true : showing
-    const handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleOnClick = () => {
         if (onClick) onClick()
     }
 
@@ -25,7 +25,7 @@ export default function ButtonSubmit({ type, onClick, btnText, disabled, classna
             disabled={btnLoading || disabled}
             className={
                 btnLoading
-                    ? "bg-blue-500 rounded p-2 disabled:grayscale-0 disabled:cursor-progress w-full"
+                    ? "bg-green-800 rounded p-2 disabled:grayscale-0 disabled:cursor-progress w-full"
                     : classname ?? "btn-primary"
             }
             onClick={handleOnClick}
