@@ -1,6 +1,6 @@
 'use client'
 
-import ".././globals.css";
+import "../../app/globals.css";
 import { AuthProvider } from "../components/queryProviders/QueryProvider";
 
 export default function AuthLayout({

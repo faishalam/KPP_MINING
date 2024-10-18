@@ -32,19 +32,16 @@ cron.schedule('0 09 * * *', () => {
 
                 // reminder h-0
                 const todayRealisasiTime = moment(item.realisasiAsset).format('YYYY-MM-DD');
-
                 if (nowWIB === todayRealisasiTime && item.action === 'realisasi waiting') {
                     sendEmail(item.User.dataValues.email, item.namaAsset);
                 }
 
                 // reminder melebih h-0 dan item.action === 'realisasi waiting'
                 const pastRealisasiTime = moment(item.realisasiAsset).isBefore(nowWIB);
-
                 if (pastRealisasiTime && item.action === 'realisasi waiting') {
                     sendEmail(item.User.dataValues.email, item.namaAsset);
                 }
-            });
-
+            })
         } catch (error) {
             console.log(error)
         }

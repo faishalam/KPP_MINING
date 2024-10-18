@@ -8,6 +8,12 @@ class UserController {
             try {
                 const { username, email, password, district, department, site } = req.body
 
+                const checkEmail = await User.findOne({ where: { email } })
+                if (checkEmail) return res.status(400).json({ message: "Email already registered" })
+
+                const checkUsername = await User.findOne({ where: { username } })
+                if (checkUsername) return res.status(400).json({ message: "Username already registered" })
+
                 let newUser = await User.create({ username, email, password, district, department, site })
                 const withoutPassword = {
                     username: newUser.username,
