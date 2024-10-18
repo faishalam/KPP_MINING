@@ -2,26 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  --background: #ffffff;
-  --foreground: #171717;
+.react-data-table {
+  white-space: normal !important;
+  /* Pastikan wrapping diizinkan */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.react-data-table .rdt_TableCell {
+  overflow: visible !important;
+  /* Pastikan tidak ada overflow tersembunyi */
 }
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-} */

@@ -5,8 +5,8 @@ const assetRouter = express.Router()
 
 
 assetRouter.use(authentication)
-assetRouter.get("/asset", AssetController.getAsset)
-assetRouter.get("/asset-by-user", AssetController.getAssetByUser)
+assetRouter.get("/asset/:search?", AssetController.getAsset)
+assetRouter.get("/asset/by-user", AssetController.getAssetByUser)
 assetRouter.post("/asset", AssetController.addAsset)
 assetRouter.get("/asset/:id", AssetController.getAssetById)
 assetRouter.delete("/asset/:id", AssetController.deleteAsset)

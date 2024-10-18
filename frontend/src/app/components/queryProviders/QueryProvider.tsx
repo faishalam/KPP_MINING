@@ -2,6 +2,8 @@
 
 import { LoginProvider } from "@/app/providers/authProviders/LoginProviders";
 import { RegisterProvider } from "@/app/providers/authProviders/RegisterProviders";
+import { HomeProvider } from "@/app/providers/rootProviders/HomeProviders";
+import { UserAssetProvider } from "@/app/providers/rootProviders/UserAssetProviders";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
 
@@ -16,11 +18,16 @@ const queryClient = new QueryClient({
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return (
         <QueryClientProvider client={queryClient}>
-            <LoginProvider>
+            {/* <LoginProvider>
                 <RegisterProvider>
-                    {children}
+                    <HomeProvider>
+                        <UserAssetProvider>
+                            {children}
+                        </UserAssetProvider>
+                    </HomeProvider>
                 </RegisterProvider>
-            </LoginProvider>
+            </LoginProvider> */}
+            {children}
             <ToastContainer />
         </QueryClientProvider>
     );

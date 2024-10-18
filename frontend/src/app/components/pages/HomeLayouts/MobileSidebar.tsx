@@ -1,21 +1,8 @@
 import { classNames } from "@/app/helper/classnames";
+import { useHomeContext } from "@/app/providers/rootProviders/HomeProviders";
 import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from "@headlessui/react";
 import { CalendarIcon, ChartPieIcon, Cog6ToothIcon, DocumentDuplicateIcon, FolderIcon, HomeIcon, UsersIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
-const navigation = [
-    { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-    { name: 'Team', href: '#', icon: UsersIcon, current: false },
-    { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-    { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-    { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
-    { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
-]
-
-const teams = [
-    { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
-    { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
-    { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false },
-]
 
 interface MobileSidebarProps {
     sidebarOpen: boolean
@@ -23,6 +10,19 @@ interface MobileSidebarProps {
 }
 
 export default function MobileSidebar({ sidebarOpen, setSidebarOpen }: MobileSidebarProps) {
+    const {
+        dataUser
+    } = useHomeContext()
+
+    const navigation = [
+        { name: 'Dashboard', href: '/', icon: HomeIcon, current: true },
+        { name: `${dataUser?.role === 'user' ? 'My Asset' : 'Your Department'}`, href: '/', icon: UsersIcon, current: false },
+    ]
+
+    const actions = [
+        { id: 1, name: 'Add Assets', href: '#', initial: 'A', current: false },
+        { id: 2, name: 'Guide Apps', href: '#', initial: 'G', current: false },
+    ].filter(action => !(dataUser?.role === 'head' && action.name === 'Add Assets'));
     return (
         <>
             <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
@@ -78,21 +78,21 @@ export default function MobileSidebar({ sidebarOpen, setSidebarOpen }: MobileSid
                                     <li>
                                         <div className="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
                                         <ul role="list" className="-mx-2 mt-2 space-y-1">
-                                            {teams.map((team) => (
-                                                <li key={team.name}>
+                                            {actions.map((item) => (
+                                                <li key={item.name}>
                                                     <a
-                                                        href={team.href}
+                                                        href={item.href}
                                                         className={classNames(
-                                                            team.current
+                                                            item.current
                                                                 ? 'bg-gray-800 text-white'
                                                                 : 'text-gray-400 hover:bg-gray-800 hover:text-white',
                                                             'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
                                                         )}
                                                     >
                                                         <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-[0.625rem] font-medium text-gray-400 group-hover:text-white">
-                                                            {team.initial}
+                                                            {item.initial}
                                                         </span>
-                                                        <span className="truncate">{team.name}</span>
+                                                        <span className="truncate">{item.name}</span>
                                                     </a>
                                                 </li>
                                             ))}

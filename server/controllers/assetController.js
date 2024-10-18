@@ -54,41 +54,28 @@ cron.schedule('0 09 * * *', () => {
 class AssetController {
     static async getAsset(req, res) {
         try {
-            const { filter } = req.query
+            const { filter } = req.query;
+            const { search } = req.params;
+
             let response;
 
-            if (filter) {
-                response = await Asset.findAll({
-                    include: {
-                        model: User,
-                        where: {
-                            department: {
-                                [Op.like]: `%${filter.toUpperCase()}%`,
-                            },
-                            site: {
-                                [Op.like]: `${req.user.site}`
-                            }
-                        },
-                    },
-                    order: [
-                        ['createdAt', 'DESC']
-                    ]
-                })
-                return res.status(200).json(response)
+            const whereConditions = {
+                ...(search ? { namaAsset: { [Op.iLike]: `%${search}%` } } : {}),
+                ...(filter ? { site: filter } : {}),
             }
 
             response = await Asset.findAll({
                 include: {
                     model: User,
-                    attributes: ['username']
                 },
+                where: whereConditions,
                 order: [
                     ['createdAt', 'DESC']
                 ]
-            })
+            });
 
-            if (response.length === 0) return res.status(404).json({ message: "Asset not found" })
-            res.status(200).json(response)
+            if (response.length === 0) return res.status(404).json({ message: "Asset not found" });
+            res.status(200).json(response);
         } catch (error) {
             console.log(error)
         }
