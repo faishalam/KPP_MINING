@@ -15,19 +15,10 @@ const queryClient = new QueryClient({
     },
 });
 
-export const QueryProvider = ({ children }: { children: React.ReactNode }) => {
+export const RootProvider = ({ children }: { children: React.ReactNode }) => {
     return (
         <QueryClientProvider client={queryClient}>
-            <LoginProvider>
-                <RegisterProvider>
-                    <HomeProvider>
-                        <UserAssetProvider>
-                            {children}
-                        </UserAssetProvider>
-                    </HomeProvider>
-                </RegisterProvider>
-            </LoginProvider>
-            {/* {children} */}
+            {children}
             <ToastContainer />
         </QueryClientProvider>
     );

@@ -1,22 +1,19 @@
+'use client'
 import { classNames } from "@/app/helper/classnames"
-import { useHomeContext } from "@/app/providers/rootProviders/HomeProviders"
+import { HomeProvider, useHomeContext } from "@/app/providers/rootProviders/HomeProviders"
+import { useRootLayoutContext } from "@/app/providers/rootProviders/RootLayoutProviders"
 import { Cog6ToothIcon, HomeIcon, UsersIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
-
 
 export default function DesktopSidebar() {
     const {
         dataUser,
         isLoadingDataUser
-    } = useHomeContext()
-
-    if(isLoadingDataUser) {
-        return null
-    }
+    } = useRootLayoutContext()
 
     const navigation = [
         { name: 'Dashboard', href: '/', icon: HomeIcon, current: true },
-        { name: `${dataUser?.role === 'user' ? 'My Asset' : 'Your Department'}`, href: '/myAsset', icon: UsersIcon, current: false },
+        { name: `${dataUser?.role === 'user' ? 'My Asset' : 'Your Department'}`, href: '/your-assets', icon: UsersIcon, current: false },
     ]
 
     const actions = [
@@ -81,13 +78,14 @@ export default function DesktopSidebar() {
                                 </ul>
                             </li>
                             <li className="mt-auto">
-                                <a
-                                    href="#"
+                                <Link
+                                    onClick={() => localStorage.removeItem('access_token')}
                                     className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                                    href="/login"
                                 >
                                     <Cog6ToothIcon aria-hidden="true" className="h-6 w-6 shrink-0" />
                                     Logout
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </nav>

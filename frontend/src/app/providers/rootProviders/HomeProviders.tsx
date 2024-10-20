@@ -3,22 +3,10 @@
 import { createContext, useContext, ReactNode, useState, useEffect } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import useAssetList from "../../api/home/useAssetList"
-import useUser from "../../api/user/useUser"
-import { AlertError } from "@/app/components/alert/AlertToastify";
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
 
 export type InputsSearch = {
     search: string
-}
-interface HomeContextProps {
-    dataAssetList?: TypeDataAssetList[];
-    dataUser?: User;
-    isLoadingDataUser: boolean;
-    isLoadingDataAssetList: boolean;
-    register: UseFormReturn<InputsSearch>["register"]
-    handleSubmit: UseFormReturn<InputsSearch>["handleSubmit"]
-    setSearchAsset: (value: string | undefined) => void
-    searchAsset: string | undefined
 }
 
 export interface TypeDataAssetList {
@@ -47,17 +35,23 @@ export interface TypeDataAssetList {
     };
 }
 
-export interface User {
-    id: number;
-    username: string;
-    email: string;
-    password: string; // Pastikan untuk mengamankan password dalam aplikasi Anda
-    role: string;
-    district: string;
-    department: string;
-    site: string;
-    createdAt: string; // Atau bisa menggunakan Date jika Anda ingin
-    updatedAt: string; // Atau bisa menggunakan Date jika Anda ingin
+export interface AssetResponse {
+    totalItems: number | undefined;
+    totalPages: number | undefined;
+    currentPage: number | undefined;
+    data: TypeDataAssetList[]; // Array of TypeDataAssetList
+}
+
+interface HomeContextProps {
+    dataAssetList?: AssetResponse;
+    isLoadingDataAssetList: boolean;
+    register: UseFormReturn<InputsSearch>["register"]
+    handleSubmit: UseFormReturn<InputsSearch>["handleSubmit"]
+    setSearchAsset: (value: string | undefined) => void
+    searchAsset: string | undefined
+    onSubmit: (data: InputsSearch) => void,
+    pagination: { page: number, limit: number },
+    setPagination: (value: { page: number, limit: number }) => void,
 }
 
 
@@ -78,38 +72,64 @@ function useHomeContext() {
 const HomeProvider = ({ children }: HomeProviderContext) => {
     const { register, handleSubmit } = useForm<InputsSearch>()
     const [searchAsset, setSearchAsset] = useState<string | undefined>()
-    const router = useRouter()
+    const [pagination, setPagination] = useState<{ page: number, limit: number }>({ page: 1, limit: 13 })
 
-    const { data: dataUser, isLoading: isLoadingDataUser } = useUser()
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const initialSearch = searchParams.get('search');
+    const initialPage = searchParams.get('page');
 
     const { data: dataAssetList, isLoading: isLoadingDataAssetList } = useAssetList({
         params: {
-            search: searchAsset
+            search: searchAsset || undefined,
+            page: pagination?.page || 1,
+            limit: pagination?.limit || 12,
+            enabled: false
         }
-    })
+    });
 
-    // const handleChangeUrl = () => {
-    //     if (searchAsset) {
-    //         router.push(`/?search=${searchAsset}`)
-    //     } else {
-    //         router.push("/")
-    //     }
-    // }
+    //search asset
+    const onSubmit = (data: InputsSearch) => {
+        const { search } = data;
+        if (!search) {
+            router.push("/");
+            return;
+        }
+        setSearchAsset(search);
+        router.push(`/?search=${search}`);
+    };
 
     // useEffect(() => {
-    //     handleChangeUrl()
-    // }, [searchAsset])
+    //     setSearchAsset(initialSearch);
+    // }, [initialSearch])
+
+    // useEffect(() => {
+    //     if (!initialSearch) {
+    //         router.push(`/?page=${pagination.page}`)
+    //     }
+    // }, [pagination.page])
+
+    // useEffect(() => {
+    //     if (initialPage) {
+    //         setPagination({
+    //             page: Number(initialPage),
+    //             limit: pagination.limit
+    //         })
+    //     }
+    // }, [initialPage])
+
 
     return (
         <HomeContext.Provider value={{
+            setPagination,
+            pagination,
             dataAssetList,
             isLoadingDataAssetList,
             register,
             handleSubmit,
+            onSubmit: onSubmit,
             setSearchAsset,
-            searchAsset,
-            dataUser,
-            isLoadingDataUser
+            searchAsset
         }}>
             {children}
         </HomeContext.Provider>

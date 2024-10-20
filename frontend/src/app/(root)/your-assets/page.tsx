@@ -1,10 +1,10 @@
 'use client'
-import { TypeDataAssetList, useHomeContext } from "@/app/providers/rootProviders/HomeProviders";
+import { RootProvider } from "@/app/components/queryProviders/RootProvider";
+import { HomeProvider, TypeDataAssetList } from "@/app/providers/rootProviders/HomeProviders";
+import { UserAssetProvider, useUserAssetContext } from "@/app/providers/rootProviders/UserAssetProviders";
 import DataTable from "react-data-table-component";
-import LoadingSpinnder from "../../LoadingSpinnder";
-import PaginationComponent from "../../PaginationComponent";
 
-const columnHomePage = [
+const columnMyAsset = [
     {
         name: 'Site',
         selector: (row: TypeDataAssetList) => row.site,
@@ -164,45 +164,36 @@ const columnHomePage = [
     },
 ];
 
-export default function DataTableHome() {
+
+function YourAssetsPageLayout() {
     const {
-        isLoadingDataAssetList,
-        dataAssetList,
-        pagination,
-        setPagination
-    } = useHomeContext();
+        dataUserAssetList,
+        isLoadingDataUserAssetList
+    } = useUserAssetContext()
+
+    
 
     return (
         <>
-            {/* Loading Spinner */}
-            {isLoadingDataAssetList ? (
-                <div className="flex flex-col items-center justify-center py-10">
-                    <LoadingSpinnder />
-                    <p className="text-gray-600 mt-2">Loading assets...</p>
-                </div>
-            ) : (
-                <>
-                    {/* Data Tidak Ditemukan */}
-                    {dataAssetList?.data && dataAssetList?.data?.length === 0 ? (
-                        <div className="text-center py-10">
-                            <p className="text-gray-500 text-lg">Asset Tidak Ditemukan</p>
-                        </div>
-                    ) : (
-                        <>
-                            <DataTable
-                                columns={columnHomePage}
-                                data={dataAssetList?.data || []}
-                                // pagination
-                                // paginationPerPage={11}
-                                className="w-full"
-                            />
-
-                            <PaginationComponent/>
-                        </>
-                    )}
-                </>
-            )}
+            <div className="mx-auto max-w-full bg-white h-full p-1 rounded-md">
+                <DataTable
+                    columns={columnMyAsset}
+                    data={dataUserAssetList || []}
+                    progressPending={isLoadingDataUserAssetList}
+                    pagination
+                    paginationPerPage={12}
+                />
+            </div>
         </>
+    )
+}
 
+export default function YourAssetPage() {
+    return (
+        <>
+            <UserAssetProvider>
+                <YourAssetsPageLayout />
+            </UserAssetProvider>
+        </>
     )
 }

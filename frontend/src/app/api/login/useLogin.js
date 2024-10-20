@@ -20,6 +20,7 @@ const useLogin = (props) => {
             }
 
             const data = await response.json()
+            console.log(data)
 
             setData(data); 
             return data; 

@@ -1,3 +1,4 @@
+'use client'
 import { useState } from "react"
 import { useQuery } from "react-query";
 
@@ -36,7 +37,7 @@ const useUser = () => {
         queryFn: useUserFn,
         staleTime: Infinity,
         cacheTime: Infinity,
-        enabled: (!!localStorage.getItem("access_token")),
+        // enabled: (localStorage.getItem("access_token")),
     })
 
     return { ...query, data }

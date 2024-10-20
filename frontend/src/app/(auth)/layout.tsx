@@ -1,7 +1,7 @@
 'use client'
 
 import "../../app/globals.css";
-import { AuthProvider } from "../components/queryProviders/QueryProvider";
+import { QueryProvider } from "../components/queryProviders/QueryProvider";
 
 export default function AuthLayout({
     children,
@@ -17,9 +17,9 @@ export default function AuthLayout({
                         alt="logo"
                         className="w-full max-w-xs object-cover"
                     />
-                    <AuthProvider>
+                    <QueryProvider>
                         {children}
-                    </AuthProvider>
+                    </QueryProvider>
                 </section>
 
                 <section className="hidden md:block md:relative md:max-w-full md:w-full ">

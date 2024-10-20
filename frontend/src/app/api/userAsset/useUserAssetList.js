@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from "react"
 import { useQuery } from "react-query";
 
@@ -12,10 +14,11 @@ const useUserAssetList = () => {
             const response = await fetch(`http://localhost:3000/asset/by-user`, {
                 method: 'GET',
                 headers: {
-                    "Content-Type": "application/json",
                     "Authorization": `Bearer ${access_token}`,
+                    "Content-Type": "application/json",
                 },
             });
+
 
             if (!response.ok) {
                 const errorData = await response.json();
@@ -34,8 +37,6 @@ const useUserAssetList = () => {
     const query = useQuery({
         queryKey: ['useUserAssetList'],
         queryFn: useUserAssetListFn,
-        staleTime: Infinity,
-        cacheTime: Infinity,
     })
 
     return { ...query, data }

@@ -54,32 +54,77 @@ cron.schedule('0 09 * * *', () => {
 class AssetController {
     static async getAsset(req, res) {
         try {
-            const { filter } = req.query;
-            const { search } = req.params;
+            const { filter, search, page = 1, limit = 10, enabled } = req.query;
 
-            let response;
 
-            const whereConditions = {
-                ...(search ? { namaAsset: { [Op.iLike]: `%${search}%` } } : {}),
-                ...(filter ? { site: filter } : {}),
+            if (enabled) {
+                const response = await Asset.findAll({
+                    include: {
+                        model: User,
+                    },
+                    order: [
+                        ['createdAt', 'DESC']
+                    ],
+                })
+                return res.status(200).json(response)
             }
 
-            response = await Asset.findAll({
+
+            const pageNum = parseInt(page, 10);
+            const limitNum = parseInt(limit, 10);
+            const offset = (pageNum - 1) * limitNum;
+
+            // Build the where conditions for the query
+            // const whereConditions = {
+            //     ...(search ? { namaAsset: { [Op.iLike]: `%${search}%` } } : {}),
+            //     ...(filter ? { site: filter } : {}),
+            // };
+
+            const whereConditions = {
+                [Op.and]: [
+                    {
+                        [Op.or]: [
+                            { namaAsset: { [Op.iLike]: search ? `%${search}%` : '%' } },
+                            { '$User.username$': { [Op.iLike]: search ? `%${search}%` : '%' } },
+                        ]
+                    }
+                ],
+            };
+
+            // Fetch data with count
+            const { count, rows } = await Asset.findAndCountAll({
                 include: {
                     model: User,
                 },
                 where: whereConditions,
                 order: [
                     ['createdAt', 'DESC']
-                ]
+                ],
+                limit: limitNum,
+                offset,
             });
 
-            if (response.length === 0) return res.status(404).json({ message: "Asset not found" });
-            res.status(200).json(response);
+            // Calculate total pages
+            const totalPages = Math.ceil(count / limitNum);
+
+            // Check if there are results
+            if (rows.length === 0) {
+                return res.status(404).json({ message: "Asset not found" });
+            }
+
+            // Return paginated response
+            res.status(200).json({
+                totalItems: count,
+                totalPages,
+                currentPage: pageNum,
+                data: rows,
+            });
         } catch (error) {
-            console.log(error)
+            console.error(error);
+            res.status(500).json({ message: "Internal server error" });
         }
     }
+
 
     static async getAssetByUser(req, res) {
         try {
