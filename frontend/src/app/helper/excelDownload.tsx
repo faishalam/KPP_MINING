@@ -42,7 +42,7 @@ export default function ExcelDownloadButton() {
             enabled,
         },
     });
-
+    
     const downloadExcel = () => {
         if (!dataAssetList) {
             console.error("No data available for download.");
@@ -80,11 +80,10 @@ export default function ExcelDownloadButton() {
         saveAs(data, "AssetsDashboard.xlsx");
     };
 
-    // Use an effect to download the Excel when the enabled state changes to true
     useEffect(() => {
         if (enabled && !isLoadingDataAssetList) {
             downloadExcel();
-            setEnabled(false); // Reset the enabled state after downloading
+            setEnabled(false);
         }
     }, [enabled, isLoadingDataAssetList, dataAssetList]);
 
@@ -100,7 +99,7 @@ export default function ExcelDownloadButton() {
         <ButtonSubmit
             btnText="Download Report"
             btnIcon={<RiFileReduceLine size={25} />}
-            classname="w-[114px] shadow-sm max-w-full px-3 bg-blue-600 hover:bg-blue-700 transition-all rounded text-white text-[10px]"
+            classname="w-[114px] shadow-sm max-w-full px-3 py-1 bg-blue-600 hover:bg-blue-700 transition-all rounded text-white text-[10px]"
             onClick={handleDownloadClick}
         />
     );

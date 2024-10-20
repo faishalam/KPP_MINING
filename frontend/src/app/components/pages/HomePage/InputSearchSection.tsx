@@ -10,6 +10,7 @@ export default function InputSearchSection() {
         onSubmit,
         register,
         setSearchAsset,
+        searchAsset
     } = useHomeContext()
 
     return (
@@ -25,6 +26,10 @@ export default function InputSearchSection() {
                     // onClick={() => setSearchAsset(undefined)}
                     aria-hidden="true"
                     className="pointer-events-none absolute p-2 inset-y-0 left-1 h-full text-gray-400"
+                />
+
+                <ButtonSubmit
+                    type="submit"
                 />
             </form>
             {/* <div className="w-full max-w-full bg-black">

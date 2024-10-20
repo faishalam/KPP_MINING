@@ -7,7 +7,9 @@ import { useMutation, useQuery } from "react-query";
 
 const useAssetList = (props) => {
     const [data, setData] = useState()
-    console.log(props?.params?.search)
+
+    console.log(props)
+
     const useAssetListFn = async () => {
         try {
             const access_token = localStorage.getItem("access_token")
@@ -26,7 +28,6 @@ const useAssetList = (props) => {
                 }
             })
 
-
             const { result, status, message } = response.data
 
             if (status === "error") throw new Error(message)
@@ -43,7 +44,7 @@ const useAssetList = (props) => {
         queryFn: useAssetListFn,
         staleTime: Infinity,
         cacheTime: Infinity,
-        enabled: Boolean(!props?.params?.search || props?.params?.page || props?.params?.limit || props?.params?.enabled),
+        enabled: Boolean((props?.params?.search || !props?.params?.page) && props?.params?.page || props?.params?.limit || props?.params?.enabled),
     })
 
 

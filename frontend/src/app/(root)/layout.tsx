@@ -1,7 +1,7 @@
 'use client'
 import "../../app/globals.css";
 import MobileSidebar from "../components/pages/HomeLayouts/MobileSidebar";
-import { useState } from "react";
+import { use, useState } from "react";
 import DesktopSidebar from "../components/pages/HomeLayouts/DesktopSidebar";
 import Navbar from "../components/pages/HomeLayouts/Navbar";
 import { QueryProvider } from "../components/queryProviders/QueryProvider";
@@ -17,7 +17,6 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-
     const [sidebarOpen, setSidebarOpen] = useState(false);
     return (
         <html lang="en">

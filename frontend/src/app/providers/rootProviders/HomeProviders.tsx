@@ -3,7 +3,7 @@
 import { createContext, useContext, ReactNode, useState, useEffect } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import useAssetList from "../../api/home/useAssetList"
-import { redirect, useRouter, useSearchParams } from 'next/navigation';
+import { redirect, usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export type InputsSearch = {
     search: string
@@ -48,10 +48,10 @@ interface HomeContextProps {
     register: UseFormReturn<InputsSearch>["register"]
     handleSubmit: UseFormReturn<InputsSearch>["handleSubmit"]
     setSearchAsset: (value: string | undefined) => void
-    searchAsset: string | undefined
+    searchAsset: string | undefined,
     onSubmit: (data: InputsSearch) => void,
     pagination: { page: number, limit: number },
-    setPagination: (value: { page: number, limit: number }) => void,
+    setPagination: (value: { page: number, limit: number }) => void
 }
 
 
@@ -78,6 +78,7 @@ const HomeProvider = ({ children }: HomeProviderContext) => {
     const searchParams = useSearchParams();
     const initialSearch = searchParams.get('search');
     const initialPage = searchParams.get('page');
+    // const pathname = usePathname();
 
     const { data: dataAssetList, isLoading: isLoadingDataAssetList } = useAssetList({
         params: {
@@ -91,33 +92,25 @@ const HomeProvider = ({ children }: HomeProviderContext) => {
     //search asset
     const onSubmit = (data: InputsSearch) => {
         const { search } = data;
-        if (!search) {
-            router.push("/");
-            return;
-        }
         setSearchAsset(search);
-        router.push(`/?search=${search}`);
+        setPagination({ page: 1, limit: pagination.limit });
     };
 
-    // useEffect(() => {
-    //     setSearchAsset(initialSearch);
-    // }, [initialSearch])
+    useEffect(() => {
+        if (!initialSearch) {
+            router.push(`/?page=${pagination.page}`)
+            return
+        }
+    }, [pagination.page])
 
-    // useEffect(() => {
-    //     if (!initialSearch) {
-    //         router.push(`/?page=${pagination.page}`)
-    //     }
-    // }, [pagination.page])
-
-    // useEffect(() => {
-    //     if (initialPage) {
-    //         setPagination({
-    //             page: Number(initialPage),
-    //             limit: pagination.limit
-    //         })
-    //     }
-    // }, [initialPage])
-
+    useEffect(() => {
+        if (initialPage) {
+            setPagination({
+                page: Number(initialPage),
+                limit: pagination.limit
+            })
+        }
+    }, [initialPage])
 
     return (
         <HomeContext.Provider value={{
@@ -127,9 +120,9 @@ const HomeProvider = ({ children }: HomeProviderContext) => {
             isLoadingDataAssetList,
             register,
             handleSubmit,
-            onSubmit: onSubmit,
             setSearchAsset,
-            searchAsset
+            searchAsset,
+            onSubmit: onSubmit
         }}>
             {children}
         </HomeContext.Provider>

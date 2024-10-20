@@ -56,7 +56,6 @@ class AssetController {
         try {
             const { filter, search, page = 1, limit = 10, enabled } = req.query;
 
-
             if (enabled) {
                 const response = await Asset.findAll({
                     include: {
@@ -69,16 +68,9 @@ class AssetController {
                 return res.status(200).json(response)
             }
 
-
             const pageNum = parseInt(page, 10);
             const limitNum = parseInt(limit, 10);
             const offset = (pageNum - 1) * limitNum;
-
-            // Build the where conditions for the query
-            // const whereConditions = {
-            //     ...(search ? { namaAsset: { [Op.iLike]: `%${search}%` } } : {}),
-            //     ...(filter ? { site: filter } : {}),
-            // };
 
             const whereConditions = {
                 [Op.and]: [
@@ -90,8 +82,7 @@ class AssetController {
                     }
                 ],
             };
-
-            // Fetch data with count
+            
             const { count, rows } = await Asset.findAndCountAll({
                 include: {
                     model: User,
@@ -104,15 +95,12 @@ class AssetController {
                 offset,
             });
 
-            // Calculate total pages
             const totalPages = Math.ceil(count / limitNum);
 
-            // Check if there are results
             if (rows.length === 0) {
                 return res.status(404).json({ message: "Asset not found" });
             }
 
-            // Return paginated response
             res.status(200).json({
                 totalItems: count,
                 totalPages,

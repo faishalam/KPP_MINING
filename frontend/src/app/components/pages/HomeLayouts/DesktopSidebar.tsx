@@ -4,12 +4,16 @@ import { HomeProvider, useHomeContext } from "@/app/providers/rootProviders/Home
 import { useRootLayoutContext } from "@/app/providers/rootProviders/RootLayoutProviders"
 import { Cog6ToothIcon, HomeIcon, UsersIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 export default function DesktopSidebar() {
     const {
         dataUser,
         isLoadingDataUser
     } = useRootLayoutContext()
+
+    const pathname = usePathname()
+
 
     const navigation = [
         { name: 'Dashboard', href: '/', icon: HomeIcon, current: true },
@@ -41,7 +45,7 @@ export default function DesktopSidebar() {
                                             <Link
                                                 href={item.href}
                                                 className={classNames(
-                                                    item.current
+                                                    item.href === pathname
                                                         ? 'bg-gray-800 text-white'
                                                         : 'text-gray-400 hover:bg-gray-800 hover:text-white',
                                                     'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',

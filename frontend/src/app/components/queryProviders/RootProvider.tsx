@@ -16,6 +16,7 @@ const queryClient = new QueryClient({
 });
 
 export const RootProvider = ({ children }: { children: React.ReactNode }) => {
+
     return (
         <QueryClientProvider client={queryClient}>
             {children}

@@ -9,7 +9,7 @@ export default function ButtonFilterSearch() {
     } = useHomeContext()
 
     const handleSelectBy = (value: string) => {
-        setSearchBy(value)
+        // setSearchBy(value)
     }
 
     return (
