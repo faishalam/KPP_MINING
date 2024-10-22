@@ -6,13 +6,7 @@ import PaginationComponent from "../../PaginationComponent";
 import { FaRegEdit } from "react-icons/fa";
 import ButtonSubmit from "../../button/ButtonSubmit";
 import { MdDelete } from "react-icons/md";
-import Swal from "sweetalert2";
 import ModalEditAsset from "../../modal/ModalEditAsset";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-
-
-
 
 export default function DataTableYourAssetSection() {
     const {
@@ -20,10 +14,9 @@ export default function DataTableYourAssetSection() {
         isLoadingDataUserAssetList,
         pagination,
         setPagination,
-        mutateDeleteAsset,
         setOpenModalEdit,
-        openModalEdit,
-        setId
+        setId,
+        handleDeleteYourAsset
     } = useUserAssetContext()
 
     const columnYourAsset = [
@@ -213,26 +206,7 @@ export default function DataTableYourAssetSection() {
         }
     ];
 
-    const handleDeleteYourAsset = (id: number) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
-                mutateDeleteAsset(id)
-            }
-        });
-    }
+
 
     const handleEditAsset = (id: number) => {
         setId(id)
@@ -240,10 +214,8 @@ export default function DataTableYourAssetSection() {
     };
 
 
-
     return (
         <>
-            {/* Loading Spinner */}
             {isLoadingDataUserAssetList ? (
                 <div className="flex flex-col items-center justify-center py-10">
                     <LoadingSpinnder />
@@ -251,7 +223,6 @@ export default function DataTableYourAssetSection() {
                 </div>
             ) : (
                 <>
-                    {/* Data Tidak Ditemukan */}
                     {dataUserAssetList?.data && dataUserAssetList?.data.length === 0 ? (
                         <div className="text-center py-10">
                             <p className="text-gray-500 text-lg">Asset Tidak Ditemukan</p>

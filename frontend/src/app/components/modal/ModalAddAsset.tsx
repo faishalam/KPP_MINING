@@ -25,15 +25,15 @@ export default function ModalAddAsset({ open, setOpen, mutate, isLoading, regist
 
     const kodePNOptions = [
         { value: 'WORKSHOP', label: 'WORKSHOP' },
-        { value: 'FIXTURE_N_FITTING', label: 'FIXTURE N FITTING' },
+        { value: 'FIXTURE N FITTING', label: 'FIXTURE N FITTING' },
         { value: 'BUILDING', label: 'BUILDING' },
-        { value: 'COMPUTER_EQUIPMENT', label: 'COMPUTER EQUIPMENT' },
-        { value: 'SAFETY_EQUIPMENT', label: 'SAFETY EQUIPMENT' },
-        { value: 'OFFICE_EQUIPMENT', label: 'OFFICE EQUIPMENT' },
+        { value: 'COMPUTER EQUIPMENT', label: 'COMPUTER EQUIPMENT' },
+        { value: 'SAFETY EQUIPMENT', label: 'SAFETY EQUIPMENT' },
+        { value: 'OFFICE EQUIPMENT', label: 'OFFICE EQUIPMENT' },
         { value: 'LEASEHOLD', label: 'LEASEHOLD' },
-        { value: 'PRODUCTION_EQUIPMENT', label: 'PRODUCTION EQUIPMENT' },
-        { value: 'SUPPORT_EQUIPMENT', label: 'SUPPORT EQUIPMENT' },
-        { value: 'ENGINEERING_EQUIPMENT', label: 'ENGINEERING EQUIPMENT' }
+        { value: 'PRODUCTION EQUIPMENT', label: 'PRODUCTION EQUIPMENT' },
+        { value: 'SUPPORT EQUIPMENT', label: 'SUPPORT EQUIPMENT' },
+        { value: 'ENGINEERING EQUIPMENT', label: 'ENGINEERING EQUIPMENT' }
     ];
 
     const actionPlan = [
@@ -177,7 +177,7 @@ export default function ModalAddAsset({ open, setOpen, mutate, isLoading, regist
                                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                     <button
                                         type="submit"
-                                        // onClick={() => setOpen(false)}
+                                        onClick={() => setOpen(false)}
                                         className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                                     >
                                         Tambahkan Asset

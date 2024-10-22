@@ -3,12 +3,12 @@ import { useMutation } from "react-query";
 import axios from "axios";
 
 const useEditAsset = (props) => {
-    const useEditAssetFn = async (id, body) => {
+    const useEditAssetFn = async ({ id, data }) => {
         try {
             const access_token = localStorage.getItem("access_token")
             if (!access_token) throw new Error("Access token not found")
 
-            const response = await axios.put(`http://localhost:3000/asset/${id}`, body, {
+            const response = await axios.put(`http://localhost:3000/asset/${id}`, data, {
                 headers: {
                     "Authorization": `Bearer ${access_token}`,
                     "Content-Type": "application/json",

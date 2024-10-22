@@ -20,47 +20,27 @@ export default function ModalEditAsset() {
         registerEdit,
         handleSubmitEdit,
         errors,
-        // mutateEditAsset,
-        dataAssetById,
-        isLoadingDataAssetById,
         setId,
-        id
+        onSubmitEdit
     } = useUserAssetContext()
 
     const kodePNOptions = [
         { value: 'WORKSHOP', label: 'WORKSHOP' },
-        { value: 'FIXTURE_N_FITTING', label: 'FIXTURE N FITTING' },
+        { value: 'FIXTURE N FITTING', label: 'FIXTURE N FITTING' },
         { value: 'BUILDING', label: 'BUILDING' },
-        { value: 'COMPUTER_EQUIPMENT', label: 'COMPUTER EQUIPMENT' },
-        { value: 'SAFETY_EQUIPMENT', label: 'SAFETY EQUIPMENT' },
-        { value: 'OFFICE_EQUIPMENT', label: 'OFFICE EQUIPMENT' },
+        { value: 'COMPUTER EQUIPMENT', label: 'COMPUTER EQUIPMENT' },
+        { value: 'SAFETY EQUIPMENT', label: 'SAFETY EQUIPMENT' },
+        { value: 'OFFICE EQUIPMENT', label: 'OFFICE EQUIPMENT' },
         { value: 'LEASEHOLD', label: 'LEASEHOLD' },
-        { value: 'PRODUCTION_EQUIPMENT', label: 'PRODUCTION EQUIPMENT' },
-        { value: 'SUPPORT_EQUIPMENT', label: 'SUPPORT EQUIPMENT' },
-        { value: 'ENGINEERING_EQUIPMENT', label: 'ENGINEERING EQUIPMENT' }
+        { value: 'PRODUCTION EQUIPMENT', label: 'PRODUCTION EQUIPMENT' },
+        { value: 'SUPPORT EQUIPMENT', label: 'SUPPORT EQUIPMENT' },
+        { value: 'ENGINEERING EQUIPMENT', label: 'ENGINEERING EQUIPMENT' }
     ];
 
     const actionPlan = [
         { value: 'HIGH PRIORIRY', label: 'HIGH PRIORIRY' },
         { value: 'CLOSED', label: 'CLOSED' },
     ]
-
-    const onSubmit = (data: AssetFormInputs) => {
-        const { kodePN, actionPlan, remark, areaKerja, benefit, planRealisasi, namaAsset, nilaiAsset, quantityAsset } = data
-
-        const updatedAsset = {
-            kodePN,
-            actionPlan,
-            remark,
-            areaKerja,
-            benefit,
-            planRealisasi,
-            namaAsset,
-            nilaiAsset,
-            quantityAsset
-        }
-
-    }
 
     useEffect(() => {
         if (!openModalEdit) {
@@ -99,7 +79,7 @@ export default function ModalEditAsset() {
                                 </div>
                             </div>
 
-                            <form onSubmit={handleSubmitEdit(onSubmit)} className='w-full max-w-full mt-8 space-y-2'>
+                            <form onSubmit={handleSubmitEdit(onSubmitEdit)} className='w-full max-w-full mt-8 space-y-2'>
                                 <InputFormModal
                                     label='Nama Asset'
                                     type='text'
@@ -108,7 +88,6 @@ export default function ModalEditAsset() {
                                     register={registerEdit('namaAsset', {
                                         required: true,
                                     })}
-                                    value={dataAssetById?.namaAsset}
                                     errors={errors.namaAsset?.message}
                                 />
 
@@ -121,7 +100,6 @@ export default function ModalEditAsset() {
                                         required: true,
                                     })}
                                     errors={errors.kodePN?.message}
-                                    value={dataAssetById?.kodePN}
                                 />
 
                                 <InputFormModal
@@ -134,7 +112,6 @@ export default function ModalEditAsset() {
                                         required: true,
                                     })}
                                     errors={errors.nilaiAsset?.message}
-                                    value={dataAssetById?.nilaiAsset}
                                 />
 
                                 <InputFormModal
@@ -147,7 +124,6 @@ export default function ModalEditAsset() {
                                         required: true,
                                     })}
                                     errors={errors.quantityAsset?.message}
-                                    value={dataAssetById?.quantityAsset}
                                 />
 
                                 <SelectField
@@ -170,7 +146,6 @@ export default function ModalEditAsset() {
                                         required: true,
                                     })}
                                     errors={errors.remark?.message}
-                                    value={dataAssetById?.remark}
 
                                 />
 
@@ -183,7 +158,6 @@ export default function ModalEditAsset() {
                                         required: true,
                                     })}
                                     errors={errors.areaKerja?.message}
-                                    value={dataAssetById?.areaKerja}
                                 />
 
                                 <InputFormModal
@@ -195,7 +169,6 @@ export default function ModalEditAsset() {
                                         required: true,
                                     })}
                                     errors={errors.benefit?.message}
-                                    value={dataAssetById?.benefit}
                                 />
 
                                 <InputFormModal
@@ -206,7 +179,6 @@ export default function ModalEditAsset() {
                                         required: true,
                                     })}
                                     errors={errors.planRealisasi?.message}
-                                    value={dataAssetById?.planRealisasi}
                                 />
 
                                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">

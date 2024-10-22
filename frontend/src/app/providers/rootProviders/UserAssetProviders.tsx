@@ -1,13 +1,14 @@
 "use client"
 
-import { createContext, useContext, ReactNode, useState } from "react";
+import { createContext, useContext, ReactNode, useState, useEffect } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import useUserAssetList from "../../api/userAsset/useUserAssetList"
-import { AlertError } from "@/app/components/alert/AlertToastify";
+import { AlertError, AlertSuccess } from "@/app/components/alert/AlertToastify";
 import useDeleteAsset from "../../api/userAsset/useDeleteAsset"
 import { useQueryClient } from "react-query";
 import useEditAsset from "../../api/asset/useEditAsset"
 import useAssetById from "../../api/asset/useAssetById"
+import Swal from "sweetalert2";
 
 export type InputsSearch = {
     search: string
@@ -93,6 +94,10 @@ interface UserAssetContextProps {
     isLoadingDataAssetById?: boolean
     setId: (id: number | null) => void
     id: number | null
+    reset: UseFormReturn<AssetFormInputs>["reset"],
+    onSubmitEdit: (data: AssetFormInputs) => void,
+    isLoadingEditAsset: boolean
+    handleDeleteYourAsset: (id: number) => void
 }
 
 
@@ -112,14 +117,24 @@ function useUserAssetContext() {
 
 const UserAssetProvider = ({ children }: UserAssetProviderContext) => {
     const { register, handleSubmit } = useForm<InputsSearch>();
-    const { register: registerEdit, handleSubmit: handleSubmitEdit, formState: { errors } } = useForm<AssetFormInputs>();
+    const { register: registerEdit, handleSubmit: handleSubmitEdit, formState: { errors }, reset } = useForm<AssetFormInputs>({
+        defaultValues: {
+            namaAsset: "",
+            kodePN: "",
+            nilaiAsset: 0,
+            quantityAsset: 0,
+            actionPlan: "",
+            remark: "",
+            areaKerja: "",
+            benefit: "",
+            planRealisasi: "",
+        }
+    });
     const [searchAsset, setSearchAsset] = useState<string | undefined>()
     const [pagination, setPagination] = useState<{ page: number, limit: number }>({ page: 1, limit: 13 })
 
     const [openModalEdit, setOpenModalEdit] = useState(false)
-
     const [id, setId] = useState<number | null>(null)
-
     const queryClient = useQueryClient()
 
     const { data: dataUserAssetList, isLoading: isLoadingDataUserAssetList } = useUserAssetList({
@@ -137,12 +152,26 @@ const UserAssetProvider = ({ children }: UserAssetProviderContext) => {
         },
     })
 
+    const { mutate: mutateEditAsset, isLoading: isLoadingEditAsset } = useEditAsset({
+        onSuccess: () => {
+            queryClient.refetchQueries('useUserAssetList');
+            queryClient.refetchQueries('useAssetList');
+            AlertSuccess('Edit Asset Successfully')
+            setOpenModalEdit(false)
+        },
+        onError: (errorEditAsset: string) => {
+            AlertError(errorEditAsset)
+        }
+    })
+
     const { mutate: mutateDeleteAsset, isLoading: isLoadingDeleteAsset } = useDeleteAsset({
         onSuccess: () => {
             queryClient.refetchQueries('useUserAssetList');
+            queryClient.refetchQueries('useAssetList');
+            AlertSuccess('Delete Asset Successfully')
         },
-        onError: () => {
-            AlertError("Delete Failed")
+        onError: (errorDeleteAsset: string) => {
+            AlertError(errorDeleteAsset)
         }
     })
 
@@ -152,6 +181,64 @@ const UserAssetProvider = ({ children }: UserAssetProviderContext) => {
         setSearchAsset(search);
         setPagination({ page: 1, limit: pagination.limit });
     }
+
+    //onSubmitEdit 
+    const onSubmitEdit = (data: AssetFormInputs) => {
+        const { kodePN, actionPlan, remark, areaKerja, benefit, planRealisasi, namaAsset, nilaiAsset, quantityAsset } = data
+        mutateEditAsset({
+            id: id || undefined,
+            data: {
+                namaAsset: namaAsset || "",
+                kodePN: kodePN || "",
+                nilaiAsset: nilaiAsset || 0,
+                quantityAsset: quantityAsset || 0,
+                actionPlan: actionPlan || "",
+                remark: remark || "",
+                areaKerja: areaKerja || "",
+                benefit: benefit || "",
+                planRealisasi: planRealisasi || ""
+            }
+        })
+    }
+
+    //deleteAsset
+    const handleDeleteYourAsset = (id: number) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+                mutateDeleteAsset(id)
+            }
+        });
+    }
+
+    //defaultValues edit
+    useEffect(() => {
+        if (dataAssetById) {
+            reset({
+                namaAsset: dataAssetById?.namaAsset,
+                kodePN: dataAssetById?.kodePN,
+                nilaiAsset: dataAssetById?.nilaiAsset,
+                quantityAsset: dataAssetById?.quantityAsset,
+                actionPlan: dataAssetById?.actionPlan,
+                remark: dataAssetById?.remark,
+                areaKerja: dataAssetById?.areaKerja,
+                benefit: dataAssetById?.benefit,
+                planRealisasi: dataAssetById.planRealisasi.split('T')[0]
+            });
+        }
+    }, [dataAssetById, reset]);
 
 
     return (
@@ -176,6 +263,10 @@ const UserAssetProvider = ({ children }: UserAssetProviderContext) => {
             isLoadingDataAssetById,
             id,
             setId,
+            reset,
+            onSubmitEdit,
+            isLoadingEditAsset,
+            handleDeleteYourAsset
         }}>
             {children}
         </UserAssetContext.Provider>

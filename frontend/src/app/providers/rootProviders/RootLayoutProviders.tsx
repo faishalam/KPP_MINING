@@ -72,6 +72,7 @@ const RootLayoutProvider = ({ children }: HomeProviderContext) => {
     const { mutate: mutateAddAsset, isLoading: isLoadingAddAsset, error: errorAddAsset } = useAddAsset({
         onSuccess: () => {
             queryClient.refetchQueries('useAssetList');
+            queryClient.refetchQueries('useUserAssetList');
             AlertSuccess('Berhasil Menambah Asset!')
             reset()
         },

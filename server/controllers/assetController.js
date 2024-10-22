@@ -136,13 +136,13 @@ class AssetController {
             const offset = (pageNum - 1) * limitNum;
 
             const whereConditions = {
-                userId: req.user.id,           // filter by userId
-                site: req.user.site            // filter by site
+                userId: req.user.id,
+                site: req.user.site
             };
 
             if (search) {
                 whereConditions.namaAsset = {
-                    [Op.iLike]: `%${search}%`  // case-insensitive search by namaAsset
+                    [Op.iLike]: `%${search}%` 
                 };
             }
 

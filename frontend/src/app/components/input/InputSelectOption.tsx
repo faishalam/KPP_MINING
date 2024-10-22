@@ -1,14 +1,14 @@
 import { InputsRegister } from '@/app/providers/authProviders/RegisterProviders';
 import { TypeYourDataAssetList } from '@/app/providers/rootProviders/UserAssetProviders';
 import React from 'react';
-import { UseFormRegister } from 'react-hook-form';
+import { UseFormRegister, UseFormRegisterReturn } from 'react-hook-form';
 
 
 interface SelectFieldProps {
     label?: string;
     name?: keyof InputsRegister; //
     options?: Array<{ value: string; label: string }>;
-    register?: UseFormRegister<InputsRegister | TypeYourDataAssetList>;
+    register?: UseFormRegisterReturn;
     required?: boolean;
     errors?: string;
     classnames?: string;
@@ -26,7 +26,10 @@ export default function SelectField({
     classnames,
     labelClassnames,
     value,
+    // registerEdit
 }: SelectFieldProps) {
+    // const registerFn = register ?? registerEdit; // Memilih register yang tersedia
+
     return (
         <div className="relative">
             <label className={`${labelClassnames ? labelClassnames : 'sr-only'}`}>{label}</label>
@@ -44,6 +47,6 @@ export default function SelectField({
                     </option>
                 ))}
             </select>
-        </div>
+        </div >
     );
 }
