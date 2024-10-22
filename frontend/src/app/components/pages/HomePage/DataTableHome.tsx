@@ -5,17 +5,29 @@ import LoadingSpinnder from "../../LoadingSpinnder";
 import PaginationComponent from "../../PaginationComponent";
 
 const columnHomePage = [
+    // {
+    //     name: 'No',
+    //     selector: (row: TypeDataAssetList, index: number) => index + 1,
+    //     sortable: true,
+    //     width: '70px'
+    // },
     {
         name: 'Site',
         selector: (row: TypeDataAssetList) => row.site,
         sortable: true,
+        cell: (row: TypeDataAssetList) => (
+            <div className="w-full">
+                {row.site}
+            </div>
+        ),
+        width : '100px'
     },
     {
         name: 'Nama Asset',
         selector: (row: TypeDataAssetList) => row.namaAsset,
         sortable: true,
         cell: (row: TypeDataAssetList) => (
-            <div style={{ minWidth: '200px' }}>
+            <div className="w-48 p-1">
                 {row.namaAsset}
             </div>
         ),
@@ -25,144 +37,148 @@ const columnHomePage = [
         selector: (row: TypeDataAssetList) => row.kodePN,
         sortable: true,
         cell: (row: TypeDataAssetList) => (
-            <div style={{ minWidth: '170px' }}>
+            <div className="w-full">
                 {row.kodePN}
             </div>
         ),
+        width: '150px'
     },
     {
         name: 'Nilai Asset',
         selector: (row: TypeDataAssetList) => `Rp. ${row.nilaiAsset.toLocaleString('id-ID')}`,
         sortable: true,
         cell: (row: TypeDataAssetList) => (
-            <div style={{ minWidth: '150px' }}>
+            <div className="w-full">
                 Rp. {row.nilaiAsset.toLocaleString('id-ID')}
             </div>
         ),
+        width: '170px'
     },
     {
         name: 'Quantity',
         selector: (row: TypeDataAssetList) => row.quantityAsset,
         sortable: true,
         cell: (row: TypeDataAssetList) => (
-            <div style={{ minWidth: '10px' }}>
+            <div className="w-full">
                 {row.quantityAsset}
             </div>
         ),
+        width: '100px'
     },
     {
         name: 'Total Nilai Asset',
         selector: (row: TypeDataAssetList) => `Rp. ${row.totalNilaiAsset.toLocaleString('id-ID')}`,
         sortable: true,
         cell: (row: TypeDataAssetList) => (
-            <div style={{ minWidth: '150px' }}>
+            <div className="w-full">
                 Rp. {row.totalNilaiAsset.toLocaleString('id-ID')}
             </div>
         ),
+        width: '170px'
     },
     {
         name: 'Action Plan',
         selector: (row: TypeDataAssetList) => row.actionPlan,
         sortable: true,
         cell: (row: TypeDataAssetList) => (
-            <div style={{ minWidth: '150px' }}>
+            <div className="w-48 p-1 pr-10">
                 {row.actionPlan}
             </div>
         ),
+        width: '200px'
     },
     {
         name: 'User Dept',
         selector: (row: TypeDataAssetList) => row.userDept,
         sortable: true,
+        width: '120px',
     },
     {
         name: 'Depresiasi',
         selector: (row: TypeDataAssetList) => row.depresiasi,
         sortable: true,
+        width: '120px',
     },
     {
-        name: "Remark",
+        name: 'Remark',
         selector: (row: TypeDataAssetList) => row.remark,
         sortable: true,
+        width: '200px',
     },
     {
-        name: "Area Kerja",
+        name: 'Area Kerja',
         selector: (row: TypeDataAssetList) => row.areaKerja,
         sortable: true,
+        width: '200px',
     },
     {
-        name: "Benefit",
+        name: 'Benefit',
         selector: (row: TypeDataAssetList) => row.benefit,
         sortable: true,
         cell: (row: TypeDataAssetList) => (
-            <div style={{
-                whiteSpace: 'normal',
-                wordWrap: 'break-word',
-                overflowWrap: 'break-word',
-                display: 'block',
-                minWidth: '150px', // moved minWidth into style
-                maxWidth: '200px', // moved maxWidth into style
-            }}>
+            <div className="w-[800px]">
                 {row.benefit}
             </div>
         ),
+        width: '200px'
     },
     {
-        name: "By",
+        name: 'By',
         selector: (row: TypeDataAssetList) => row.User?.username,
         sortable: true,
         cell: (row: TypeDataAssetList) => (
-            <div style={{
-                fontStyle: 'italic', // Teks miring
-                color: 'gray', // Warna abu-abu
-            }}>
+            <div className="italic text-gray-500">
                 {row.User?.username}
             </div>
         ),
+        width: '130px'
     },
     {
-        name: "Status",
+        name: 'Status',
         selector: (row: TypeDataAssetList) => row.status,
         sortable: true,
         cell: (row: TypeDataAssetList) => (
-            <div style={{
-                color: row.status === 'approved' ? 'green' : row.status === 'waiting' ? 'red' : 'black',
-            }}>
+            <div className={`font-sm rounded-xl text-xs p-1 ${row.status === 'approved' ? 'bg-green-200 text-green-600' : row.status === 'waiting' ? 'bg-red-200 text-red-600 ' : ''}`}>
                 {row.status}
             </div>
         ),
+        width: '100px'
     },
     {
-        name: "Plan Realisasi",
+        name: 'Plan Realisasi',
         selector: (row: TypeDataAssetList) => new Date(row.planRealisasi).toISOString().split('T')[0],
         sortable: true,
         cell: (row: TypeDataAssetList) => (
-            <div style={{ minWidth: '100px' }}>
+            <div className="min-w-[100px] text-gray-500">
                 {new Date(row.planRealisasi).toISOString().split('T')[0]}
             </div>
         ),
+        width: '150px'
     },
     {
-        name: "Realisasi Asset",
+        name: 'Realisasi Asset',
         selector: (row: TypeDataAssetList) => new Date(row.realisasiAsset).toISOString().split('T')[0],
         sortable: true,
         cell: (row: TypeDataAssetList) => (
-            <div style={{ minWidth: '100px' }}>
+            <div className="min-w-[100px] text-gray-500">
                 {new Date(row.realisasiAsset).toISOString().split('T')[0]}
             </div>
         ),
+        width: '150px'
     },
     {
-        name: "Keterangan",
-        selector: (row: TypeDataAssetList) => row.remark,
+        name: 'Keterangan',
+        selector: (row: TypeDataAssetList) => row.action,
         sortable: true,
         cell: (row: TypeDataAssetList) => (
-            <div style={{ minWidth: '150px' }}>
-                {row.remark}
+            <div className="min-w-[150px]">
+                {row.action}
             </div>
         ),
+        width: '200px'
     },
 ];
+
 
 export default function DataTableHome() {
     const {
@@ -192,12 +208,14 @@ export default function DataTableHome() {
                             <DataTable
                                 columns={columnHomePage}
                                 data={dataAssetList?.data || []}
-                                // pagination
-                                // paginationPerPage={11}
                                 className="w-full"
                             />
 
-                            <PaginationComponent/>
+                            <PaginationComponent
+                                pagination={pagination}
+                                setPagination={setPagination}
+                                data={dataAssetList}
+                            />
                         </>
                     )}
                 </>

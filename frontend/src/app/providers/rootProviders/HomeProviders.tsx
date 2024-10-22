@@ -89,6 +89,7 @@ const HomeProvider = ({ children }: HomeProviderContext) => {
         }
     });
 
+
     //search asset
     const onSubmit = (data: InputsSearch) => {
         const { search } = data;
@@ -96,21 +97,21 @@ const HomeProvider = ({ children }: HomeProviderContext) => {
         setPagination({ page: 1, limit: pagination.limit });
     };
 
-    useEffect(() => {
-        if (!initialSearch) {
-            router.push(`/?page=${pagination.page}`)
-            return
-        }
-    }, [pagination.page])
+    // useEffect(() => {
+    //     if (!initialSearch) {
+    //         router.push(`/?page=${pagination.page}`)
+    //         return
+    //     }
+    // }, [pagination.page])
 
-    useEffect(() => {
-        if (initialPage) {
-            setPagination({
-                page: Number(initialPage),
-                limit: pagination.limit
-            })
-        }
-    }, [initialPage])
+    // useEffect(() => {
+    //     if (initialPage) {
+    //         setPagination({
+    //             page: Number(initialPage),
+    //             limit: pagination.limit
+    //         })
+    //     }
+    // }, [initialPage])
 
     return (
         <HomeContext.Provider value={{

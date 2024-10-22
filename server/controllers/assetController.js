@@ -82,7 +82,7 @@ class AssetController {
                     }
                 ],
             };
-            
+
             const { count, rows } = await Asset.findAndCountAll({
                 include: {
                     model: User,
@@ -116,18 +116,61 @@ class AssetController {
 
     static async getAssetByUser(req, res) {
         try {
-            const response = await Asset.findAll({
-                where: { userId: req.user.id, site: req.user.site },
+            const { filter, search, page = 1, limit = 10, enabled } = req.query;
+
+            if (enabled) {
+                const response = await Asset.findAll({
+                    where: { userId: req.user.id },
+                    include: {
+                        model: User,
+                    },
+                    order: [
+                        ['createdAt', 'DESC']
+                    ],
+                })
+                return res.status(200).json(response)
+            }
+
+            const pageNum = parseInt(page, 10);
+            const limitNum = parseInt(limit, 10);
+            const offset = (pageNum - 1) * limitNum;
+
+            const whereConditions = {
+                userId: req.user.id,           // filter by userId
+                site: req.user.site            // filter by site
+            };
+
+            if (search) {
+                whereConditions.namaAsset = {
+                    [Op.iLike]: `%${search}%`  // case-insensitive search by namaAsset
+                };
+            }
+
+            const { count, rows } = await Asset.findAndCountAll({
+                where: whereConditions,
                 include: {
                     model: User,
                     attributes: ["username", "email"]
                 },
                 order: [
                     ['createdAt', 'DESC']
-                ]
+                ],
+                limit: limitNum,
+                offset,
             })
 
-            res.status(200).json(response)
+            const totalPages = Math.ceil(count / limitNum);
+
+            if (rows.length === 0) {
+                return res.status(404).json({ message: "Asset not found" });
+            }
+
+            res.status(200).json({
+                totalItems: count,
+                totalPages,
+                currentPage: pageNum,
+                data: rows,
+            });
         } catch (error) {
             console.log(error)
         }

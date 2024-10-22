@@ -5,14 +5,24 @@ import { useRootLayoutContext } from "@/app/providers/rootProviders/RootLayoutPr
 import { Cog6ToothIcon, HomeIcon, UsersIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useState } from "react"
+import ModalAddAsset from "../../modal/ModalAddAsset"
 
 export default function DesktopSidebar() {
     const {
         dataUser,
-        isLoadingDataUser
+        isLoadingDataUser,
+        mutateAddAsset,
+        isLoadingAddAsset,
+        register, 
+        handleSubmit,
+        onSubmit,
+        errors
     } = useRootLayoutContext()
 
     const pathname = usePathname()
+
+    const [openModalAddAsset, setOpenModalAddAsset] = useState<boolean>(false)
 
 
     const navigation = [
@@ -21,7 +31,7 @@ export default function DesktopSidebar() {
     ]
 
     const actions = [
-        { id: 1, name: 'Add Assets', href: '#', initial: 'A', current: false },
+        { id: 1, name: 'Add Assets', onclick: () => setOpenModalAddAsset(!openModalAddAsset), initial: 'A', current: false },
         { id: 2, name: 'Guide Apps', href: '#', initial: 'G', current: false },
     ].filter(action => !(dataUser?.role === 'head' && action.name === 'Add Assets'));
 
@@ -63,8 +73,8 @@ export default function DesktopSidebar() {
                                 <ul role="list" className="-mx-2 mt-2 space-y-1">
                                     {actions.map((item) => (
                                         <li key={item.name}>
-                                            <Link
-                                                href={item.href}
+                                            <button
+                                                onClick={item.onclick}
                                                 className={classNames(
                                                     item.current
                                                         ? 'bg-gray-800 text-white'
@@ -76,7 +86,7 @@ export default function DesktopSidebar() {
                                                     {item.initial}
                                                 </span>
                                                 <span className="truncate">{item.name}</span>
-                                            </Link>
+                                            </button>
                                         </li>
                                     ))}
                                 </ul>
@@ -94,6 +104,16 @@ export default function DesktopSidebar() {
                         </ul>
                     </nav>
                 </div>
+                <ModalAddAsset
+                    open={openModalAddAsset}
+                    setOpen={setOpenModalAddAsset}
+                    mutate={mutateAddAsset}
+                    isLoading={isLoadingAddAsset}
+                    register={register}
+                    handleSubmit={handleSubmit}
+                    onSubmit={onSubmit}
+                    errors={errors}
+                />
             </div>
         </>
     )

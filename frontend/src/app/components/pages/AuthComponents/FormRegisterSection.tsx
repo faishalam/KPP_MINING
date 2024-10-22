@@ -1,8 +1,8 @@
 'use client'
 import { InputsRegister, useRegisterContext } from "@/app/providers/authProviders/RegisterProviders";
 import { SubmitHandler } from "react-hook-form";
-import InputFormAuth from "./InputFormAuth";
-import SelectField from "./InputSelectOption";
+import InputFormAuth from "../../input/InputFormAuth";
+import SelectField from "../../input/InputSelectOption";
 import ButtonSubmit from "../../button/ButtonSubmit";
 import Link from "next/link";
 import ContinueWithSection from "./ContinueWithSection";

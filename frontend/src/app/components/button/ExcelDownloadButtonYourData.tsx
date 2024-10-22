@@ -1,9 +1,12 @@
+'use client'
+
 import * as XLSX from 'xlsx';
-import useAssetList from '../api/home/useAssetList';
+import useAssetList from '../../api/home/useAssetList';
 import { saveAs } from 'file-saver';
 import React, { useEffect, useState } from 'react';
 import { RiFileReduceLine } from 'react-icons/ri';
-import ButtonSubmit from '../components/button/ButtonSubmit';
+import ButtonSubmit from './ButtonSubmit';
+import useUserAssetList from '@/app/api/userAsset/useUserAssetList';
 
 interface TypeDataAssetList {
     id: number;
@@ -35,14 +38,14 @@ export interface AssetResponse {
     data: TypeDataAssetList[]; // Array of TypeDataAssetList
 }
 
-export default function ExcelDownloadButton() {
+export default function ExcelDownloadButtonYourAsset() {
     const [enabled, setEnabled] = useState(false);
-    const { data: dataAssetList, isLoading: isLoadingDataAssetList } = useAssetList({
+    const { data: dataAssetList, isLoading: isLoadingDataAssetList } = useUserAssetList({
         params: {
             enabled,
         },
     });
-    
+
     const downloadExcel = () => {
         if (!dataAssetList) {
             console.error("No data available for download.");

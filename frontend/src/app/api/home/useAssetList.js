@@ -1,15 +1,9 @@
 'use client'
 
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
-import { useState } from "react"
-import { useMutation, useQuery } from "react-query";
+import { useQuery } from "react-query";
 
 const useAssetList = (props) => {
-    const [data, setData] = useState()
-
-    console.log(props)
-
     const useAssetListFn = async () => {
         try {
             const access_token = localStorage.getItem("access_token")
@@ -32,7 +26,6 @@ const useAssetList = (props) => {
 
             if (status === "error") throw new Error(message)
 
-            setData(response.data)
             return response.data;
         } catch (error) {
             throw error.message

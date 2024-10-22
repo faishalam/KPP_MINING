@@ -1,16 +1,12 @@
+'use client'
+
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
-import { useHomeContext } from '../providers/rootProviders/HomeProviders';
 
-export default function PaginationComponent() {
-    const {
-        pagination,
-        setPagination,
-        dataAssetList,
-    } = useHomeContext();
 
-    const totalItems = dataAssetList?.totalItems || 0;
-    const totalPages = dataAssetList?.totalPages || 0;
-    const currentPage = dataAssetList?.currentPage || 1;
+export default function PaginationComponent({ pagination, setPagination, data }: any) {
+    const totalItems = data?.totalItems || 0;
+    const totalPages = data?.totalPages || 0;
+    const currentPage = data?.currentPage || 1;
 
     const handlePageChange = (page: number) => {
         setPagination({ page, limit: pagination.limit });

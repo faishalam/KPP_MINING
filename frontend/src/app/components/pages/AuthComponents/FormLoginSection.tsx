@@ -1,7 +1,7 @@
 import Link from "next/link";
 import ButtonSubmit from "../../button/ButtonSubmit";
 import ContinueWithSection from "./ContinueWithSection";
-import InputFormAuth from "./InputFormAuth";
+import InputFormAuth from "../../input/InputFormAuth";
 import { InputsLogin, useLoginContext } from "@/app/providers/authProviders/LoginProviders";
 import { SubmitHandler } from "react-hook-form";
 

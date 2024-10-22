@@ -4,27 +4,46 @@ import { createContext, useContext, ReactNode, useState, useEffect } from "react
 import { useForm, UseFormReturn } from "react-hook-form";
 import useAssetList from "../../api/home/useAssetList"
 import useUser from "../../api/user/useUser"
-import { AlertError } from "@/app/components/alert/AlertToastify";
+import { AlertError, AlertSuccess } from "@/app/components/alert/AlertToastify";
 import { useRouter } from 'next/navigation';
 import RootLayout from "@/app/(root)/layout";
+import useAddAsset from "../../api/asset/useAddAsset"
+import { useQueryClient } from "react-query";
+
+export interface AssetFormInputs {
+    namaAsset: string;
+    kodePN: string;
+    nilaiAsset: number;
+    quantityAsset: number;
+    actionPlan: string;
+    remark: string;
+    areaKerja: string;
+    benefit: string;
+    planRealisasi: string;
+}
 
 interface RootLayoutContextProps {
     dataUser?: User;
     isLoadingDataUser: boolean;
+    mutateAddAsset: (body: AssetFormInputs) => void;
+    isLoadingAddAsset: boolean
+    register: UseFormReturn<AssetFormInputs>["register"]
+    handleSubmit: UseFormReturn<AssetFormInputs>["handleSubmit"]
+    errors: UseFormReturn<AssetFormInputs>["formState"]["errors"]
+    onSubmit: (data: AssetFormInputs) => void
 }
-
 
 export interface User {
     id: number;
     username: string;
     email: string;
-    password: string; // Pastikan untuk mengamankan password dalam aplikasi Anda
+    password: string;
     role: string;
     district: string;
     department: string;
     site: string;
-    createdAt: string; // Atau bisa menggunakan Date jika Anda ingin
-    updatedAt: string; // Atau bisa menggunakan Date jika Anda ingin
+    createdAt: string;
+    updatedAt: string;
 }
 
 
@@ -42,25 +61,39 @@ function useRootLayoutContext() {
     return context;
 }
 
+
 const RootLayoutProvider = ({ children }: HomeProviderContext) => {
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<AssetFormInputs>();
+
     const { data: dataUser, isLoading: isLoadingDataUser } = useUser()
 
-    // const handleChangeUrl = () => {
-    //     if (searchAsset) {
-    //         router.push(`/?search=${searchAsset}`)
-    //     } else {
-    //         router.push("/")
-    //     }
-    // }
+    const queryClient = useQueryClient()
 
-    // useEffect(() => {
-    //     handleChangeUrl()
-    // }, [searchAsset])
+    const { mutate: mutateAddAsset, isLoading: isLoadingAddAsset, error: errorAddAsset } = useAddAsset({
+        onSuccess: () => {
+            queryClient.refetchQueries('useAssetList');
+            AlertSuccess('Berhasil Menambah Asset!')
+            reset()
+        },
+        onError: () => {
+            AlertError(errorAddAsset as string)
+        }
+    })
+
+    const onSubmit = (data: AssetFormInputs) => {
+        mutateAddAsset(data)
+    }
 
     return (
         <RootLayoutContext.Provider value={{
             dataUser,
             isLoadingDataUser,
+            mutateAddAsset,
+            isLoadingAddAsset,
+            register,
+            handleSubmit,
+            onSubmit,
+            errors,
         }}>
             {children}
         </RootLayoutContext.Provider>

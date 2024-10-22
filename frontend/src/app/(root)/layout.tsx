@@ -1,14 +1,14 @@
 'use client'
 import "../../app/globals.css";
-import MobileSidebar from "../components/pages/HomeLayouts/MobileSidebar";
+import MobileSidebar from "../components/pages/RootLayout/MobileSidebar";
 import { use, useState } from "react";
-import DesktopSidebar from "../components/pages/HomeLayouts/DesktopSidebar";
-import Navbar from "../components/pages/HomeLayouts/Navbar";
+import DesktopSidebar from "../components/pages/RootLayout/DesktopSidebar";
+import Navbar from "../components/pages/RootLayout/Navbar";
 import { QueryProvider } from "../components/queryProviders/QueryProvider";
 import { HomeProvider } from "../providers/rootProviders/HomeProviders";
 import { RootLayoutProvider } from "../providers/rootProviders/RootLayoutProviders";
-import HomeLayout from "../components/pages/HomeLayouts/HomeLayout";
-import MobileSidebarLayout from "../components/pages/HomeLayouts/MobileSidebar";
+import HomeLayout from "../components/pages/HomePage/HomeLayout";
+import MobileSidebarLayout from "../components/pages/RootLayout/MobileSidebar";
 import { RootProvider } from "../components/queryProviders/RootProvider";
 
 
