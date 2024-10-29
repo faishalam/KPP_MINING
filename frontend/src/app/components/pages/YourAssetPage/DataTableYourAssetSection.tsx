@@ -286,7 +286,7 @@ export default function DataTableYourAssetSection() {
                 showConfirmButton: false,
                 timer: 1500
             });
-            mutateUpdateActionAsset({ id: id, payload: { body: 'working on', status: status } })
+            // mutateUpdateActionAsset({ id: id, payload: { keterangan: 'working on', statusRealisasi: status } })
         }
         if (status === 'canceled') {
             setOpenModalCancel(() => ({ show: true, id: id }))

@@ -32,13 +32,13 @@ cron.schedule('0 09 * * *', () => {
 
                 // reminder h-0
                 const todayRealisasiTime = moment(item.realisasiAsset).format('YYYY-MM-DD');
-                if (nowWIB === todayRealisasiTime && item.action === 'realisasi waiting') {
+                if (nowWIB === todayRealisasiTime && item.statusRealisasi === 'realisasi waiting') {
                     sendEmail(item.User.dataValues.email, item.namaAsset);
                 }
 
                 // reminder melebih h-0 dan item.action === 'realisasi waiting'
                 const pastRealisasiTime = moment(item.realisasiAsset).isBefore(nowWIB);
-                if (pastRealisasiTime && item.action === 'realisasi waiting') {
+                if (pastRealisasiTime && item.statusRealisasi === 'realisasi waiting') {
                     sendEmail(item.User.dataValues.email, item.namaAsset);
                 }
             })
@@ -352,65 +352,67 @@ class AssetController {
             const { id } = req.params
             // const { action } = req.body
             // const { hold, planRealisasi } = req.body
-            const { keterangan, statusRealisasi } = req.body
+            const { keterangan, statusRealisasi, planRealisasi } = req.body
 
             const asset = await Asset.findOne({ where: { id } })
             if (asset.userId !== req.user.id) return res.status(403).json({ message: "Cannot update action other user's asset" })
 
             const kodePN = asset.dataValues.kodePN
 
-            if (status === 'worked') {
+            if (statusRealisasi === 'worked') {
                 await asset.update({ statusRealisasi: 'worked', keterangan: 'worked' }, { where: { id } })
             }
 
-            if (status === 'canceled') {
-                await asset.update({ statusRealisasi: status, keterangan: body }, { where: { id } })
+            if (statusRealisasi === 'canceled') {
+                await asset.update({ statusRealisasi: statusRealisasi, keterangan: keterangan }, { where: { id } })
             }
 
+            if (statusRealisasi === 'hold') {
+                const planRealisasiBefore = moment.tz(asset.dataValues.planRealisasi, 'Asia/Jakarta').format('YYYY-MM-DD');
+                const planRealisasiAfter = moment.tz(planRealisasi, 'Asia/Jakarta').format('YYYY-MM-DD');
 
-            // if (action) {
-            //     await asset.update({ action: action }, { where: { id } })
-            // } else {
-            //     const plan = moment.tz(planRealisasi, 'Asia/Jakarta').format('YYYY-MM-DD');
-            //     let assetRealisasi;
+                if (moment(planRealisasiAfter).isSameOrBefore(planRealisasiBefore)) {
+                    return res.status(400).json({ message: "Plan realisasi cannot be less than or equal to plan realisasi before" });
+                }
 
-            //     switch (kodePN) {
-            //         case 'WORKSHOP':
-            //             assetRealisasi = moment(plan).subtract(120, 'days').format('YYYY-MM-DD');
-            //             break;
-            //         case 'FIXTURE N FITTING':
-            //             assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
-            //             break;
-            //         case 'BUILDING':
-            //             assetRealisasi = moment(plan).subtract(90, 'days').format('YYYY-MM-DD');
-            //             break;
-            //         case 'COMPUTER EQUIPMENT':
-            //             assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
-            //             break;
-            //         case 'SAFETY EQUIPMENT':
-            //             assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
-            //             break;
-            //         case 'OFFICE EQUIPMENT':
-            //             assetRealisasi = moment(plan).subtract(30, 'days').format('YYYY-MM-DD');
-            //             break;
-            //         case 'LEASEHOLD':
-            //             assetRealisasi = moment(plan).subtract(90, 'days').format('YYYY-MM-DD');
-            //             break;
-            //         case 'PRODUCTION EQUIPMENT':
-            //             assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
-            //             break;
-            //         case 'SUPPORT EQUIPMENT':
-            //             assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
-            //             break;
-            //         case 'ENGINEERING EQUIPMENT':
-            //             assetRealisasi = moment(plan).subtract(30, 'days').format('YYYY-MM-DD');
-            //             break;
-            //         default:
-            //             return res.status(400).json({ message: "Invalid kodePN" });
-            //     }
-            //     await asset.update({ action: hold, planRealisasi: planRealisasi, realisasiAsset: assetRealisasi }, { where: { id } })
-            // }
+                let assetRealisasi;
 
+                switch (kodePN) {
+                    case 'WORKSHOP':
+                        assetRealisasi = moment(planRealisasiAfter).subtract(120, 'days').format('YYYY-MM-DD');
+                        break;
+                    case 'FIXTURE N FITTING':
+                        assetRealisasi = moment(planRealisasiAfter).subtract(60, 'days').format('YYYY-MM-DD');
+                        break;
+                    case 'BUILDING':
+                        assetRealisasi = moment(planRealisasiAfter).subtract(90, 'days').format('YYYY-MM-DD');
+                        break;
+                    case 'COMPUTER EQUIPMENT':
+                        assetRealisasi = moment(planRealisasiAfter).subtract(60, 'days').format('YYYY-MM-DD');
+                        break;
+                    case 'SAFETY EQUIPMENT':
+                        assetRealisasi = moment(planRealisasiAfter).subtract(60, 'days').format('YYYY-MM-DD');
+                        break;
+                    case 'OFFICE EQUIPMENT':
+                        assetRealisasi = moment(planRealisasiAfter).subtract(30, 'days').format('YYYY-MM-DD');
+                        break;
+                    case 'LEASEHOLD':
+                        assetRealisasi = moment(planRealisasiAfter).subtract(90, 'days').format('YYYY-MM-DD');
+                        break;
+                    case 'PRODUCTION EQUIPMENT':
+                        assetRealisasi = moment(planRealisasiAfter).subtract(60, 'days').format('YYYY-MM-DD');
+                        break;
+                    case 'SUPPORT EQUIPMENT':
+                        assetRealisasi = moment(planRealisasiAfter).subtract(60, 'days').format('YYYY-MM-DD');
+                        break;
+                    case 'ENGINEERING EQUIPMENT':
+                        assetRealisasi = moment(planRealisasiAfter).subtract(30, 'days').format('YYYY-MM-DD');
+                        break;
+                    default:
+                        return res.status(400).json({ message: "Invalid kodePN" });
+                }
+                await asset.update({ statusRealisasi: statusRealisasi, keterangan: keterangan, planRealisasi: planRealisasiAfter, realisasiAsset: assetRealisasi }, { where: { id } })
+            }
 
             res.status(200).json({ message: "Asset action updated successfully" })
         } catch (error) {

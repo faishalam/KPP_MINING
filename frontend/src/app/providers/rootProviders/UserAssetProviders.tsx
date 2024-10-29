@@ -81,6 +81,16 @@ export interface User {
     updatedAt: string;
 }
 
+export interface payloadMutate {
+    id: number
+    payload: {
+        id: number | undefined
+        keterangan: string | undefined
+        statusRealisasi: string | undefined
+        planRealisasi: string | undefined
+    }
+}
+
 interface UserAssetContextProps {
     dataUserAssetList?: YourDataAssetResponse;
     isLoadingDataUserAssetList: boolean;
@@ -108,7 +118,7 @@ interface UserAssetContextProps {
     handleDeleteYourAsset: (id: number) => void
     isLoadingApproveAsset: boolean
     mutateApproveAsset: (id: number) => void
-    // mutateUpdateActionAsset: (params: { id: number, body: string }) => void
+    mutateUpdateActionAsset: (params: { id: number | undefined, payload: { keterangan?: string | undefined, statusRealisasi?: string | undefined, planRealisasi?: string | undefined } }) => void
     isLoadingUpdateActionAsset: boolean
 }
 

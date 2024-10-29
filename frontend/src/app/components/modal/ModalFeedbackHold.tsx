@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 type ModalFeedbackHoldProps = {
     openModal: { id: number | undefined, show: boolean }
     setOpenModal: (newOpen: { id: number | undefined, show: boolean }) => void
-    mutate: any
+    mutate: (params: { id: number | undefined, payload: { keterangan: string, statusRealisasi: string, planRealisasi: string } }) => void
 }
 
 type FormData = {
@@ -27,7 +27,7 @@ export default function ModalFeedbackHold({ openModal, setOpenModal, mutate }: M
         <>
             <ModalFeedback
                 openModal={openModal.show}
-                setOpenModal={(prev) => setOpenModal({ ...prev, show: false })}
+                setOpenModal={(show) => setOpenModal({ ...openModal, show })}
             >
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="mt-3 text-center sm:mt-5 p-4">
