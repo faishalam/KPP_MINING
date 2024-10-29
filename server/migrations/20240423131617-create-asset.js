@@ -9,13 +9,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      site : {
+      site: {
         type: Sequelize.STRING
       },
       namaAsset: {
         type: Sequelize.STRING
       },
-      kodePN : {
+      kodePN: {
         type: Sequelize.STRING
       },
       nilaiAsset: {
@@ -27,41 +27,44 @@ module.exports = {
       totalNilaiAsset: {
         type: Sequelize.INTEGER
       },
-      actionPlan : {
+      actionPlan: {
         type: Sequelize.STRING
       },
-      userDept  :{
+      userDept: {
         type: Sequelize.STRING
       },
       depresiasi: {
         type: Sequelize.INTEGER
       },
-      remark : {
+      remark: {
         type: Sequelize.STRING
       },
-      areaKerja : {
+      areaKerja: {
         type: Sequelize.STRING
       },
       benefit: {
         type: Sequelize.STRING
       },
-      realisasiAsset : {
+      realisasiAsset: {
         type: Sequelize.DATE
       },
       planRealisasi: {
         type: Sequelize.DATE
       },
-      status: {
+      statusApproval: {
         type: Sequelize.STRING
       },
-      action : {
+      statusRealisasi: {
+        type: Sequelize.STRING
+      },
+      keterangan: {
         type: Sequelize.STRING
       },
       userId: {
         type: Sequelize.INTEGER,
-        references : {
-          model : 'Users',
-          key : 'id'
+        references: {
+          model: 'Users',
+          key: 'id'
         }
       },
       createdAt: {

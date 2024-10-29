@@ -56,6 +56,7 @@ class AssetController {
         try {
             const { filter, search, page = 1, limit = 10, enabled } = req.query;
 
+
             if (enabled) {
                 const response = await Asset.findAll({
                     include: {
@@ -97,10 +98,6 @@ class AssetController {
 
             const totalPages = Math.ceil(count / limitNum);
 
-            if (rows.length === 0) {
-                return res.status(404).json({ message: "Asset not found" });
-            }
-
             res.status(200).json({
                 totalItems: count,
                 totalPages,
@@ -135,14 +132,14 @@ class AssetController {
             const limitNum = parseInt(limit, 10);
             const offset = (pageNum - 1) * limitNum;
 
-            const whereConditions = {
-                userId: req.user.id,
-                site: req.user.site
-            };
+            const whereConditions = filter === 'head'
+                ? { site: req.user.site, userDept: req.user.dept.toUpperCase() }
+                : { userId: req.user.id, site: req.user.site };
+
 
             if (search) {
                 whereConditions.namaAsset = {
-                    [Op.iLike]: `%${search}%` 
+                    [Op.iLike]: `%${search}%`
                 };
             }
 
@@ -160,10 +157,6 @@ class AssetController {
             })
 
             const totalPages = Math.ceil(count / limitNum);
-
-            if (rows.length === 0) {
-                return res.status(404).json({ message: "Asset not found" });
-            }
 
             res.status(200).json({
                 totalItems: count,
@@ -239,6 +232,7 @@ class AssetController {
             }
 
             let newAsset = await Asset.create({ site: req.user.site, namaAsset, kodePN, nilaiAsset, quantityAsset, actionPlan, userDept: req.user.dept, remark, areaKerja, totalNilaiAsset: totalAsset, benefit, planRealisasi: plan, realisasiAsset: assetRealisasi, userId: req.user.id })
+
             res.status(201).json(newAsset)
         } catch (error) {
             // console.log(error)
@@ -342,7 +336,6 @@ class AssetController {
             const { id } = req.params
             const role = req.user.role
 
-
             if (role !== "head") return res.status(403).json({ message: "Only head can update asset status" })
 
             const asset = await Asset.findOne({ where: { id } })
@@ -357,57 +350,66 @@ class AssetController {
     static async updateAction(req, res) {
         try {
             const { id } = req.params
-            const { action } = req.body
-            const { hold, planRealisasi } = req.body
+            // const { action } = req.body
+            // const { hold, planRealisasi } = req.body
+            const { keterangan, statusRealisasi } = req.body
 
             const asset = await Asset.findOne({ where: { id } })
             if (asset.userId !== req.user.id) return res.status(403).json({ message: "Cannot update action other user's asset" })
 
             const kodePN = asset.dataValues.kodePN
 
-
-            if (action) {
-                await asset.update({ action: action }, { where: { id } })
-            } else {
-                const plan = moment.tz(planRealisasi, 'Asia/Jakarta').format('YYYY-MM-DD');
-                let assetRealisasi;
-
-                switch (kodePN) {
-                    case 'WORKSHOP':
-                        assetRealisasi = moment(plan).subtract(120, 'days').format('YYYY-MM-DD');
-                        break;
-                    case 'FIXTURE N FITTING':
-                        assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
-                        break;
-                    case 'BUILDING':
-                        assetRealisasi = moment(plan).subtract(90, 'days').format('YYYY-MM-DD');
-                        break;
-                    case 'COMPUTER EQUIPMENT':
-                        assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
-                        break;
-                    case 'SAFETY EQUIPMENT':
-                        assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
-                        break;
-                    case 'OFFICE EQUIPMENT':
-                        assetRealisasi = moment(plan).subtract(30, 'days').format('YYYY-MM-DD');
-                        break;
-                    case 'LEASEHOLD':
-                        assetRealisasi = moment(plan).subtract(90, 'days').format('YYYY-MM-DD');
-                        break;
-                    case 'PRODUCTION EQUIPMENT':
-                        assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
-                        break;
-                    case 'SUPPORT EQUIPMENT':
-                        assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
-                        break;
-                    case 'ENGINEERING EQUIPMENT':
-                        assetRealisasi = moment(plan).subtract(30, 'days').format('YYYY-MM-DD');
-                        break;
-                    default:
-                        return res.status(400).json({ message: "Invalid kodePN" });
-                }
-                await asset.update({ action: hold, planRealisasi: planRealisasi, realisasiAsset: assetRealisasi }, { where: { id } })
+            if (status === 'worked') {
+                await asset.update({ statusRealisasi: 'worked', keterangan: 'worked' }, { where: { id } })
             }
+
+            if (status === 'canceled') {
+                await asset.update({ statusRealisasi: status, keterangan: body }, { where: { id } })
+            }
+
+
+            // if (action) {
+            //     await asset.update({ action: action }, { where: { id } })
+            // } else {
+            //     const plan = moment.tz(planRealisasi, 'Asia/Jakarta').format('YYYY-MM-DD');
+            //     let assetRealisasi;
+
+            //     switch (kodePN) {
+            //         case 'WORKSHOP':
+            //             assetRealisasi = moment(plan).subtract(120, 'days').format('YYYY-MM-DD');
+            //             break;
+            //         case 'FIXTURE N FITTING':
+            //             assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
+            //             break;
+            //         case 'BUILDING':
+            //             assetRealisasi = moment(plan).subtract(90, 'days').format('YYYY-MM-DD');
+            //             break;
+            //         case 'COMPUTER EQUIPMENT':
+            //             assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
+            //             break;
+            //         case 'SAFETY EQUIPMENT':
+            //             assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
+            //             break;
+            //         case 'OFFICE EQUIPMENT':
+            //             assetRealisasi = moment(plan).subtract(30, 'days').format('YYYY-MM-DD');
+            //             break;
+            //         case 'LEASEHOLD':
+            //             assetRealisasi = moment(plan).subtract(90, 'days').format('YYYY-MM-DD');
+            //             break;
+            //         case 'PRODUCTION EQUIPMENT':
+            //             assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
+            //             break;
+            //         case 'SUPPORT EQUIPMENT':
+            //             assetRealisasi = moment(plan).subtract(60, 'days').format('YYYY-MM-DD');
+            //             break;
+            //         case 'ENGINEERING EQUIPMENT':
+            //             assetRealisasi = moment(plan).subtract(30, 'days').format('YYYY-MM-DD');
+            //             break;
+            //         default:
+            //             return res.status(400).json({ message: "Invalid kodePN" });
+            //     }
+            //     await asset.update({ action: hold, planRealisasi: planRealisasi, realisasiAsset: assetRealisasi }, { where: { id } })
+            // }
 
 
             res.status(200).json({ message: "Asset action updated successfully" })

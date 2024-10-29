@@ -99,7 +99,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    userDept : {
+    userDept: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -124,7 +124,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    remark : {
+    remark: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -134,9 +134,9 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           msg: 'Remark is required'
         }
-      }      
+      }
     },
-    areaKerja : {
+    areaKerja: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -172,43 +172,46 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    realisasiAsset : {
-      type : DataTypes.DATE,
-      allowNull : false,
-      validate : {
-        notNull : {
-          msg : 'Realisasi Asset is required'
+    realisasiAsset: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Realisasi Asset is required'
         },
-        notEmpty : {
-          msg : 'Realisasi Asset is required'
+        notEmpty: {
+          msg: 'Realisasi Asset is required'
         }
       }
-    },  
-    status: {
+    },
+    statusApproval: {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: 'waiting',
       validate: {
         notNull: {
-          msg: 'Status is required'
+          msg: 'Status Approval is required'
         },
         notEmpty: {
-          msg: 'Status is required'
+          msg: 'Status Approval is required'
         }
       }
     },
-    action : {
-      type : DataTypes.STRING,
+    statusRealisasi: {
+      type: DataTypes.STRING,
       allowNull: false,
       defaultValue: 'realisasi waiting',
-      validate : {
-        notNull : {
-          msg : 'Action is required'
+      validate: {
+        notNull: {
+          msg: 'Status Realisasi is required'
         },
-        notEmpty : {
-          msg: 'Action is required'
+        notEmpty: {
+          msg: 'Status Realisasi is required'
         }
       }
+    },
+    keterangan: {
+      type: DataTypes.STRING,
     },
     userId: {
       type: DataTypes.INTEGER,

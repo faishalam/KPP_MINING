@@ -1,3 +1,4 @@
+'use client'
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface ButtonSubmitProps {

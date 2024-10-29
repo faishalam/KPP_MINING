@@ -2,13 +2,11 @@
 
 import { createContext, useContext, ReactNode, useState, useEffect } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
-import useAssetList from "../../api/home/useAssetList"
 import useUser from "../../api/user/useUser"
-import { AlertError, AlertSuccess } from "@/app/components/alert/AlertToastify";
-import { useRouter } from 'next/navigation';
-import RootLayout from "@/app/(root)/layout";
+// import { AlertError, AlertSuccess } from "@/app/components/alert/AlertToastify";
 import useAddAsset from "../../api/asset/useAddAsset"
 import { useQueryClient } from "react-query";
+import { AlertError, AlertSuccess } from "@/app/components/alert/AlertToastify";
 
 export interface AssetFormInputs {
     namaAsset: string;
@@ -31,6 +29,12 @@ interface RootLayoutContextProps {
     handleSubmit: UseFormReturn<AssetFormInputs>["handleSubmit"]
     errors: UseFormReturn<AssetFormInputs>["formState"]["errors"]
     onSubmit: (data: AssetFormInputs) => void
+    openModalAddAsset: boolean
+    setOpenModalAddAsset: (open: boolean) => void
+    sidebarOpen: boolean,
+    setSidebarOpen: (open: boolean) => void
+    role: string | null
+    setRole: (role: string | null) => void
 }
 
 export interface User {
@@ -64,10 +68,21 @@ function useRootLayoutContext() {
 
 const RootLayoutProvider = ({ children }: HomeProviderContext) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<AssetFormInputs>();
+    const [openModalAddAsset, setOpenModalAddAsset] = useState<boolean>(false);
+    const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+    const [role, setRole] = useState<string | null>(null);
 
-    const { data: dataUser, isLoading: isLoadingDataUser } = useUser()
 
     const queryClient = useQueryClient()
+
+
+    const { data: dataUser, isLoading: isLoadingDataUser } = useUser({
+        onSuccess: (data: User) => {
+            if (data?.role) {
+                localStorage.setItem('role', data?.role)
+            }
+        }
+    })
 
     const { mutate: mutateAddAsset, isLoading: isLoadingAddAsset, error: errorAddAsset } = useAddAsset({
         onSuccess: () => {
@@ -85,6 +100,14 @@ const RootLayoutProvider = ({ children }: HomeProviderContext) => {
         mutateAddAsset(data)
     }
 
+    useEffect(() => {
+        const role = localStorage.getItem('role');
+        if(role) {
+            setRole(role)
+        }
+    }, [dataUser]);
+
+
     return (
         <RootLayoutContext.Provider value={{
             dataUser,
@@ -95,6 +118,12 @@ const RootLayoutProvider = ({ children }: HomeProviderContext) => {
             handleSubmit,
             onSubmit,
             errors,
+            openModalAddAsset,
+            setOpenModalAddAsset,
+            sidebarOpen,
+            setSidebarOpen,
+            role,
+            setRole
         }}>
             {children}
         </RootLayoutContext.Provider>

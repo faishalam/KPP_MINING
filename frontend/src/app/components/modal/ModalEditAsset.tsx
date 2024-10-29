@@ -1,16 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
-import { MdOutlineAddToPhotos } from 'react-icons/md'
-import InputFormAuth from '../input/InputFormAuth'
-import { useForm } from 'react-hook-form'
 import InputFormModal from '../input/InputFormModal'
 import SelectField from '../input/InputSelectOption'
-import { AssetFormInputs } from '@/app/providers/rootProviders/RootLayoutProviders'
 import { useUserAssetContext } from '@/app/providers/rootProviders/UserAssetProviders'
-import { useParams } from 'next/navigation'
 import { BsFillCreditCard2FrontFill } from 'react-icons/bs'
 
 export default function ModalEditAsset() {
@@ -84,7 +78,6 @@ export default function ModalEditAsset() {
                                     label='Nama Asset'
                                     type='text'
                                     placeholder='Masukkan Nama Asset..'
-                                    name='namaAsset'
                                     register={registerEdit('namaAsset', {
                                         required: true,
                                     })}
@@ -106,7 +99,6 @@ export default function ModalEditAsset() {
                                     label='Nilai Asset'
                                     type='number'
                                     placeholder='Masukkan Nilai Asset..'
-                                    name='nilaiAsset'
                                     min={1}
                                     register={registerEdit('nilaiAsset', {
                                         required: true,
@@ -119,7 +111,6 @@ export default function ModalEditAsset() {
                                     type='number'
                                     min={1}
                                     placeholder='Masukkan Nilai Asset..'
-                                    name='nilaiAsset'
                                     register={registerEdit('quantityAsset', {
                                         required: true,
                                     })}
@@ -141,7 +132,6 @@ export default function ModalEditAsset() {
                                     label='Remark'
                                     type='text'
                                     placeholder='Masukkan Remark..'
-                                    name='remark'
                                     register={registerEdit('remark', {
                                         required: true,
                                     })}
@@ -153,7 +143,6 @@ export default function ModalEditAsset() {
                                     label='Area Kerja'
                                     type='text'
                                     placeholder='Masukkan Area Kerja..'
-                                    name='areaKerja'
                                     register={registerEdit('areaKerja', {
                                         required: true,
                                     })}
@@ -164,7 +153,6 @@ export default function ModalEditAsset() {
                                     label='Benefit'
                                     type='text'
                                     placeholder='Masukkan Benefit..'
-                                    name='benefit'
                                     register={registerEdit('benefit', {
                                         required: true,
                                     })}
@@ -174,7 +162,6 @@ export default function ModalEditAsset() {
                                 <InputFormModal
                                     label='Plan Realisasi'
                                     type='date'
-                                    name='planRealisasi'
                                     register={registerEdit('planRealisasi', {
                                         required: true,
                                     })}

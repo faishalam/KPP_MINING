@@ -3,7 +3,7 @@
 import { createContext, useContext, ReactNode } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import useLogin from "../../api/login/useLogin";
-import { AlertError } from "@/app/components/alert/AlertToastify";
+// import { AlertError } from "@/app/components/alert/AlertToastify";
 import { useRouter } from 'next/navigation';
 
 
@@ -51,7 +51,7 @@ const LoginProvider = ({ children }: LoginProviderProps) => {
             router.push("/")
         },
         onError: (error: string) => {
-            AlertError(error)
+            // AlertError(error)
             reset()
         }
     })

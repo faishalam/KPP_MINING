@@ -2,11 +2,22 @@
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 
+type PaginationProps = {
+    pagination: {
+        page: number;
+        limit: number;
+    };
+    setPagination: (value: { page: number; limit: number }) => void;
+    totalItems: number ;
+    totalPages: number;
+    currentPage: number;
+};
 
-export default function PaginationComponent({ pagination, setPagination, data }: any) {
-    const totalItems = data?.totalItems || 0;
-    const totalPages = data?.totalPages || 0;
-    const currentPage = data?.currentPage || 1;
+
+export default function PaginationComponent({ pagination, setPagination, totalItems, totalPages, currentPage }: PaginationProps) {
+    // const totalItems = data?.totalItems || 0;
+    // const totalPages = data?.totalPages || 0;
+    // const currentPage = data?.currentPage || 1;
 
     const handlePageChange = (page: number) => {
         setPagination({ page, limit: pagination.limit });

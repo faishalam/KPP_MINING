@@ -1,8 +1,9 @@
 'use client'
+import axios from "axios";
 import { useState } from "react"
 import { useQuery } from "react-query";
 
-const useUser = () => {
+const useUser = (props) => {
     const [data, setData] = useState()
 
     const useUserFn = async () => {
@@ -10,23 +11,17 @@ const useUser = () => {
             const access_token = localStorage.getItem("access_token")
             if (!access_token) throw new Error("Access token not found")
 
-            const response = await fetch(`http://localhost:3000/user-me`, {
-                method: 'GET',
+            const response = await axios.get(`http://localhost:3000/user-me`, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${access_token}`,
                 },
             });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message);
-            }
-
-            const data = await response.json()
-
-            setData(data);
-            return data;
+            const { status } = response
+            if (status !== 200) return
+            setData(response.data)
+            return response.data
         } catch (error) {
             throw error.message
         }
@@ -37,7 +32,16 @@ const useUser = () => {
         queryFn: useUserFn,
         staleTime: Infinity,
         cacheTime: Infinity,
-        // enabled: (localStorage.getItem("access_token")),
+        onSuccess: (data) => {
+            if (props?.onSuccess) {
+                props.onSuccess(data);
+            }
+        },
+        onError: (error) => {
+            if (props?.onError) {
+                props.onError(error);
+            }
+        },
     })
 
     return { ...query, data }

@@ -1,33 +1,32 @@
-import { useState } from "react"
 import { useMutation } from "react-query";
 import axios from "axios";
 
-const useDeleteAsset = (props) => {
-    const useDeleteAssetFn = async (id) => {
+const useUppdateActionAsset = (props) => {
+    const useUppdateActionAssetFn = async ({ id, payload }) => {
+        console.log(id, payload)
         try {
             const access_token = localStorage.getItem("access_token")
             if (!access_token) throw new Error("Access token not found")
 
-            const response = await axios.delete(`http://localhost:3000/asset/${id}`, {
+            const response = await axios.patch(`http://localhost:3000/asset-action/${id}`, payload, {
                 headers: {
-                    "Authorization": `Bearer ${access_token}`,
-                    "Content-Type": "application/json",
-                },
-            });
+                    Authorization: `Bearer ${localStorage.getItem("access_token")}`
+                }
+            })
 
-            const { result, status, message } = response.data
+            const { status } = response
 
-            if (status === "error") throw new Error(message)
+            if (status !== 200) return
 
             return response.data;
         } catch (error) {
-            throw error.message
+            throw error.response.data.message
         }
     }
 
     const mutation = useMutation({
-        mutationKey: ['useDeleteAsset'],
-        mutationFn: useDeleteAssetFn,
+        mutationKey: ['useUppdateActionAsset'],
+        mutationFn: useUppdateActionAssetFn,
         onSuccess: (data) => {
             if (props?.onSuccess) {
                 props.onSuccess(data);
@@ -43,4 +42,4 @@ const useDeleteAsset = (props) => {
     return { ...mutation }
 }
 
-export default useDeleteAsset
+export default useUppdateActionAsset

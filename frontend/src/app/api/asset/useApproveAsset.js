@@ -1,18 +1,21 @@
-import { useMutation } from "react-query";
-import axios from "axios";
+'use client'
 
-const useEditAsset = (props) => {
-    const useEditAssetFn = async ({ id, data }) => {
+import axios from "axios";
+import { useMutation } from "react-query";
+
+const useApproveAsset = (props) => {
+    const useApproveAssetFn = async (id) => {
+        console.log(id)
         try {
             const access_token = localStorage.getItem("access_token")
+            console.log(access_token)
             if (!access_token) throw new Error("Access token not found")
 
-            const response = await axios.put(`http://localhost:3000/asset/${id}`, data, {
+            const response = await axios.patch(`http://localhost:3000/asset/${id}`, {}, {
                 headers: {
-                    "Authorization": `Bearer ${access_token}`,
-                    "Content-Type": "application/json",
-                },
-            });
+                    Authorization: `Bearer ${localStorage.getItem("access_token")}`
+                }
+            })
 
             const { status } = response
 
@@ -20,13 +23,13 @@ const useEditAsset = (props) => {
 
             return response.data;
         } catch (error) {
-            throw error.response.data.message
+            throw error.message
         }
     }
 
     const mutation = useMutation({
-        mutationKey: ['useEditAsset'],
-        mutationFn: useEditAssetFn,
+        mutationKey: ['useApproveAsset'],
+        mutationFn: useApproveAssetFn,
         onSuccess: (data) => {
             if (props?.onSuccess) {
                 props.onSuccess(data);
@@ -39,7 +42,8 @@ const useEditAsset = (props) => {
         },
     });
 
+
     return { ...mutation }
 }
 
-export default useEditAsset
+export default useApproveAsset

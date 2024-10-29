@@ -1,19 +1,15 @@
 'use client'
 import { classNames } from "@/app/helper/classnames";
-import { HomeProvider, useHomeContext } from "@/app/providers/rootProviders/HomeProviders";
 import { useRootLayoutContext } from "@/app/providers/rootProviders/RootLayoutProviders";
 import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from "@headlessui/react";
-import { CalendarIcon, ChartPieIcon, Cog6ToothIcon, DocumentDuplicateIcon, FolderIcon, HomeIcon, UsersIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Cog6ToothIcon, HomeIcon, UsersIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
 
-interface MobileSidebarProps {
-    sidebarOpen: boolean
-    setSidebarOpen: (open: boolean) => void
-}
-
-export default function MobileSidebar({ sidebarOpen, setSidebarOpen }: MobileSidebarProps) {
+export default function MobileSidebar() {
     const {
-        dataUser
+        dataUser,
+        sidebarOpen,
+        setSidebarOpen
     } = useRootLayoutContext()
 
     const navigation = [

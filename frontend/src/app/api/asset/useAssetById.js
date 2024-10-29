@@ -1,12 +1,9 @@
 'use client'
 
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 const useAssetById = (props) => {
-    const [data, setData] = useState()
-
     const useAssetByIdFn = async () => {
         try {
             const access_token = localStorage.getItem("access_token")
@@ -19,11 +16,9 @@ const useAssetById = (props) => {
                 }
             })
 
-            const { result, status, message } = response.data
+            const { status } = response
 
-            if (status === "error") throw new Error(message)
-
-            // setData(response.data)
+            if (status !== 200) return
 
             return response.data;
         } catch (error) {

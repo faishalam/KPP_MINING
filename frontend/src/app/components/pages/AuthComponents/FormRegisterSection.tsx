@@ -124,9 +124,9 @@ export default function FormRegisterSection() {
                     label="Department"
                     name="department"
                     options={departmentOptions}
-                    register={register}
+                    register={register('department', { required: 'Department wajib diisi' })}
                     required={true}
-                    error={errors.department?.message}
+                    errors={errors.department?.message}
                 />
 
                 {/* Site Select */}
@@ -134,9 +134,9 @@ export default function FormRegisterSection() {
                     label="Site"
                     name="site"
                     options={siteOptions}
-                    register={register}
+                    register={register('site', { required: 'Site wajib diisi' })}
                     required={true}
-                    error={errors.site?.message}
+                    errors={errors.site?.message}
                 />
 
                 <div className="flex flex-col space-y-4">

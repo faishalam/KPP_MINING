@@ -1,7 +1,7 @@
 'use client'
 
 import * as XLSX from 'xlsx';
-import useAssetList from '../../api/home/useAssetList';
+import useAssetList from '../../api/asset/useAssetList';
 import { saveAs } from 'file-saver';
 import React, { useEffect, useState } from 'react';
 import { RiFileReduceLine } from 'react-icons/ri';

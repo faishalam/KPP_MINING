@@ -1,12 +1,11 @@
 'use client'
 
 import * as XLSX from 'xlsx';
-import useAssetList from '../../api/home/useAssetList';
 import { saveAs } from 'file-saver';
 import React, { useEffect, useState } from 'react';
 import { RiFileReduceLine } from 'react-icons/ri';
 import ButtonSubmit from './ButtonSubmit';
-import useUserAssetList from '@/app/api/userAsset/useUserAssetList';
+import useUserAssetList from '@/app/api/asset/useUserAssetList';
 
 interface TypeDataAssetList {
     id: number;

@@ -1,14 +1,21 @@
 "use client"
 
-import { createContext, useContext, ReactNode, useState, useEffect } from "react";
+import { createContext, useContext, ReactNode, useState, useEffect, use } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
-import useUserAssetList from "../../api/userAsset/useUserAssetList"
-import { AlertError, AlertSuccess } from "@/app/components/alert/AlertToastify";
-import useDeleteAsset from "../../api/userAsset/useDeleteAsset"
+import useUserAssetList from "../../api/asset/useUserAssetList"
+import useDeleteAsset from "../../api/asset/useDeleteAsset"
 import { useQueryClient } from "react-query";
 import useEditAsset from "../../api/asset/useEditAsset"
 import useAssetById from "../../api/asset/useAssetById"
+import useUpdateActionAsset from "../../api/asset/useUpdateActionAsset"
+import useApproveAsset from "../../api/asset/useApproveAsset"
 import Swal from "sweetalert2";
+import { AlertError, AlertSuccess } from "@/app/components/alert/AlertToastify";
+
+type body = {
+    id: number
+    data: string
+}
 
 export type InputsSearch = {
     search: string
@@ -43,11 +50,12 @@ export interface TypeYourDataAssetList {
     benefit: string;
     planRealisasi: string;
     realisasiAsset: string;
-    status: string;
-    action: string;
+    statusApproval: string;
+    statusRealisasi: string;
     userId: number;
     createdAt: string;
     updatedAt: string;
+    keterangan: string
     User: {
         username: string;
     };
@@ -98,6 +106,10 @@ interface UserAssetContextProps {
     onSubmitEdit: (data: AssetFormInputs) => void,
     isLoadingEditAsset: boolean
     handleDeleteYourAsset: (id: number) => void
+    isLoadingApproveAsset: boolean
+    mutateApproveAsset: (id: number) => void
+    // mutateUpdateActionAsset: (params: { id: number, body: string }) => void
+    isLoadingUpdateActionAsset: boolean
 }
 
 
@@ -135,6 +147,8 @@ const UserAssetProvider = ({ children }: UserAssetProviderContext) => {
 
     const [openModalEdit, setOpenModalEdit] = useState(false)
     const [id, setId] = useState<number | null>(null)
+    const [role, setRole] = useState<string | null>('')
+
     const queryClient = useQueryClient()
 
     const { data: dataUserAssetList, isLoading: isLoadingDataUserAssetList } = useUserAssetList({
@@ -142,7 +156,8 @@ const UserAssetProvider = ({ children }: UserAssetProviderContext) => {
             search: searchAsset || undefined,
             page: pagination.page || 1,
             limit: pagination.limit || 13,
-            enabled: false
+            enabled: false,
+            filter: role || null
         }
     })
 
@@ -172,6 +187,28 @@ const UserAssetProvider = ({ children }: UserAssetProviderContext) => {
         },
         onError: (errorDeleteAsset: string) => {
             AlertError(errorDeleteAsset)
+        }
+    })
+
+    const { mutate: mutateApproveAsset, isLoading: isLoadingApproveAsset } = useApproveAsset({
+        onSuccess: () => {
+            queryClient.refetchQueries('useUserAssetList');
+            queryClient.refetchQueries('useAssetList');
+            AlertSuccess('Delete Asset Successfully')
+        },
+        onerror: (errorApproveAsset: string) => {
+            AlertError(errorApproveAsset)
+        }
+    })
+
+    const { mutate: mutateUpdateActionAsset, isLoading: isLoadingUpdateActionAsset } = useUpdateActionAsset({
+        onSuccess: () => {
+            queryClient.refetchQueries('useUserAssetList');
+            queryClient.refetchQueries('useAssetList');
+            AlertSuccess('Update Action Asset Successfully')
+        },
+        onError: (errorUpdateActionAsset: string) => {
+            AlertError(errorUpdateActionAsset)
         }
     })
 
@@ -240,6 +277,14 @@ const UserAssetProvider = ({ children }: UserAssetProviderContext) => {
         }
     }, [dataAssetById, reset]);
 
+    //get role
+    useEffect(() => {
+        const role = localStorage.getItem('role')
+        if (role) {
+            setRole(role)
+        }
+    }, [])
+
 
     return (
         <UserAssetContext.Provider value={{
@@ -266,7 +311,11 @@ const UserAssetProvider = ({ children }: UserAssetProviderContext) => {
             reset,
             onSubmitEdit,
             isLoadingEditAsset,
-            handleDeleteYourAsset
+            handleDeleteYourAsset,
+            isLoadingApproveAsset,
+            mutateApproveAsset,
+            mutateUpdateActionAsset,
+            isLoadingUpdateActionAsset
         }}>
             {children}
         </UserAssetContext.Provider>

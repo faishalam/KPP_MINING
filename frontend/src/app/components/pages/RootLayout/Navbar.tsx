@@ -1,22 +1,17 @@
 'use client'
-import { HomeProvider, InputsSearch, useHomeContext } from "@/app/providers/rootProviders/HomeProviders"
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
-import { Bars3Icon, BellIcon, ChevronDownIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline"
-import ButtonSubmit from "../../button/ButtonSubmit"
-import { RootLayoutProvider, useRootLayoutContext } from "@/app/providers/rootProviders/RootLayoutProviders"
+import { Bars3Icon, ChevronDownIcon } from "@heroicons/react/24/outline"
+import { useRootLayoutContext } from "@/app/providers/rootProviders/RootLayoutProviders"
 import Link from "next/link"
-
-interface NavbarProps {
-    setSidebarOpen: (open: boolean) => void
-}
 
 const userNavigation = [
     { name: 'Sign out' },
 ]
 
-export default function Navbar({ setSidebarOpen }: NavbarProps) {
+export default function Navbar() {
     const {
-        dataUser
+        dataUser,
+        setSidebarOpen
     } = useRootLayoutContext()
 
     return (

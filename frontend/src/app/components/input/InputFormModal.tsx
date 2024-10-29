@@ -4,13 +4,12 @@ type InputFormModalProps = {
     label?: string
     type?: string
     placeholder?: string
-    name?: string
     register: UseFormRegisterReturn
     min?: number
     errors?: string
 }
 
-export default function InputFormModal({ label, type, placeholder, name, register, min, errors }: InputFormModalProps) {
+export default function InputFormModal({ label, type, placeholder, register, min, errors }: InputFormModalProps) {
     return (
         <>
             <div className='w-full max-w-full space-y-1'>

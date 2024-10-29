@@ -134,15 +134,15 @@ const columnHomePage = [
         width: '130px'
     },
     {
-        name: 'Status',
-        selector: (row: TypeDataAssetList) => row.status,
+        name: 'Status Approval',
+        selector: (row: TypeDataAssetList) => row.statusApproval,
         sortable: true,
         cell: (row: TypeDataAssetList) => (
-            <div className={`font-sm rounded-xl text-xs p-1 ${row.status === 'approved' ? 'bg-green-200 text-green-600' : row.status === 'waiting' ? 'bg-red-200 text-red-600 ' : ''}`}>
-                {row.status}
+            <div className={`font-sm rounded-xl text-xs p-1 ${row.statusApproval === 'approved' ? 'bg-green-200 text-green-600' : row.statusApproval === 'waiting' ? 'bg-red-200 text-red-600 ' : ''}`}>
+                {row.statusApproval}
             </div>
         ),
-        width: '100px'
+        width: '150px'
     },
     {
         name: 'Plan Realisasi',
@@ -168,11 +168,11 @@ const columnHomePage = [
     },
     {
         name: 'Keterangan',
-        selector: (row: TypeDataAssetList) => row.action,
+        selector: (row: TypeDataAssetList) => row.keterangan,
         sortable: true,
         cell: (row: TypeDataAssetList) => (
             <div className="min-w-[150px]">
-                {row.action}
+                {row.keterangan}
             </div>
         ),
         width: '200px'
@@ -214,7 +214,9 @@ export default function DataTableHome() {
                             <PaginationComponent
                                 pagination={pagination}
                                 setPagination={setPagination}
-                                data={dataAssetList}
+                                totalItems={dataAssetList?.totalItems || 0}
+                                totalPages={dataAssetList?.totalPages || 0}
+                                currentPage={dataAssetList?.currentPage || 0}
                             />
                         </>
                     )}

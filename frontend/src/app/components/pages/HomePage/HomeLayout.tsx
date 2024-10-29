@@ -11,8 +11,6 @@ export default function HomeLayout() {
         handleSubmit,
         onSubmit,
         register,
-        setSearchAsset,
-        searchAsset
     } = useHomeContext()
 
     return (
@@ -25,8 +23,6 @@ export default function HomeLayout() {
                             handleSubmit={handleSubmit}
                             onSubmit={onSubmit}
                             register={register}
-                            setSearchAsset={setSearchAsset}
-                            searchAsset={searchAsset}
                         />
                     </div>
                 </section>

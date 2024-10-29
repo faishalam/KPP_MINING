@@ -1,9 +1,8 @@
 "use client"
 
-import { createContext, useContext, ReactNode, useState, useEffect } from "react";
+import { createContext, useContext, ReactNode, useState } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
-import useAssetList from "../../api/home/useAssetList"
-import { redirect, usePathname, useRouter, useSearchParams } from 'next/navigation';
+import useAssetList from "../../api/asset/useAssetList"
 
 export type InputsSearch = {
     search: string
@@ -25,11 +24,12 @@ export interface TypeDataAssetList {
     benefit: string;
     planRealisasi: string;
     realisasiAsset: string;
-    status: string;
-    action: string;
+    statusApproval: string;
+    statusRealisasi: string;
     userId: number;
     createdAt: string;
     updatedAt: string;
+    keterangan: string
     User: {
         username: string;
     };
@@ -74,10 +74,10 @@ const HomeProvider = ({ children }: HomeProviderContext) => {
     const [searchAsset, setSearchAsset] = useState<string | undefined>()
     const [pagination, setPagination] = useState<{ page: number, limit: number }>({ page: 1, limit: 13 })
 
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const initialSearch = searchParams.get('search');
-    const initialPage = searchParams.get('page');
+    // const router = useRouter();
+    // const searchParams = useSearchParams();
+    // const initialSearch = searchParams.get('search');
+    // const initialPage = searchParams.get('page');
     // const pathname = usePathname();
 
     const { data: dataAssetList, isLoading: isLoadingDataAssetList } = useAssetList({
@@ -85,7 +85,6 @@ const HomeProvider = ({ children }: HomeProviderContext) => {
             search: searchAsset || undefined,
             page: pagination?.page || 1,
             limit: pagination?.limit || 12,
-            enabled: false
         }
     });
 

@@ -1,7 +1,6 @@
 import { InputsRegister } from '@/app/providers/authProviders/RegisterProviders';
-import { TypeYourDataAssetList } from '@/app/providers/rootProviders/UserAssetProviders';
 import React from 'react';
-import { UseFormRegister, UseFormRegisterReturn } from 'react-hook-form';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 
 interface SelectFieldProps {
@@ -18,10 +17,8 @@ interface SelectFieldProps {
 
 export default function SelectField({
     label,
-    name,
     options,
     register,
-    required,
     errors,
     classnames,
     labelClassnames,

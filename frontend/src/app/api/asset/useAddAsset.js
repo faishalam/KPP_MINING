@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { useMutation } from "react-query";
 import axios from "axios";
 
@@ -15,9 +14,9 @@ const useAddAsset = (props) => {
                 },
             });
 
-            const { result, status, message } = response.data
+            const { status } = response
 
-            if (status === "error") return
+            if (status !== 200) return
 
             return response.data;
         } catch (error) {

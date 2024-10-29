@@ -10,8 +10,6 @@ export default function YourAssetLayout() {
         handleSubmit,
         onSubmit,
         register,
-        setSearchAsset,
-        searchAsset
     } = useUserAssetContext()
 
     return (
@@ -24,8 +22,6 @@ export default function YourAssetLayout() {
                             handleSubmit={handleSubmit}
                             onSubmit={onSubmit}
                             register={register}
-                            setSearchAsset={setSearchAsset}
-                            searchAsset={searchAsset}
                         />
                     </div>
                 </section>

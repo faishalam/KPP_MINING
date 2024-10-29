@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react"
 import { useMutation } from "react-query";
 
@@ -6,23 +7,17 @@ const useRegister = (props) => {
 
     const userRegisterFn = async (formRegister) => {
         try {
-            const response = await fetch(`http://localhost:3000/register`, {
-                method: 'POST',
+            const response = await axios.post(`http://localhost:3000/register`, formRegister, {
                 headers: {
                     "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formRegister),
+                }
             });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message);
-            }
+            const { status } = response
 
-            const data = await response.json()
+            if (status !== 200) return
 
-            setData(data);
-            return data;
+            return response.data;
         } catch (error) {
             throw error.message
         }

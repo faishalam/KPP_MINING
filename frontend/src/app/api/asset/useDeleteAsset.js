@@ -1,14 +1,15 @@
-import axios from "axios";
-import { useState } from "react"
 import { useMutation } from "react-query";
+import axios from "axios";
 
-const useLogin = (props) => {
-    const [data, setData] = useState()
-
-    const userLoginFn = async (formLogin) => {
+const useDeleteAsset = (props) => {
+    const useDeleteAssetFn = async (id) => {
         try {
-            const response = await axios.post(`http://localhost:3000/login`, formLogin, {
+            const access_token = localStorage.getItem("access_token")
+            if (!access_token) throw new Error("Access token not found")
+
+            const response = await axios.delete(`http://localhost:3000/asset/${id}`, {
                 headers: {
+                    "Authorization": `Bearer ${access_token}`,
                     "Content-Type": "application/json",
                 },
             });
@@ -24,8 +25,8 @@ const useLogin = (props) => {
     }
 
     const mutation = useMutation({
-        mutationKey: ['userLogin'],
-        mutationFn: userLoginFn,
+        mutationKey: ['useDeleteAsset'],
+        mutationFn: useDeleteAssetFn,
         onSuccess: (data) => {
             if (props?.onSuccess) {
                 props.onSuccess(data);
@@ -38,7 +39,7 @@ const useLogin = (props) => {
         },
     });
 
-    return { ...mutation, data }
+    return { ...mutation }
 }
 
-export default useLogin
+export default useDeleteAsset

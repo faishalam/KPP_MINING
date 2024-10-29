@@ -1,29 +1,21 @@
 'use client'
 import { classNames } from "@/app/helper/classnames"
-import { HomeProvider, useHomeContext } from "@/app/providers/rootProviders/HomeProviders"
 import { useRootLayoutContext } from "@/app/providers/rootProviders/RootLayoutProviders"
 import { Cog6ToothIcon, HomeIcon, UsersIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ModalAddAsset from "../../modal/ModalAddAsset"
+import { useRouter } from "next/router"
 
 export default function DesktopSidebar() {
     const {
         dataUser,
-        isLoadingDataUser,
-        mutateAddAsset,
-        isLoadingAddAsset,
-        register, 
-        handleSubmit,
-        onSubmit,
-        errors
+        setOpenModalAddAsset,
+        role
     } = useRootLayoutContext()
 
     const pathname = usePathname()
-
-    const [openModalAddAsset, setOpenModalAddAsset] = useState<boolean>(false)
-
 
     const navigation = [
         { name: 'Dashboard', href: '/', icon: HomeIcon, current: true },
@@ -31,9 +23,14 @@ export default function DesktopSidebar() {
     ]
 
     const actions = [
-        { id: 1, name: 'Add Assets', onclick: () => setOpenModalAddAsset(!openModalAddAsset), initial: 'A', current: false },
+        { id: 1, name: 'Add Assets', onclick: () => setOpenModalAddAsset(true), initial: 'A', current: false },
         { id: 2, name: 'Guide Apps', href: '#', initial: 'G', current: false },
-    ].filter(action => !(dataUser?.role === 'head' && action.name === 'Add Assets'));
+    ].filter(action => !(role === 'head' && action.name === 'Add Assets'));
+
+    const handleLogout = () => {
+        localStorage.clear()
+    }
+    
 
     return (
         <>
@@ -93,7 +90,7 @@ export default function DesktopSidebar() {
                             </li>
                             <li className="mt-auto">
                                 <Link
-                                    onClick={() => localStorage.removeItem('access_token')}
+                                    onClick={() => handleLogout()}
                                     className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
                                     href="/login"
                                 >
@@ -104,16 +101,7 @@ export default function DesktopSidebar() {
                         </ul>
                     </nav>
                 </div>
-                <ModalAddAsset
-                    open={openModalAddAsset}
-                    setOpen={setOpenModalAddAsset}
-                    mutate={mutateAddAsset}
-                    isLoading={isLoadingAddAsset}
-                    register={register}
-                    handleSubmit={handleSubmit}
-                    onSubmit={onSubmit}
-                    errors={errors}
-                />
+                <ModalAddAsset />
             </div>
         </>
     )

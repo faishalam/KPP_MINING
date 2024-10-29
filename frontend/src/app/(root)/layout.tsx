@@ -1,23 +1,17 @@
 'use client'
 import "../../app/globals.css";
 import MobileSidebar from "../components/pages/RootLayout/MobileSidebar";
-import { use, useState } from "react";
 import DesktopSidebar from "../components/pages/RootLayout/DesktopSidebar";
 import Navbar from "../components/pages/RootLayout/Navbar";
-import { QueryProvider } from "../components/queryProviders/QueryProvider";
-import { HomeProvider } from "../providers/rootProviders/HomeProviders";
 import { RootLayoutProvider } from "../providers/rootProviders/RootLayoutProviders";
-import HomeLayout from "../components/pages/HomePage/HomeLayout";
-import MobileSidebarLayout from "../components/pages/RootLayout/MobileSidebar";
 import { RootProvider } from "../components/queryProviders/RootProvider";
-
+import InputSearchSection from "../components/InputSearchSection";
 
 export default function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
     return (
         <html lang="en">
             <body
@@ -26,9 +20,9 @@ export default function RootLayout({
                 <div className="w-full max-w-full">
                     <RootProvider>
                         <RootLayoutProvider>
-                            <MobileSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+                            <MobileSidebar />
                             <DesktopSidebar />
-                            <Navbar setSidebarOpen={setSidebarOpen} />
+                            <Navbar />
                         </RootLayoutProvider>
                         <div className="lg:pl-72 w-full max-w-full">
                             <main className="py-10 w-full max-w-full ">

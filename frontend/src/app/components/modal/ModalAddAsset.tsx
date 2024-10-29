@@ -1,27 +1,20 @@
 'use client'
 
-import { useState } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import { MdOutlineAddToPhotos } from 'react-icons/md'
-import InputFormAuth from '../input/InputFormAuth'
-import { useForm } from 'react-hook-form'
 import InputFormModal from '../input/InputFormModal'
 import SelectField from '../input/InputSelectOption'
-import { AssetFormInputs } from '@/app/providers/rootProviders/RootLayoutProviders'
+import { useRootLayoutContext } from '@/app/providers/rootProviders/RootLayoutProviders'
 
-type ModalAddAssetProps = {
-    open: boolean
-    setOpen: (open: boolean) => void
-    mutate: (body: AssetFormInputs) => void
-    isLoading: boolean
-    register: any
-    handleSubmit: any
-    onSubmit: any
-    errors: any
-}
-
-export default function ModalAddAsset({ open, setOpen, mutate, isLoading, register, handleSubmit, onSubmit, errors }: ModalAddAssetProps) {
+export default function ModalAddAsset() {
+    const {
+        openModalAddAsset,
+        setOpenModalAddAsset,
+        register,
+        handleSubmit,
+        onSubmit,
+        errors,
+    } = useRootLayoutContext()
 
     const kodePNOptions = [
         { value: 'WORKSHOP', label: 'WORKSHOP' },
@@ -42,7 +35,7 @@ export default function ModalAddAsset({ open, setOpen, mutate, isLoading, regist
     ]
 
     return (
-        <Dialog open={open} onClose={setOpen} className="relative z-10">
+        <Dialog open={openModalAddAsset} onClose={setOpenModalAddAsset} className="relative z-10">
             <DialogBackdrop
                 transition
                 className="fixed inset-0 bg-black bg-opacity-50 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
@@ -73,12 +66,11 @@ export default function ModalAddAsset({ open, setOpen, mutate, isLoading, regist
                             </div>
 
                             <form onSubmit={handleSubmit(onSubmit)} className='w-full max-w-full mt-8 space-y-2'>
-                                
+
                                 <InputFormModal
                                     label='Nama Asset'
                                     type='text'
                                     placeholder='Masukkan Nama Asset..'
-                                    name='namaAsset'
                                     register={register('namaAsset', {
                                         required: true,
                                     })}
@@ -100,7 +92,6 @@ export default function ModalAddAsset({ open, setOpen, mutate, isLoading, regist
                                     label='Nilai Asset'
                                     type='number'
                                     placeholder='Masukkan Nilai Asset..'
-                                    name='nilaiAsset'
                                     min={1}
                                     register={register('nilaiAsset', {
                                         required: true,
@@ -113,7 +104,6 @@ export default function ModalAddAsset({ open, setOpen, mutate, isLoading, regist
                                     type='number'
                                     min={1}
                                     placeholder='Masukkan Nilai Asset..'
-                                    name='nilaiAsset'
                                     register={register('quantityAsset', {
                                         required: true,
                                     })}
@@ -135,7 +125,6 @@ export default function ModalAddAsset({ open, setOpen, mutate, isLoading, regist
                                     label='Remark'
                                     type='text'
                                     placeholder='Masukkan Remark..'
-                                    name='remark'
                                     register={register('remark', {
                                         required: true,
                                     })}
@@ -146,7 +135,6 @@ export default function ModalAddAsset({ open, setOpen, mutate, isLoading, regist
                                     label='Area Kerja'
                                     type='text'
                                     placeholder='Masukkan Area Kerja..'
-                                    name='areaKerja'
                                     register={register('areaKerja', {
                                         required: true,
                                     })}
@@ -157,7 +145,6 @@ export default function ModalAddAsset({ open, setOpen, mutate, isLoading, regist
                                     label='Benefit'
                                     type='text'
                                     placeholder='Masukkan Benefit..'
-                                    name='benefit'
                                     register={register('benefit', {
                                         required: true,
                                     })}
@@ -167,7 +154,6 @@ export default function ModalAddAsset({ open, setOpen, mutate, isLoading, regist
                                 <InputFormModal
                                     label='Plan Realisasi'
                                     type='date'
-                                    name='planRealisasi'
                                     register={register('planRealisasi', {
                                         required: true,
                                     })}
@@ -177,7 +163,7 @@ export default function ModalAddAsset({ open, setOpen, mutate, isLoading, regist
                                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                     <button
                                         type="submit"
-                                        onClick={() => setOpen(false)}
+                                        onClick={() => setOpenModalAddAsset(false)}
                                         className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                                     >
                                         Tambahkan Asset
@@ -185,7 +171,7 @@ export default function ModalAddAsset({ open, setOpen, mutate, isLoading, regist
                                     <button
                                         type="button"
                                         data-autofocus
-                                        onClick={() => setOpen(false)}
+                                        onClick={() => setOpenModalAddAsset(false)}
                                         className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
                                     >
                                         Cancel
