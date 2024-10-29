@@ -19,7 +19,7 @@ const useRegister = (props) => {
 
             return response.data;
         } catch (error) {
-            throw error.message
+            throw error.response.data.message
         }
     }
 

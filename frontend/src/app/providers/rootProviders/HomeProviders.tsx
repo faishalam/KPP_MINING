@@ -52,6 +52,7 @@ interface HomeContextProps {
     onSubmit: (data: InputsSearch) => void,
     pagination: { page: number, limit: number },
     setPagination: (value: { page: number, limit: number }) => void
+    isFetchingDataAssetList: boolean
 }
 
 
@@ -74,13 +75,8 @@ const HomeProvider = ({ children }: HomeProviderContext) => {
     const [searchAsset, setSearchAsset] = useState<string | undefined>()
     const [pagination, setPagination] = useState<{ page: number, limit: number }>({ page: 1, limit: 13 })
 
-    // const router = useRouter();
-    // const searchParams = useSearchParams();
-    // const initialSearch = searchParams.get('search');
-    // const initialPage = searchParams.get('page');
-    // const pathname = usePathname();
 
-    const { data: dataAssetList, isLoading: isLoadingDataAssetList } = useAssetList({
+    const { data: dataAssetList, isLoading: isLoadingDataAssetList, isFetching: isFetchingDataAssetList } = useAssetList({
         params: {
             search: searchAsset || undefined,
             page: pagination?.page || 1,
@@ -88,29 +84,12 @@ const HomeProvider = ({ children }: HomeProviderContext) => {
         }
     });
 
-
     //search asset
     const onSubmit = (data: InputsSearch) => {
         const { search } = data;
         setSearchAsset(search);
         setPagination({ page: 1, limit: pagination.limit });
     };
-
-    // useEffect(() => {
-    //     if (!initialSearch) {
-    //         router.push(`/?page=${pagination.page}`)
-    //         return
-    //     }
-    // }, [pagination.page])
-
-    // useEffect(() => {
-    //     if (initialPage) {
-    //         setPagination({
-    //             page: Number(initialPage),
-    //             limit: pagination.limit
-    //         })
-    //     }
-    // }, [initialPage])
 
     return (
         <HomeContext.Provider value={{
@@ -122,7 +101,8 @@ const HomeProvider = ({ children }: HomeProviderContext) => {
             handleSubmit,
             setSearchAsset,
             searchAsset,
-            onSubmit: onSubmit
+            onSubmit: onSubmit,
+            isFetchingDataAssetList
         }}>
             {children}
         </HomeContext.Provider>

@@ -4,13 +4,13 @@ import { createContext, useContext, ReactNode, useState, useEffect, use } from "
 import { useForm, UseFormReturn } from "react-hook-form";
 import useUserAssetList from "../../api/asset/useUserAssetList"
 import useDeleteAsset from "../../api/asset/useDeleteAsset"
-import { useQueryClient } from "react-query";
 import useEditAsset from "../../api/asset/useEditAsset"
 import useAssetById from "../../api/asset/useAssetById"
 import useUpdateActionAsset from "../../api/asset/useUpdateActionAsset"
 import useApproveAsset from "../../api/asset/useApproveAsset"
 import Swal from "sweetalert2";
 import { AlertError, AlertSuccess } from "@/app/components/alert/AlertToastify";
+import { useQueryClient } from "react-query";
 
 type body = {
     id: number
@@ -120,6 +120,7 @@ interface UserAssetContextProps {
     mutateApproveAsset: (id: number) => void
     mutateUpdateActionAsset: (params: { id: number | undefined, payload: { keterangan?: string | undefined, statusRealisasi?: string | undefined, planRealisasi?: string | undefined } }) => void
     isLoadingUpdateActionAsset: boolean
+    isFetchingDataUserAssetList: boolean
 }
 
 
@@ -161,7 +162,7 @@ const UserAssetProvider = ({ children }: UserAssetProviderContext) => {
 
     const queryClient = useQueryClient()
 
-    const { data: dataUserAssetList, isLoading: isLoadingDataUserAssetList } = useUserAssetList({
+    const { data: dataUserAssetList, isLoading: isLoadingDataUserAssetList, isFetching: isFetchingDataUserAssetList } = useUserAssetList({
         params: {
             search: searchAsset || undefined,
             page: pagination.page || 1,
@@ -204,7 +205,7 @@ const UserAssetProvider = ({ children }: UserAssetProviderContext) => {
         onSuccess: () => {
             queryClient.refetchQueries('useUserAssetList');
             queryClient.refetchQueries('useAssetList');
-            AlertSuccess('Delete Asset Successfully')
+            AlertSuccess('Approve Asset Successfully')
         },
         onerror: (errorApproveAsset: string) => {
             AlertError(errorApproveAsset)
@@ -325,7 +326,8 @@ const UserAssetProvider = ({ children }: UserAssetProviderContext) => {
             isLoadingApproveAsset,
             mutateApproveAsset,
             mutateUpdateActionAsset,
-            isLoadingUpdateActionAsset
+            isLoadingUpdateActionAsset,
+            isFetchingDataUserAssetList
         }}>
             {children}
         </UserAssetContext.Provider>

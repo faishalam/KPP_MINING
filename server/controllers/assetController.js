@@ -339,7 +339,7 @@ class AssetController {
             if (role !== "head") return res.status(403).json({ message: "Only head can update asset status" })
 
             const asset = await Asset.findOne({ where: { id } })
-            await asset.update({ status: "approved" }, { where: { id } })
+            await asset.update({ statusApproval: "approved" }, { where: { id } })
 
             res.status(200).json({ message: "Asset status updated successfully" })
         } catch (error) {

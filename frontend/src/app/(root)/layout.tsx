@@ -1,11 +1,10 @@
 'use client'
 import "../../app/globals.css";
-import MobileSidebar from "../components/pages/RootLayout/MobileSidebar";
 import DesktopSidebar from "../components/pages/RootLayout/DesktopSidebar";
+import MobileSidebar from "../components/pages/RootLayout/MobileSidebar";
 import Navbar from "../components/pages/RootLayout/Navbar";
-import { RootLayoutProvider } from "../providers/rootProviders/RootLayoutProviders";
 import { RootProvider } from "../components/queryProviders/RootProvider";
-import InputSearchSection from "../components/InputSearchSection";
+import { RootLayoutProvider } from "../providers/rootProviders/RootLayoutProviders";
 
 export default function RootLayout({
     children,

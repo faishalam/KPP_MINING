@@ -22,10 +22,10 @@ export default function DataTableYourAssetSection() {
         setId,
         handleDeleteYourAsset,
         mutateApproveAsset,
-        mutateUpdateActionAsset
+        mutateUpdateActionAsset,
+        isFetchingDataUserAssetList
     } = useUserAssetContext()
     const [role, setRole] = useState<string>('')
-
     const [openModalCancel, setOpenModalCancel] = useState<{ id: number | undefined, show: boolean }>({ id: undefined, show: false });
     const [openModalHold, setOpenModalHold] = useState<{ id: number | undefined, show: boolean }>({ id: undefined, show: false });
 
@@ -197,7 +197,7 @@ export default function DataTableYourAssetSection() {
             width: '150px'
         },
         {
-            name: 'Status Approval',
+            name: 'Action',
             cell: (row: TypeYourDataAssetList) => (
                 <div className="flex gap-3">
                     {role === 'user' ? (
@@ -233,7 +233,7 @@ export default function DataTableYourAssetSection() {
 
                 </div>
             ),
-            width: '100px'
+            width: '120px'
         },
         ...(role === 'user' ? [{
             name: 'Status Realisasi',
@@ -277,8 +277,8 @@ export default function DataTableYourAssetSection() {
         }] : []),
     ];
 
-    const handleUpdateAction = (id: number, status: string) => {
-        if (status === 'worked') {
+    const handleUpdateAction = (id: number, statusRealisasi: string) => {
+        if (statusRealisasi === 'worked') {
             Swal.fire({
                 position: "center",
                 icon: "success",
@@ -286,12 +286,12 @@ export default function DataTableYourAssetSection() {
                 showConfirmButton: false,
                 timer: 1500
             });
-            // mutateUpdateActionAsset({ id: id, payload: { keterangan: 'working on', statusRealisasi: status } })
+            mutateUpdateActionAsset({ id: id, payload: { keterangan: 'working on', statusRealisasi: statusRealisasi } })
         }
-        if (status === 'canceled') {
+        if (statusRealisasi === 'canceled') {
             setOpenModalCancel(() => ({ show: true, id: id }))
         }
-        if (status === 'hold') {
+        if (statusRealisasi === 'hold') {
             setOpenModalHold(() => ({ show: true, id: id }))
         }
     }
@@ -310,7 +310,7 @@ export default function DataTableYourAssetSection() {
 
     return (
         <>
-            {isLoadingDataUserAssetList ? (
+            {isLoadingDataUserAssetList || isFetchingDataUserAssetList ? (
                 <div className="flex flex-col items-center justify-center py-10">
                     <LoadingSpinnder />
                     <p className="text-gray-600 mt-2">Loading assets...</p>
@@ -341,7 +341,6 @@ export default function DataTableYourAssetSection() {
                 </>
             )}
             <ModalEditAsset />
-
 
             <ModalFeedbackCancel
                 openModal={openModalCancel}

@@ -3,8 +3,8 @@
 import { createContext, useContext, ReactNode } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import useRegister from "../../api/register/useRegister"
-// import { AlertError, AlertSuccess } from "@/app/components/alert/AlertToastify";
 import { useRouter } from 'next/navigation';
+import { AlertError, AlertSuccess } from "@/app/components/alert/AlertToastify";
 
 export type InputsRegister = {
     email: string
@@ -46,12 +46,12 @@ const RegisterProvider = ({ children }: RegisterProviderProps) => {
 
     const { mutate: mutateRegister, isLoading: isLoadingRegister } = useRegister({
         onSuccess: () => {
-            // AlertSuccess('Register successfully')
+            AlertSuccess('Register successfully')
             reset()
             router.push('/login')
         },
         onError: (error: string) => {
-            // AlertError(error)
+            AlertError(error)
         }
     })
 

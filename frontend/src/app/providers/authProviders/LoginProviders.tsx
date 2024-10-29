@@ -5,6 +5,7 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import useLogin from "../../api/login/useLogin";
 // import { AlertError } from "@/app/components/alert/AlertToastify";
 import { useRouter } from 'next/navigation';
+import { AlertError } from "@/app/components/alert/AlertToastify";
 
 
 export type InputsLogin = {
@@ -46,12 +47,12 @@ const LoginProvider = ({ children }: LoginProviderProps) => {
     const router = useRouter()
 
     const { mutate: mutateLogin, data: dataLogin, isLoading: isLoadingLogin } = useLogin({
-        onSuccess: (data : DataLogin) => {
+        onSuccess: (data: DataLogin) => {
             localStorage.setItem("access_token", data.access_token)
             router.push("/")
         },
         onError: (error: string) => {
-            // AlertError(error)
+            AlertError(error)
             reset()
         }
     })

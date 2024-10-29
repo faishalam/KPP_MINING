@@ -3,7 +3,6 @@
 import { createContext, useContext, ReactNode, useState, useEffect } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import useUser from "../../api/user/useUser"
-// import { AlertError, AlertSuccess } from "@/app/components/alert/AlertToastify";
 import useAddAsset from "../../api/asset/useAddAsset"
 import { useQueryClient } from "react-query";
 import { AlertError, AlertSuccess } from "@/app/components/alert/AlertToastify";
@@ -72,9 +71,7 @@ const RootLayoutProvider = ({ children }: HomeProviderContext) => {
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
     const [role, setRole] = useState<string | null>(null);
 
-
     const queryClient = useQueryClient()
-
 
     const { data: dataUser, isLoading: isLoadingDataUser } = useUser({
         onSuccess: (data: User) => {
@@ -102,11 +99,10 @@ const RootLayoutProvider = ({ children }: HomeProviderContext) => {
 
     useEffect(() => {
         const role = localStorage.getItem('role');
-        if(role) {
+        if (role) {
             setRole(role)
         }
     }, [dataUser]);
-
 
     return (
         <RootLayoutContext.Provider value={{

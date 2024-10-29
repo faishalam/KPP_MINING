@@ -1,5 +1,5 @@
 import { DialogTitle } from "@headlessui/react";
-import ModalFeedback from "./ModalFeedback";
+import ModalFeedback from "./modalLayout/ModalFeedbackLayout";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type ModalFeedbackCancelProps = {

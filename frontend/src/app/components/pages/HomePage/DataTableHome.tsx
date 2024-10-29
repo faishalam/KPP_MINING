@@ -185,20 +185,19 @@ export default function DataTableHome() {
         isLoadingDataAssetList,
         dataAssetList,
         pagination,
-        setPagination
+        setPagination,
+        isFetchingDataAssetList
     } = useHomeContext();
 
     return (
         <>
-            {/* Loading Spinner */}
-            {isLoadingDataAssetList ? (
+            {isLoadingDataAssetList || isFetchingDataAssetList ? (
                 <div className="flex flex-col items-center justify-center py-10">
                     <LoadingSpinnder />
                     <p className="text-gray-600 mt-2">Loading assets...</p>
                 </div>
             ) : (
                 <>
-                    {/* Data Tidak Ditemukan */}
                     {dataAssetList?.data && dataAssetList?.data?.length === 0 ? (
                         <div className="text-center py-10">
                             <p className="text-gray-500 text-lg">Asset Tidak Ditemukan</p>
