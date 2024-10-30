@@ -22,6 +22,7 @@ export default function YourAssetLayout() {
                             handleSubmit={handleSubmit}
                             onSubmit={onSubmit}
                             register={register}
+                            placeholder="Cari nama asset.."
                         />
                     </div>
                 </section>

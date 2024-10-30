@@ -3,14 +3,9 @@ import { TypeDataAssetList, useHomeContext } from "@/app/providers/rootProviders
 import DataTable from "react-data-table-component";
 import LoadingSpinnder from "../../LoadingSpinnder";
 import PaginationComponent from "../../PaginationComponent";
+import LoadingSkeletonTable from "../../loading/LoadingSkeletonTable";
 
 const columnHomePage = [
-    // {
-    //     name: 'No',
-    //     selector: (row: TypeDataAssetList, index: number) => index + 1,
-    //     sortable: true,
-    //     width: '70px'
-    // },
     {
         name: 'Site',
         selector: (row: TypeDataAssetList) => row.site,
@@ -20,7 +15,7 @@ const columnHomePage = [
                 {row.site}
             </div>
         ),
-        width : '100px'
+        width: '100px'
     },
     {
         name: 'Nama Asset',
@@ -179,7 +174,6 @@ const columnHomePage = [
     },
 ];
 
-
 export default function DataTableHome() {
     const {
         isLoadingDataAssetList,
@@ -189,10 +183,11 @@ export default function DataTableHome() {
         isFetchingDataAssetList
     } = useHomeContext();
 
+
     return (
         <>
             {isLoadingDataAssetList || isFetchingDataAssetList ? (
-                <div className="flex flex-col items-center justify-center py-10">
+                <div className="flex max-w-full w-full flex-col items-center justify-center py-10">
                     <LoadingSpinnder />
                     <p className="text-gray-600 mt-2">Loading assets...</p>
                 </div>
@@ -222,6 +217,5 @@ export default function DataTableHome() {
                 </>
             )}
         </>
-
     )
 }

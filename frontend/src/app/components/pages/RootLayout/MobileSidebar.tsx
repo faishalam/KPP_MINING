@@ -20,7 +20,7 @@ export default function MobileSidebar() {
     const pathname = usePathname()
 
     const navigation = [
-        { name: 'Dashboard', href: '/', icon: HomeIcon, current: true },
+        { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
         { name: `${dataUser?.role === 'user' ? 'My Asset' : 'Your Department'}`, href: '/your-assets', icon: UsersIcon, current: false },
     ]
 

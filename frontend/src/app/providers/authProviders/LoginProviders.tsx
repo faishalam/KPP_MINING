@@ -49,7 +49,7 @@ const LoginProvider = ({ children }: LoginProviderProps) => {
     const { mutate: mutateLogin, data: dataLogin, isLoading: isLoadingLogin } = useLogin({
         onSuccess: (data: DataLogin) => {
             localStorage.setItem("access_token", data.access_token)
-            router.push("/")
+            router.push("/dashboard")
         },
         onError: (error: string) => {
             AlertError(error)

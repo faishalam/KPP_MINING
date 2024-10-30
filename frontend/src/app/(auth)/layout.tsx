@@ -10,8 +10,10 @@ export default function AuthLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body className="max-w-full min-h-screen bg-white flex">
+        // <html lang="en">
+        //     <body className="max-w-full min-h-screen bg-white flex">
+        <>
+            <div className="max-w-full w-full bg-white flex min-h-screen">
                 <section className="max-w-full w-full flex flex-col justify-center items-center">
                     <img
                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReW8lr0R3L6JBwPdJVTnbJ38rA2QWLWTfwSw&s"
@@ -31,7 +33,9 @@ export default function AuthLayout({
                     />
                     <div className="absolute inset-0 bg-black opacity-60"></div>
                 </section>
-            </body>
-        </html>
+            </div>
+        </>
+        // </body>
+        // </html>
     );
 }

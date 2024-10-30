@@ -23,9 +23,9 @@ export default function DataTableYourAssetSection() {
         handleDeleteYourAsset,
         mutateApproveAsset,
         mutateUpdateActionAsset,
-        isFetchingDataUserAssetList
+        isFetchingDataUserAssetList,
+        role
     } = useUserAssetContext()
-    const [role, setRole] = useState<string>('')
     const [openModalCancel, setOpenModalCancel] = useState<{ id: number | undefined, show: boolean }>({ id: undefined, show: false });
     const [openModalHold, setOpenModalHold] = useState<{ id: number | undefined, show: boolean }>({ id: undefined, show: false });
 
@@ -194,10 +194,10 @@ export default function DataTableYourAssetSection() {
                     {row.statusRealisasi !== "realisasi waiting" && (
                         <div
                             className={`p-1 rounded-full ${row.statusRealisasi === "worked"
-                                    ? "bg-green-400"
-                                    : row.statusRealisasi === "hold"
-                                        ? "bg-gray-400"
-                                        : "bg-red-400"
+                                ? "bg-green-400"
+                                : row.statusRealisasi === "hold"
+                                    ? "bg-gray-400"
+                                    : "bg-red-400"
                                 }`}
                         ></div>
                     )}
@@ -311,16 +311,9 @@ export default function DataTableYourAssetSection() {
         setOpenModalEdit(true)
     };
 
-    useEffect(() => {
-        const role = localStorage.getItem('role')
-        if (role) {
-            setRole(role)
-        }
-    }, [])
-
     return (
         <>
-            {isLoadingDataUserAssetList || isFetchingDataUserAssetList ? (
+            {isLoadingDataUserAssetList || isFetchingDataUserAssetList || !role ? (
                 <div className="flex flex-col items-center justify-center py-10">
                     <LoadingSpinnder />
                     <p className="text-gray-600 mt-2">Loading assets...</p>

@@ -23,6 +23,7 @@ export default function HomeLayout() {
                             handleSubmit={handleSubmit}
                             onSubmit={onSubmit}
                             register={register}
+                            placeholder="Cari nama asset atau nama user..."
                         />
                     </div>
                 </section>

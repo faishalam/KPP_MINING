@@ -69,8 +69,8 @@ const RootLayoutProvider = ({ children }: HomeProviderContext) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<AssetFormInputs>();
     const [openModalAddAsset, setOpenModalAddAsset] = useState<boolean>(false);
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
-    const [role, setRole] = useState<string | null>(null);
-
+    const [role, setRole] = useState<string | null>('');
+    
     const queryClient = useQueryClient()
 
     const { data: dataUser, isLoading: isLoadingDataUser } = useUser({

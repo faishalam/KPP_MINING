@@ -11,8 +11,10 @@ const userNavigation = [
 export default function Navbar() {
     const {
         dataUser,
-        setSidebarOpen
+        setSidebarOpen,
+        isLoadingDataUser
     } = useRootLayoutContext()
+
 
     return (
         <>
@@ -25,26 +27,38 @@ export default function Navbar() {
 
                 <div aria-hidden="true" className="h-6 w-px bg-gray-900/10 lg:hidden" />
 
-                <div className="flex max-w-full w-full items-center gap-x-4 justify-end lg:gap-x-6 p-3">
+                <div className="flex max-w-full w-full items-center justify-end gap-x-4 lg:gap-x-6 p-3">
+
                     <div className="flex items-center justify-end gap-x-4 lg:gap-x-6">
-
-
                         <div aria-hidden="true" className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10" />
-
                         <Menu as="div" className="relative">
                             <MenuButton className="-m-1.5 flex items-center p-1.5">
                                 <span className="sr-only">Open user menu</span>
-                                <img
-                                    alt=""
-                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                    className="h-8 w-8 rounded-full bg-gray-50"
-                                />
-                                <span className="hidden lg:flex lg:items-center">
-                                    <span aria-hidden="true" className="ml-4 text-sm font-semibold leading-6 text-gray-900">
-                                        {dataUser?.username}
-                                    </span>
-                                    <ChevronDownIcon aria-hidden="true" className="ml-2 h-5 w-5 text-gray-400" />
-                                </span>
+                                {isLoadingDataUser ? (
+                                    <>
+                                        <div className="flex items-center space-x-3">
+                                            <div className="h-8 w-8 rounded-full bg-gray-200 animate-pulse"></div>
+                                            <div className="hidden lg:flex lg:items-center">
+                                                <div className="h-5 w-20 rounded-md bg-gray-200 animate-pulse ml-4"></div>
+                                                <div className="ml-2 h-5 w-5 bg-gray-200 rounded animate-pulse"></div>
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <img
+                                            alt=""
+                                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                            className="h-8 w-8 rounded-full bg-gray-50"
+                                        />
+                                        <span className="hidden lg:flex lg:items-center">
+                                            <span aria-hidden="true" className="ml-4 text-sm font-semibold leading-6 text-gray-900">
+                                                {dataUser?.username}
+                                            </span>
+                                            <ChevronDownIcon aria-hidden="true" className="ml-2 h-5 w-5 text-gray-400" />
+                                        </span>
+                                    </>
+                                )}
                             </MenuButton>
                             <MenuItems
                                 transition
@@ -63,6 +77,7 @@ export default function Navbar() {
                                 ))}
                             </MenuItems>
                         </Menu>
+
                     </div>
                 </div>
             </div >

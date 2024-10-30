@@ -121,6 +121,8 @@ interface UserAssetContextProps {
     mutateUpdateActionAsset: (params: { id: number | undefined, payload: { keterangan?: string | undefined, statusRealisasi?: string | undefined, planRealisasi?: string | undefined } }) => void
     isLoadingUpdateActionAsset: boolean
     isFetchingDataUserAssetList: boolean
+    role: string | null
+    setRole: (role: string | null) => void
 }
 
 
@@ -327,7 +329,9 @@ const UserAssetProvider = ({ children }: UserAssetProviderContext) => {
             mutateApproveAsset,
             mutateUpdateActionAsset,
             isLoadingUpdateActionAsset,
-            isFetchingDataUserAssetList
+            isFetchingDataUserAssetList,
+            role,
+            setRole
         }}>
             {children}
         </UserAssetContext.Provider>

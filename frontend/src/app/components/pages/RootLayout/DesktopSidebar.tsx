@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import ModalAddAsset from "../../modal/ModalAddAsset"
 import { useRouter } from "next/router"
+import LoadingSpinnder from "../../LoadingSpinnder"
 
 export default function DesktopSidebar() {
     const {
@@ -14,12 +15,12 @@ export default function DesktopSidebar() {
         setOpenModalAddAsset,
         role
     } = useRootLayoutContext()
-
     const pathname = usePathname()
 
     const navigation = [
-        { name: 'Dashboard', href: '/', icon: HomeIcon, current: true },
-        { name: `${dataUser?.role === 'user' ? 'My Asset' : 'Your Department'}`, href: '/your-assets', icon: UsersIcon, current: false },
+        { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
+        { name: 'Asset Department', href: '/your-assets', icon: UsersIcon, current: false },
+        { name: 'Statistics', href: '/statistics', icon: Cog6ToothIcon, current: false },
     ]
 
     const actions = [
@@ -38,7 +39,7 @@ export default function DesktopSidebar() {
                     <div className="flex h-16 shrink-0 items-start">
                         <img
                             alt="Your Company"
-                            src="https://career.kppmining.com/logo.svg"
+                            // src="https://career.kppmining.com/logo.svg"
                             className="h-14 w-auto"
                         />
                     </div>
