@@ -8,6 +8,7 @@ import { useEffect, useState } from "react"
 import ModalAddAsset from "../../modal/ModalAddAsset"
 import { useRouter } from "next/router"
 import LoadingSpinnder from "../../LoadingSpinnder"
+HomeIcon
 
 export default function DesktopSidebar() {
     const {
@@ -18,9 +19,9 @@ export default function DesktopSidebar() {
     const pathname = usePathname()
 
     const navigation = [
-        { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
+        { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: false },
+        { name: 'Assets', href: '/assets', icon: HomeIcon, current: true },
         { name: 'Asset Department', href: '/your-assets', icon: UsersIcon, current: false },
-        { name: 'Statistics', href: '/statistics', icon: Cog6ToothIcon, current: false },
     ]
 
     const actions = [
@@ -35,14 +36,17 @@ export default function DesktopSidebar() {
     return (
         <>
             <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-[#0e342d] px-6 pb-4">
-                    <div className="flex h-16 shrink-0 items-start">
-                        <img
-                            alt="Your Company"
-                            // src="https://career.kppmining.com/logo.svg"
-                            className="h-14 w-auto"
-                        />
-                    </div>
+                <div className="flex shrink-0 bg-[#0e342d] border-b border-gray-500 shadow-xl items-center p-1">
+                    <img
+                        src="https://www.kppmining.com/assets/images/logo.svg"
+                        alt="Logo KPP Mining"
+                        className="filter brightness-0 invert w-28"
+                    />
+                    <p className="text-white font-medium">KPP MONITORING</p>
+
+                </div>
+                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-[#0e342d] px-6 pb-4 py-10">
+                   
                     <nav className="flex flex-1 flex-col">
                         <ul role="list" className="flex flex-1 flex-col gap-y-7">
                             <li>

@@ -20,8 +20,9 @@ export default function MobileSidebar() {
     const pathname = usePathname()
 
     const navigation = [
-        { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
-        { name: `${dataUser?.role === 'user' ? 'My Asset' : 'Your Department'}`, href: '/your-assets', icon: UsersIcon, current: false },
+        { name: 'Dashboard', href: '/dashboard', icon: Cog6ToothIcon, current: false },
+        { name: 'Assets', href: '/assets', icon: HomeIcon, current: true },
+        { name: 'Asset Department', href: '/your-assets', icon: UsersIcon, current: false },
     ]
 
     const actions = [
@@ -55,33 +56,37 @@ export default function MobileSidebar() {
                             </div>
                         </TransitionChild>
 
-                        <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4 ring-1 ring-white/10">
-                            <div className="flex h-16 shrink-0 items-center">
+
+
+                        <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-[#0e342d] ring-1 ring-white/10">
+
+                            <div className="flex shrink-0 bg-[#0e342d] border-b border-gray-500 shadow-xl items-center p-1">
                                 <img
-                                    alt="Your Company"
-                                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                                    className="h-8 w-auto"
+                                    src="https://www.kppmining.com/assets/images/logo.svg"
+                                    alt="Logo KPP Mining"
+                                    className="filter brightness-0 invert w-24"
                                 />
+                                <p className="text-white font-medium">KPP MONITORING</p>
+
                             </div>
-                            <nav className="flex flex-1 flex-col">
+                            <nav className="flex flex-1 flex-col px-6 pb-4 ">
                                 <ul role="list" className="flex flex-1 flex-col gap-y-7">
                                     <li>
                                         <ul role="list" className="-mx-2 space-y-1">
                                             {navigation.map((item) => (
                                                 <li key={item.name}>
-                                                    <a
+                                                    <Link
                                                         href={item.href}
-                                                        onClick={() => setSidebarOpen(false)}
                                                         className={classNames(
                                                             item.href === pathname
-                                                                ? 'bg-gray-800 text-white'
-                                                                : 'text-gray-400 hover:bg-gray-800 hover:text-white',
+                                                                ? 'bg-[#207262] text-white'
+                                                                : 'text-white hover:bg-[#207262] hover:w-full hover:text-white',
                                                             'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
                                                         )}
                                                     >
                                                         <item.icon aria-hidden="true" className="h-6 w-6 shrink-0" />
                                                         {item.name}
-                                                    </a>
+                                                    </Link>
                                                 </li>
                                             ))}
                                         </ul>
@@ -92,14 +97,11 @@ export default function MobileSidebar() {
                                             {actions.map((item) => (
                                                 <li key={item.name}>
                                                     <button
-                                                        onClick={() => {
-                                                            item.onclick && item.onclick();
-                                                            setSidebarOpen(false);
-                                                        }}
+                                                        onClick={item.onclick}
                                                         className={classNames(
                                                             item.current
-                                                                ? 'bg-gray-800 text-white'
-                                                                : 'text-gray-400 hover:bg-gray-800 hover:w-full hover:text-white',
+                                                                ? 'bg-[#207262] text-white'
+                                                                : 'text-white hover:bg-[#207262] hover:w-full hover:text-white',
                                                             'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
                                                         )}
                                                     >
