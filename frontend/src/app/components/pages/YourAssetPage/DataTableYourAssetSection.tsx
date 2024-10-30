@@ -190,8 +190,18 @@ export default function DataTableYourAssetSection() {
             selector: (row: TypeYourDataAssetList) => row.keterangan,
             sortable: true,
             cell: (row: TypeYourDataAssetList) => (
-                <div className="min-w-[100px] text-gray-500">
-                    {row.keterangan}
+                <div className="min-w-[100px] text-gray-500 flex items-center space-x-2">
+                    {row.statusRealisasi !== "realisasi waiting" && (
+                        <div
+                            className={`p-1 rounded-full ${row.statusRealisasi === "worked"
+                                    ? "bg-green-400"
+                                    : row.statusRealisasi === "hold"
+                                        ? "bg-gray-400"
+                                        : "bg-red-400"
+                                }`}
+                        ></div>
+                    )}
+                    <div>{row.keterangan}</div>
                 </div>
             ),
             width: '150px'

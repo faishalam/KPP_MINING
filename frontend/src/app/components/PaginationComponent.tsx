@@ -15,10 +15,6 @@ type PaginationProps = {
 
 
 export default function PaginationComponent({ pagination, setPagination, totalItems, totalPages, currentPage }: PaginationProps) {
-    // const totalItems = data?.totalItems || 0;
-    // const totalPages = data?.totalPages || 0;
-    // const currentPage = data?.currentPage || 1;
-
     const handlePageChange = (page: number) => {
         setPagination({ page, limit: pagination.limit });
     };
@@ -100,7 +96,7 @@ export default function PaginationComponent({ pagination, setPagination, totalIt
                                 <button
                                     key={pageNum}
                                     onClick={() => handlePageChange(pageNum)}
-                                    className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ${currentPage === pageNum ? 'bg-indigo-600 text-white' : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'} focus:outline-offset-0`}
+                                    className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ${currentPage === pageNum ? 'bg-[#154a40] text-white' : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'} focus:outline-offset-0`}
                                 >
                                     {pageNum}
                                 </button>
@@ -116,7 +112,7 @@ export default function PaginationComponent({ pagination, setPagination, totalIt
                                 )}
                                 <button
                                     onClick={() => handlePageChange(totalPages)}
-                                    className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ${currentPage === totalPages ? 'bg-indigo-600 text-white' : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'} focus:outline-offset-0`}
+                                    className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ${currentPage === totalPages ? 'bg-[#154a40] text-white' : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'} focus:outline-offset-0`}
                                 >
                                     {totalPages}
                                 </button>

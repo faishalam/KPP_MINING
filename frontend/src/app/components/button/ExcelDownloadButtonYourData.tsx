@@ -5,7 +5,8 @@ import { saveAs } from 'file-saver';
 import React, { useEffect, useState } from 'react';
 import { RiFileReduceLine } from 'react-icons/ri';
 import ButtonSubmit from './ButtonSubmit';
-import useUserAssetList from '@/app/api/asset/useUserAssetList';
+import { useQuery } from 'react-query';
+import axios from 'axios';
 
 interface TypeDataAssetList {
     id: number;
@@ -34,11 +35,50 @@ interface TypeDataAssetList {
 }
 
 export interface AssetResponse {
-    data: TypeDataAssetList[]; // Array of TypeDataAssetList
+    data: TypeDataAssetList[]
 }
 
 export default function ExcelDownloadButtonYourAsset() {
     const [enabled, setEnabled] = useState(false);
+
+    const useUserAssetList = (props: { params: { enabled: boolean } }) => {
+        const useUserAssetListFn = async () => {
+            try {
+                const access_token = localStorage.getItem("access_token")
+                if (!access_token) throw new Error("Access token not found")
+
+                const response = await axios.get(`http://localhost:3000/asset/by-user`, {
+                    headers: {
+                        "Authorization": `Bearer ${access_token}`,
+                        "Content-Type": "application/json",
+                    },
+                    params: {
+                        ...(props?.params?.enabled && { enabled: props?.params?.enabled }),
+                    }
+                });
+
+                const { status } = response
+
+                if (status !== 200) return
+
+                return response.data;
+            } catch (error) {
+                throw error
+            }
+        }
+
+        const query = useQuery({
+            queryKey: ['useUserAssetListExcel', props?.params],
+            queryFn: useUserAssetListFn,
+            staleTime: Infinity,
+            cacheTime: Infinity,
+            enabled: Boolean((props?.params?.enabled))
+        })
+
+        return { ...query }
+    }
+
+
     const { data: dataAssetList, isLoading: isLoadingDataAssetList } = useUserAssetList({
         params: {
             enabled,
@@ -101,7 +141,7 @@ export default function ExcelDownloadButtonYourAsset() {
         <ButtonSubmit
             btnText="Download Report"
             btnIcon={<RiFileReduceLine size={25} />}
-            classname="w-[114px] shadow-sm max-w-full px-3 py-1 bg-blue-600 hover:bg-blue-700 transition-all rounded text-white text-[10px]"
+            classname="w-[114px] shadow-sm max-w-full px-3 py-1 bg-[#154a40] hover:bg-[#0e2f29] transition-all rounded text-white text-[10px]"
             onClick={handleDownloadClick}
         />
     );

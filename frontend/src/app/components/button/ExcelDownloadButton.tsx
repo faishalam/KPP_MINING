@@ -1,11 +1,13 @@
 'use client'
 
 import * as XLSX from 'xlsx';
-import useAssetList from '../../api/asset/useAssetList';
 import { saveAs } from 'file-saver';
 import React, { useEffect, useState } from 'react';
 import { RiFileReduceLine } from 'react-icons/ri';
 import ButtonSubmit from './ButtonSubmit';
+import { useQuery } from 'react-query';
+import axios from 'axios';
+
 
 interface TypeDataAssetList {
     id: number;
@@ -39,12 +41,50 @@ export interface AssetResponse {
 
 export default function ExcelDownloadButton() {
     const [enabled, setEnabled] = useState(false);
+
+    const useAssetList = (props: { params: { enabled: boolean } }) => {
+        const useAssetListFn = async () => {
+            try {
+                const access_token = localStorage.getItem("access_token");
+                if (!access_token) throw new Error("Access token not found");
+
+                const response = await axios.get(`http://localhost:3000/asset`, {
+                    headers: {
+                        "Authorization": `Bearer ${access_token}`,
+                        "Content-Type": "application/json",
+                    },
+                    params: {
+                        ...(props?.params?.enabled && { enabled: props.params.enabled }),
+                    }
+                });
+
+                if (response.status !== 200) return;
+
+                return response.data;
+            } catch (error) {
+                throw error
+            }
+
+        }
+
+        const query = useQuery({
+            queryKey: ['useAssetListExcel', props.params],
+            queryFn: useAssetListFn,
+            staleTime: Infinity,
+            cacheTime: Infinity,
+            enabled: props.params.enabled,
+        });
+
+        return { ...query };
+    }
+
+
     const { data: dataAssetList, isLoading: isLoadingDataAssetList } = useAssetList({
         params: {
             enabled,
         },
     });
-    
+
     const downloadExcel = () => {
         if (!dataAssetList) {
             console.error("No data available for download.");
@@ -101,7 +141,7 @@ export default function ExcelDownloadButton() {
         <ButtonSubmit
             btnText="Download Report"
             btnIcon={<RiFileReduceLine size={25} />}
-            classname="w-[114px] shadow-sm max-w-full px-3 py-1 bg-blue-600 hover:bg-blue-700 transition-all rounded text-white text-[10px]"
+            classname="w-[114px] shadow-sm max-w-full px-3 py-1 bg-[#154a40] hover:bg-[#154a40] transition-all rounded text-white text-[10px]"
             onClick={handleDownloadClick}
         />
     );

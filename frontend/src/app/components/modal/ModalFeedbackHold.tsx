@@ -15,12 +15,13 @@ type FormData = {
 };
 
 export default function ModalFeedbackHold({ openModal, setOpenModal, mutate }: ModalFeedbackHoldProps) {
-    const { register, handleSubmit } = useForm<FormData>();
+    const { register, handleSubmit, reset } = useForm<FormData>();
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
         mutate({ id: openModal.id, payload: { keterangan: data.keterangan, statusRealisasi: 'hold', planRealisasi: data.planRealisasi } })
+        reset()
+        setOpenModal({ ...openModal, show: false })
     };
-
 
 
     return (

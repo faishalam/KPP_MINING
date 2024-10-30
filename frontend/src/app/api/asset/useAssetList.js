@@ -36,7 +36,7 @@ const useAssetList = (props) => {
         queryFn: useAssetListFn,
         staleTime: Infinity,
         cacheTime: Infinity,
-        enabled: Boolean(props?.params?.search || props?.params?.page), // Simplified enabled check
+        enabled: Boolean(props?.params?.search || props?.params?.page || props?.params?.limit || !props?.params?.enabled),
     });
 
     return { ...query };

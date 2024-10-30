@@ -34,12 +34,12 @@ export default function DesktopSidebar() {
     return (
         <>
             <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
-                    <div className="flex h-16 shrink-0 items-center">
+                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-[#0e342d] px-6 pb-4">
+                    <div className="flex h-16 shrink-0 items-start">
                         <img
                             alt="Your Company"
-                            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                            className="h-8 w-auto"
+                            src="https://career.kppmining.com/logo.svg"
+                            className="h-14 w-auto"
                         />
                     </div>
                     <nav className="flex flex-1 flex-col">
@@ -52,8 +52,8 @@ export default function DesktopSidebar() {
                                                 href={item.href}
                                                 className={classNames(
                                                     item.href === pathname
-                                                        ? 'bg-gray-800 text-white'
-                                                        : 'text-gray-400 hover:bg-gray-800 hover:text-white',
+                                                        ? 'bg-[#207262] text-white'
+                                                        : 'text-white hover:bg-[#207262] hover:w-full hover:text-white',
                                                     'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
                                                 )}
                                             >
@@ -73,8 +73,8 @@ export default function DesktopSidebar() {
                                                 onClick={item.onclick}
                                                 className={classNames(
                                                     item.current
-                                                        ? 'bg-gray-800 text-white'
-                                                        : 'text-gray-400 hover:bg-gray-800 hover:text-white',
+                                                        ? 'bg-[#207262] text-white'
+                                                        : 'text-white hover:bg-[#207262] hover:w-full hover:text-white',
                                                     'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
                                                 )}
                                             >
@@ -90,7 +90,7 @@ export default function DesktopSidebar() {
                             <li className="mt-auto">
                                 <Link
                                     onClick={() => handleLogout()}
-                                    className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                                    className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-white hover:bg-[#207262] hover:w-full hover:text-white"
                                     href="/login"
                                 >
                                     <Cog6ToothIcon aria-hidden="true" className="h-6 w-6 shrink-0" />

@@ -13,10 +13,12 @@ type FormData = {
 };
 
 export default function ModalFeedbackCancel({ openModal, setOpenModal, mutate }: ModalFeedbackCancelProps) {
-    const { register, handleSubmit } = useForm<FormData>();
+    const { register, handleSubmit, reset } = useForm<FormData>();
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
         mutate({ id: openModal.id, payload: { keterangan: data.keterangan, statusRealisasi: 'canceled' } })
+        reset()
+        setOpenModal({ ...openModal, show: false })
     };
 
 

@@ -3,30 +3,42 @@ import { classNames } from "@/app/helper/classnames";
 import { useRootLayoutContext } from "@/app/providers/rootProviders/RootLayoutProviders";
 import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from "@headlessui/react";
 import { Cog6ToothIcon, HomeIcon, UsersIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import ModalAddAsset from "../../modal/ModalAddAsset";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 
 export default function MobileSidebar() {
     const {
         dataUser,
         sidebarOpen,
-        setSidebarOpen
+        setSidebarOpen,
+        setOpenModalAddAsset,
+        role,
     } = useRootLayoutContext()
+
+    const pathname = usePathname()
 
     const navigation = [
         { name: 'Dashboard', href: '/', icon: HomeIcon, current: true },
-        { name: `${dataUser?.role === 'user' ? 'My Asset' : 'Your Department'}`, href: '/', icon: UsersIcon, current: false },
+        { name: `${dataUser?.role === 'user' ? 'My Asset' : 'Your Department'}`, href: '/your-assets', icon: UsersIcon, current: false },
     ]
 
     const actions = [
-        { id: 1, name: 'Add Assets', href: '#', initial: 'A', current: false },
+        { id: 1, name: 'Add Assets', onclick: () => setOpenModalAddAsset(true), initial: 'A', current: false },
         { id: 2, name: 'Guide Apps', href: '#', initial: 'G', current: false },
-    ].filter(action => !(dataUser?.role === 'head' && action.name === 'Add Assets'));
+    ].filter(action => !(role === 'head' && action.name === 'Add Assets'));
+
+    const handleLogout = () => {
+        localStorage.clear()
+    }
+
     return (
         <>
             <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
                 <DialogBackdrop
                     transition
-                    className="fixed inset-0 bg-gray-900/80 transition-opacity duration-300 ease-linear data-[closed]:opacity-0"
+                    className="fixed inset-0 bg-black opacity-50 transition-opacity duration-300 ease-linear data-[closed]:opacity-0"
                 />
 
                 <div className="fixed inset-0 flex">
@@ -59,8 +71,9 @@ export default function MobileSidebar() {
                                                 <li key={item.name}>
                                                     <a
                                                         href={item.href}
+                                                        onClick={() => setSidebarOpen(false)}
                                                         className={classNames(
-                                                            item.current
+                                                            item.href === pathname
                                                                 ? 'bg-gray-800 text-white'
                                                                 : 'text-gray-400 hover:bg-gray-800 hover:text-white',
                                                             'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
@@ -74,16 +87,19 @@ export default function MobileSidebar() {
                                         </ul>
                                     </li>
                                     <li>
-                                        <div className="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
+                                        <div className="text-xs font-semibold leading-6 text-gray-400">Settings</div>
                                         <ul role="list" className="-mx-2 mt-2 space-y-1">
                                             {actions.map((item) => (
                                                 <li key={item.name}>
-                                                    <a
-                                                        href={item.href}
+                                                    <button
+                                                        onClick={() => {
+                                                            item.onclick && item.onclick();
+                                                            setSidebarOpen(false);
+                                                        }}
                                                         className={classNames(
                                                             item.current
                                                                 ? 'bg-gray-800 text-white'
-                                                                : 'text-gray-400 hover:bg-gray-800 hover:text-white',
+                                                                : 'text-gray-400 hover:bg-gray-800 hover:w-full hover:text-white',
                                                             'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
                                                         )}
                                                     >
@@ -91,25 +107,17 @@ export default function MobileSidebar() {
                                                             {item.initial}
                                                         </span>
                                                         <span className="truncate">{item.name}</span>
-                                                    </a>
+                                                    </button>
                                                 </li>
                                             ))}
                                         </ul>
-                                    </li>
-                                    <li className="mt-auto">
-                                        <a
-                                            href="#"
-                                            className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
-                                        >
-                                            <Cog6ToothIcon aria-hidden="true" className="h-6 w-6 shrink-0" />
-                                            Settings
-                                        </a>
                                     </li>
                                 </ul>
                             </nav>
                         </div>
                     </DialogPanel>
                 </div>
+                <ModalAddAsset />
             </Dialog>
         </>
     )
