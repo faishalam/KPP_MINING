@@ -35,6 +35,8 @@ export interface AssetFormInputs {
 
 
 export interface TypeYourDataAssetList {
+    no : number
+    index: number
     id: number;
     site: string;
     namaAsset: string;

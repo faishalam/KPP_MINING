@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+.row-even {
+  background-color: #f9f9f9;
+  /* Warna abu-abu */
+}
+
+.row-odd {
+  background-color: #ffffff;
+  /* Warna putih */
+}
+
 .react-data-table {
   white-space: normal !important;
   /* Pastikan wrapping diizinkan */

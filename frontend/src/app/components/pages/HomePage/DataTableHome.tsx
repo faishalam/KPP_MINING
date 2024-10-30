@@ -7,8 +7,14 @@ import LoadingSkeletonTable from "../../loading/LoadingSkeletonTable";
 
 const columnHomePage = [
     {
-        name: 'Site',
-        selector: (row: TypeDataAssetList) => row.site,
+        name: 'No',
+        sortable: true,
+        selector: (row: TypeDataAssetList) => row.index + 1,
+        cell: (row: TypeDataAssetList) => <div className="w-full">{row.index + 1}</div>,
+        width: '50px' // Sesuaikan lebar jika diperlukan
+    },
+    {
+        name: 'Site', selector: (row: TypeDataAssetList) => row.site,
         sortable: true,
         cell: (row: TypeDataAssetList) => (
             <div className="w-full">
@@ -36,7 +42,7 @@ const columnHomePage = [
                 {row.kodePN}
             </div>
         ),
-        width: '150px'
+        width: '170px'
     },
     {
         name: 'Nilai Asset',
@@ -166,13 +172,24 @@ const columnHomePage = [
         selector: (row: TypeDataAssetList) => row.keterangan,
         sortable: true,
         cell: (row: TypeDataAssetList) => (
-            <div className="min-w-[150px]">
-                {row.keterangan}
+            <div className="min-w-[100px] text-gray-500 flex items-center space-x-2">
+                {row.statusRealisasi !== "realisasi waiting" && (
+                    <div
+                        className={`p-1 rounded-full ${row.statusRealisasi === "worked"
+                            ? "bg-green-400"
+                            : row.statusRealisasi === "hold"
+                                ? "bg-gray-400"
+                                : "bg-red-400"
+                            }`}
+                    ></div>
+                )}
+                <div>{row.keterangan}</div>
             </div>
         ),
         width: '200px'
     },
 ];
+
 
 export default function DataTableHome() {
     const {
@@ -184,6 +201,22 @@ export default function DataTableHome() {
     } = useHomeContext();
 
 
+    const dataWithIndex = dataAssetList?.data?.map((item, index) => ({ ...item, index }));
+
+    const conditionalRowStyles = [
+        {
+            when: (row: TypeDataAssetList) => row.index % 2 === 0,
+            style: {
+                backgroundColor: '#f9f9f9',
+            },
+        },
+        {
+            when: (row: TypeDataAssetList) => row.index % 2 !== 0,
+            style: {
+                backgroundColor: '#ffffff',
+            },
+        },
+    ];
     return (
         <>
             {isLoadingDataAssetList || isFetchingDataAssetList ? (
@@ -201,8 +234,9 @@ export default function DataTableHome() {
                         <>
                             <DataTable
                                 columns={columnHomePage}
-                                data={dataAssetList?.data || []}
+                                data={dataWithIndex || []}
                                 className="w-full"
+                                conditionalRowStyles={conditionalRowStyles}
                             />
 
                             <PaginationComponent

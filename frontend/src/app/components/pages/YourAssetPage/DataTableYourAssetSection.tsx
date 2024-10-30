@@ -31,6 +31,13 @@ export default function DataTableYourAssetSection() {
 
     const columnYourAsset = [
         {
+            name: 'No',
+            sortable: true,
+            selector: (row: TypeYourDataAssetList) => row.index + 1,
+            cell: (row: TypeYourDataAssetList) => <div className="w-full">{row.index + 1}</div>,
+            width: '50px' // Sesuaikan lebar jika diperlukan
+        },
+        {
             name: 'Site',
             selector: (row: TypeYourDataAssetList) => row.site,
             sortable: true,
@@ -287,6 +294,23 @@ export default function DataTableYourAssetSection() {
         }] : []),
     ];
 
+    const conditionalRowStyles = [
+        {
+            when: (row: TypeYourDataAssetList) => row.index % 2 === 0,
+            style: {
+                backgroundColor: '#f9f9f9',
+            },
+        },
+        {
+            when: (row: TypeYourDataAssetList) => row.index % 2 !== 0,
+            style: {
+                backgroundColor: '#ffffff',
+            },
+        },
+    ];
+
+    const dataWithIndex = dataUserAssetList?.data?.map((item, index) => ({ ...item, index }));
+
     const handleUpdateAction = (id: number, statusRealisasi: string) => {
         if (statusRealisasi === 'worked') {
             Swal.fire({
@@ -328,8 +352,9 @@ export default function DataTableYourAssetSection() {
                         <>
                             <DataTable
                                 columns={columnYourAsset}
-                                data={dataUserAssetList?.data || []}
+                                data={dataWithIndex || []}
                                 className="w-full"
+                                conditionalRowStyles={conditionalRowStyles}
                             />
 
                             <PaginationComponent

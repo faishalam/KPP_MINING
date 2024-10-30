@@ -9,6 +9,8 @@ export type InputsSearch = {
 }
 
 export interface TypeDataAssetList {
+    no: number
+    index: number
     id: number;
     site: string;
     namaAsset: string;
