@@ -11,7 +11,7 @@ const columnHomePage = [
         sortable: true,
         selector: (row: TypeDataAssetList) => row.index + 1,
         cell: (row: TypeDataAssetList) => <div className="w-full">{row.index + 1}</div>,
-        width: '50px' // Sesuaikan lebar jika diperlukan
+        width: '50px' // Sesuaikan lebar jika diperlukan,
     },
     {
         name: 'Site', selector: (row: TypeDataAssetList) => row.site,

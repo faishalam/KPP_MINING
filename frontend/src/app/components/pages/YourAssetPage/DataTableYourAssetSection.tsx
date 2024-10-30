@@ -67,7 +67,7 @@ export default function DataTableYourAssetSection() {
                     {row.kodePN}
                 </div>
             ),
-            width: '150px'
+            width: '170px'
         },
         {
             name: 'Nilai Asset',

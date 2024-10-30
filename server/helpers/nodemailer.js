@@ -11,10 +11,10 @@ async function sendEmail(email) {
     const sendMail = transporter.sendMail({
         from: "noreply",
         to: `${email}`,
-        subject: "testing ya",
-        text: 'REMINDER YOUR ASSET IS OVERDUE'
+        subject: "REMINDER YOUR ASSET IS OVERDUE",
+        text: 'REMINDER YOUR ASSET IS OVERDUE, PLEASE UPDATE YOUR ASSET REALISASI STATUS'
     })
-    console.log("email berhasil dikirim")
+    // console.log("email berhasil dikirim")
 }
 
 
