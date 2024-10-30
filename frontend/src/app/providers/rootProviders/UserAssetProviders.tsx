@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, ReactNode, useState, useEffect, use } from "react";
+import { createContext, useContext, ReactNode, useState, useEffect } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import useUserAssetList from "../../api/asset/useUserAssetList"
 import useDeleteAsset from "../../api/asset/useDeleteAsset"
@@ -11,11 +11,6 @@ import useApproveAsset from "../../api/asset/useApproveAsset"
 import Swal from "sweetalert2";
 import { AlertError, AlertSuccess } from "@/app/components/alert/AlertToastify";
 import { useQueryClient } from "react-query";
-
-type body = {
-    id: number
-    data: string
-}
 
 export type InputsSearch = {
     search: string

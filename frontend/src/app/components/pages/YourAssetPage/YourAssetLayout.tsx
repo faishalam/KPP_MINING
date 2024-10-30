@@ -27,7 +27,7 @@ export default function YourAssetLayout() {
                     </div>
                 </section>
 
-                <section className="mx-auto max-w-full h-full rounded flex flex-col">
+                <section className="mx-auto max-w-full w-full h-full rounded flex flex-col">
                     <DataTableYourAssetSection />
                 </section>
             </div>

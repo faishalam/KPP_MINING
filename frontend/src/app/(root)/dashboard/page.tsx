@@ -7,12 +7,8 @@ import { MdApproval } from "react-icons/md";
 import { MdPendingActions } from "react-icons/md";
 import { GrUserWorker } from "react-icons/gr";
 import { TbDeviceIpadCancel } from "react-icons/tb";
-import StatusChart from "@/app/components/card/ChartStatusRealisasi";
 import StatusRealisasiChart from "@/app/components/card/ChartStatusRealisasi";
 import ChartStatusApproval from "@/app/components/card/ChartStatusApproval";
-
-
-
 
 
 
@@ -30,7 +26,6 @@ function StatisticsLayout() {
     const {
         dataAssetList,
         isLoadingDataAssetList,
-        isFetchingDataAssetList
     } = useStatisticsContext()
 
     const totalNilaiAsset = `Rp. ${dataAssetList?.reduce((a, b) => a + b.totalNilaiAsset, 0).toLocaleString('id-ID')}`

@@ -10,7 +10,6 @@ import { usePathname } from "next/navigation";
 
 export default function MobileSidebar() {
     const {
-        dataUser,
         sidebarOpen,
         setSidebarOpen,
         setOpenModalAddAsset,
@@ -113,6 +112,16 @@ export default function MobileSidebar() {
                                                 </li>
                                             ))}
                                         </ul>
+                                    </li>
+                                    <li className="mt-auto">
+                                        <Link
+                                            onClick={() => handleLogout()}
+                                            className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-white hover:bg-[#207262] hover:w-full hover:text-white"
+                                            href="/login"
+                                        >
+                                            <Cog6ToothIcon aria-hidden="true" className="h-6 w-6 shrink-0" />
+                                            Logout
+                                        </Link>
                                     </li>
                                 </ul>
                             </nav>

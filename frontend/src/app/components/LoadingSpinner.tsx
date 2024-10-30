@@ -1,5 +1,5 @@
 'use client'
-export default function LoadingSpinnder() {
+export default function LoadingSpinner() {
     return (
         <>
             <div className="max-w-full w-full flex justify-center items-center">

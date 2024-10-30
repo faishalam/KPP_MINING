@@ -4,15 +4,10 @@ import { useRootLayoutContext } from "@/app/providers/rootProviders/RootLayoutPr
 import { Cog6ToothIcon, HomeIcon, UsersIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
 import ModalAddAsset from "../../modal/ModalAddAsset"
-import { useRouter } from "next/router"
-import LoadingSpinnder from "../../LoadingSpinnder"
-HomeIcon
 
 export default function DesktopSidebar() {
     const {
-        dataUser,
         setOpenModalAddAsset,
         role
     } = useRootLayoutContext()

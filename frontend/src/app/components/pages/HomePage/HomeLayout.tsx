@@ -28,7 +28,7 @@ export default function HomeLayout() {
                     </div>
                 </section>
 
-                <section className="mx-auto max-w-full h-full rounded flex flex-col">
+                <section className="mx-auto max-w-full w-full h-full rounded flex flex-col">
                     <DataTableHome />
                 </section>
             </div>

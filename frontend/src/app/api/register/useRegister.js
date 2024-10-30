@@ -1,10 +1,7 @@
 import axios from "axios";
-import { useState } from "react"
 import { useMutation } from "react-query";
 
 const useRegister = (props) => {
-    const [data, setData] = useState()
-
     const userRegisterFn = async (formRegister) => {
         try {
             const response = await axios.post(`http://localhost:3000/register`, formRegister, {
@@ -38,7 +35,7 @@ const useRegister = (props) => {
         },
     });
 
-    return { ...mutation, data }
+    return { ...mutation }
 }
 
 export default useRegister

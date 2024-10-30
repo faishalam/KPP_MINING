@@ -1,21 +1,16 @@
-// src/components/LoadingSkeleton.tsx
 import React from 'react';
+import LoadingSpinner from '../LoadingSpinner';
 
-const LoadingSkeletonTable = () => {
+const LoadingSkeletonTable: React.FC = () => {
+   
     return (
-        <div className="animate-pulse max-w-full w-full">
-            <div className="flex flex-col space-y-2">
-                {[...Array(5)].map((_, index) => (
-                    <div key={index} className="flex items-center space-x-4">
-                        <div className="h-6 bg-gray-300 rounded w-1/4" /> {/* Skeleton untuk nama asset */}
-                        <div className="h-6 bg-gray-300 rounded w-1/4" /> {/* Skeleton untuk kode PN */}
-                        <div className="h-6 bg-gray-300 rounded w-1/4" /> {/* Skeleton untuk nilai asset */}
-                        <div className="h-6 bg-gray-300 rounded w-1/4" /> {/* Skeleton untuk quantity */}
-                    </div>
-                ))}
+        <div className="max-w-full w-full bg-gray-200 rounded-md shadow h-[720px] animate-pulse border border-dashed border-gray-400 overflow-hidden">
+            <div className="h-full flex flex-col items-center justify-center">
+                <LoadingSpinner />
+                <span className="text-gray-500">Loading...</span>
             </div>
         </div>
     );
 };
 
-export default LoadingSkeletonTable
+export default LoadingSkeletonTable;

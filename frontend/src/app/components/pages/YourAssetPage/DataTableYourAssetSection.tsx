@@ -1,16 +1,16 @@
 'use client'
 import { TypeYourDataAssetList, useUserAssetContext } from "@/app/providers/rootProviders/UserAssetProviders";
 import DataTable from "react-data-table-component";
-import LoadingSpinnder from "../../LoadingSpinnder";
 import PaginationComponent from "../../PaginationComponent";
 import { FaRegEdit } from "react-icons/fa";
 import ButtonSubmit from "../../button/ButtonSubmit";
 import { MdDelete } from "react-icons/md";
 import ModalEditAsset from "../../modal/ModalEditAsset";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Swal from "sweetalert2";
 import ModalFeedbackCancel from "../../modal/ModalFeedbackCancel";
 import ModalFeedbackHold from "../../modal/ModalFeedbackHold";
+import LoadingSkeletonTable from "../../loading/LoadingSkeletonTable";
 
 export default function DataTableYourAssetSection() {
     const {
@@ -35,7 +35,7 @@ export default function DataTableYourAssetSection() {
             sortable: true,
             selector: (row: TypeYourDataAssetList) => row.index + 1,
             cell: (row: TypeYourDataAssetList) => <div className="w-full">{row.index + 1}</div>,
-            width: '50px' // Sesuaikan lebar jika diperlukan
+            width: '70px'
         },
         {
             name: 'Site',
@@ -338,10 +338,9 @@ export default function DataTableYourAssetSection() {
     return (
         <>
             {isLoadingDataUserAssetList || isFetchingDataUserAssetList || !role ? (
-                <div className="flex flex-col items-center justify-center py-10">
-                    <LoadingSpinnder />
-                    <p className="text-gray-600 mt-2">Loading assets...</p>
-                </div>
+                <>
+                    <LoadingSkeletonTable />
+                </>
             ) : (
                 <>
                     {dataUserAssetList?.data && dataUserAssetList?.data.length === 0 ? (

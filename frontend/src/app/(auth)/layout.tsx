@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect } from "react";
 import "../../app/globals.css";
 import { QueryProvider } from "../components/queryProviders/QueryProvider";
 

@@ -6,7 +6,6 @@ import {
     YAxis,
     CartesianGrid,
     Tooltip,
-    Legend,
     ResponsiveContainer,
 } from 'recharts';
 import LoadingSkeletonChartBar from '../loading/LoadingSkeletonChartBar';
@@ -49,7 +48,6 @@ export default function StatusRealisasiChart({ workedTotal, canceledTotal, holdT
                                 <XAxis dataKey="name" />
                                 <YAxis />
                                 <Tooltip />
-                                {/* <Legend /> */}
                                 <Bar dataKey="value" fill="#8884d8" />
                             </BarChart >
                         </ResponsiveContainer >

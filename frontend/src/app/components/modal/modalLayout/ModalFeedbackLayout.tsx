@@ -1,5 +1,4 @@
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
 import { ReactNode } from 'react'
 
 interface ModalFeedbackProps {

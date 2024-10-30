@@ -1,10 +1,7 @@
 import axios from "axios";
-import { useState } from "react"
 import { useMutation } from "react-query";
 
 const useLogin = (props) => {
-    const [data, setData] = useState()
-
     const userLoginFn = async (formLogin) => {
         try {
             const response = await axios.post(`http://localhost:3000/login`, formLogin, {
@@ -38,7 +35,7 @@ const useLogin = (props) => {
         },
     });
 
-    return { ...mutation, data }
+    return { ...mutation }
 }
 
 export default useLogin

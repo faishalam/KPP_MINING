@@ -2,8 +2,6 @@
 
 import { LoginProvider } from "@/app/providers/authProviders/LoginProviders";
 import { RegisterProvider } from "@/app/providers/authProviders/RegisterProviders";
-import { HomeProvider } from "@/app/providers/rootProviders/HomeProviders";
-import { UserAssetProvider } from "@/app/providers/rootProviders/UserAssetProviders";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
 
