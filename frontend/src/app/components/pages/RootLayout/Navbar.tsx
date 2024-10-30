@@ -24,13 +24,10 @@ export default function Navbar() {
                     <Bars3Icon aria-hidden="true" className="h-6 w-6" />
                 </button>
 
-
                 <div aria-hidden="true" className="h-6 w-px bg-gray-900/10 lg:hidden" />
 
                 <div className="flex max-w-full w-full items-center justify-end gap-x-4 lg:gap-x-6 p-3">
                     <Link href={'https://www.kppmining.com/'} className="text-green-900 text-xs font-semibold hover:underline">Official Website</Link>
-
-
                     <div className="flex items-center justify-end gap-x-4 lg:gap-x-6">
                         <div aria-hidden="true" className=" block h-6 w-px lg:bg-gray-900/10" />
                         <Menu as="div" className="relative">
