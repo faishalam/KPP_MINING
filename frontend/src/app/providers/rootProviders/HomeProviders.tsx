@@ -82,7 +82,7 @@ const HomeProvider = ({ children }: HomeProviderContext) => {
         params: {
             search: searchAsset || undefined,
             page: pagination?.page || 1,
-            limit: pagination?.limit || 12,
+            limit: pagination?.limit || 13,
         }
     });
 

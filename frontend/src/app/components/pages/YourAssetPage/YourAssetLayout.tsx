@@ -15,7 +15,7 @@ export default function YourAssetLayout() {
     return (
         <>
             <div className="max-w-full w-full flex flex-col gap-4 ">
-                <section className="max-w-full w-full rounded">
+                <section className="max-w-full w-full rounded mb-2">
                     <div className="w-full max-w-full flex gap-4">
                         <ExcelDownloadButtonYourAsset />
                         <InputSearchSection

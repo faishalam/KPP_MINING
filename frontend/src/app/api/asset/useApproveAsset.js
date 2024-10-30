@@ -1,6 +1,6 @@
 'use client'
 
-import axios from "axios";
+import { heroService } from "@/app/services/HeroServices";
 import { useMutation } from "react-query";
 
 const useApproveAsset = (props) => {
@@ -11,7 +11,7 @@ const useApproveAsset = (props) => {
             console.log(access_token)
             if (!access_token) throw new Error("Access token not found")
 
-            const response = await axios.patch(`http://localhost:3000/asset/${id}`, {}, {
+            const response = await heroService.patch(`/asset/${id}`, {}, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("access_token")}`
                 }

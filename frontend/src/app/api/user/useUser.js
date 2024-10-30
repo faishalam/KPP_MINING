@@ -1,5 +1,5 @@
 'use client'
-import axios from "axios";
+import { heroService } from "@/app/services/HeroServices";
 import { useState } from "react"
 import { useQuery } from "react-query";
 
@@ -11,7 +11,7 @@ const useUser = (props) => {
             const access_token = localStorage.getItem("access_token")
             if (!access_token) throw new Error("Access token not found")
 
-            const response = await axios.get(`http://localhost:3000/user-me`, {
+            const response = await heroService.get(`/user-me`, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${access_token}`,

@@ -1,7 +1,7 @@
 'use client'
 import { classNames } from "@/app/helper/classnames"
 import { useRootLayoutContext } from "@/app/providers/rootProviders/RootLayoutProviders"
-import { Cog6ToothIcon, HomeIcon, UsersIcon } from "@heroicons/react/24/outline"
+import { Cog6ToothIcon, FolderIcon, HomeIcon, UsersIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import ModalAddAsset from "../../modal/ModalAddAsset"
@@ -15,8 +15,8 @@ export default function DesktopSidebar() {
 
     const navigation = [
         { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: false },
-        { name: 'Assets', href: '/assets', icon: HomeIcon, current: true },
-        { name: 'Asset Department', href: '/your-assets', icon: UsersIcon, current: false },
+        { name: 'Assets', href: '/assets', icon: FolderIcon, current: true },
+        { name: 'Asset on Department', href: '/your-assets', icon: UsersIcon, current: false },
     ]
 
     const actions = [

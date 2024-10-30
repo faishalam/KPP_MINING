@@ -1,5 +1,5 @@
 import { useMutation } from "react-query";
-import axios from "axios";
+import { heroService } from "@/app/services/HeroServices";
 
 const useEditAsset = (props) => {
     const useEditAssetFn = async ({ id, data }) => {
@@ -7,7 +7,7 @@ const useEditAsset = (props) => {
             const access_token = localStorage.getItem("access_token")
             if (!access_token) throw new Error("Access token not found")
 
-            const response = await axios.put(`http://localhost:3000/asset/${id}`, data, {
+            const response = await heroService.put(`/asset/${id}`, data, {
                 headers: {
                     "Authorization": `Bearer ${access_token}`,
                     "Content-Type": "application/json",

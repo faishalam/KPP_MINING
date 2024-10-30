@@ -1,6 +1,6 @@
 'use client'
 
-import axios from "axios";
+import { heroService } from "@/app/services/HeroServices";
 import { useQuery } from "react-query";
 
 const useAssetList = (props) => {
@@ -9,7 +9,7 @@ const useAssetList = (props) => {
             const access_token = localStorage.getItem("access_token");
             if (!access_token) throw new Error("Access token not found");
 
-            const response = await axios.get(`http://localhost:3000/asset`, {
+            const response = await heroService.get(`/asset`, {
                 headers: {
                     "Authorization": `Bearer ${access_token}`,
                     "Content-Type": "application/json",

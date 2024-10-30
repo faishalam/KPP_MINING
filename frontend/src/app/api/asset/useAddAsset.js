@@ -1,5 +1,5 @@
 import { useMutation } from "react-query";
-import axios from "axios";
+import { heroService } from "@/app/services/HeroServices";
 
 const useAddAsset = (props) => {
     const useAddAssetFn = async (body) => {
@@ -7,7 +7,7 @@ const useAddAsset = (props) => {
             const access_token = localStorage.getItem("access_token")
             if (!access_token) throw new Error("Access token not found")
 
-            const response = await axios.post(`http://localhost:3000/asset`, body, {
+            const response = await heroService.post(`/asset`, body, {
                 headers: {
                     "Authorization": `Bearer ${access_token}`,
                     "Content-Type": "application/json",

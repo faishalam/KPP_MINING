@@ -1,10 +1,10 @@
-import axios from "axios";
+import { heroService } from "@/app/services/HeroServices";
 import { useMutation } from "react-query";
 
 const useLogin = (props) => {
     const userLoginFn = async (formLogin) => {
         try {
-            const response = await axios.post(`http://localhost:3000/login`, formLogin, {
+            const response = await heroService.post(`/login`, formLogin, {
                 headers: {
                     "Content-Type": "application/json",
                 },

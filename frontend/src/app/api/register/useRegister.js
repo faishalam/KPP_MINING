@@ -1,10 +1,10 @@
-import axios from "axios";
+import { heroService } from "@/app/services/HeroServices";
 import { useMutation } from "react-query";
 
 const useRegister = (props) => {
     const userRegisterFn = async (formRegister) => {
         try {
-            const response = await axios.post(`http://localhost:3000/register`, formRegister, {
+            const response = await heroService.post(`/register`, formRegister, {
                 headers: {
                     "Content-Type": "application/json",
                 }

@@ -1,5 +1,5 @@
 import { useMutation } from "react-query";
-import axios from "axios";
+import { heroService } from "@/app/services/HeroServices";
 
 const useUppdateActionAsset = (props) => {
     const useUppdateActionAssetFn = async ({ id, payload }) => {
@@ -8,7 +8,7 @@ const useUppdateActionAsset = (props) => {
             const access_token = localStorage.getItem("access_token")
             if (!access_token) throw new Error("Access token not found")
 
-            const response = await axios.patch(`http://localhost:3000/asset-action/${id}`, payload, {
+            const response = await heroService.patch(`/asset-action/${id}`, payload, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("access_token")}`
                 }

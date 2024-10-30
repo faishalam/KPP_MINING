@@ -1,5 +1,5 @@
+import { heroService } from "@/app/services/HeroServices";
 import { useMutation } from "react-query";
-import axios from "axios";
 
 const useDeleteAsset = (props) => {
     const useDeleteAssetFn = async (id) => {
@@ -7,7 +7,7 @@ const useDeleteAsset = (props) => {
             const access_token = localStorage.getItem("access_token")
             if (!access_token) throw new Error("Access token not found")
 
-            const response = await axios.delete(`http://localhost:3000/asset/${id}`, {
+            const response = await heroService.delete(`/asset/${id}`, {
                 headers: {
                     "Authorization": `Bearer ${access_token}`,
                     "Content-Type": "application/json",

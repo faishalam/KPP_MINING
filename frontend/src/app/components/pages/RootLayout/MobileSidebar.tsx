@@ -2,7 +2,7 @@
 import { classNames } from "@/app/helper/classnames";
 import { useRootLayoutContext } from "@/app/providers/rootProviders/RootLayoutProviders";
 import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from "@headlessui/react";
-import { Cog6ToothIcon, HomeIcon, UsersIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Cog6ToothIcon, FolderIcon, HomeIcon, UsersIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import ModalAddAsset from "../../modal/ModalAddAsset";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -19,9 +19,9 @@ export default function MobileSidebar() {
     const pathname = usePathname()
 
     const navigation = [
-        { name: 'Dashboard', href: '/dashboard', icon: Cog6ToothIcon, current: false },
-        { name: 'Assets', href: '/assets', icon: HomeIcon, current: true },
-        { name: 'Asset Department', href: '/your-assets', icon: UsersIcon, current: false },
+        { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: false },
+        { name: 'Assets', href: '/assets', icon: FolderIcon, current: true },
+        { name: 'Assets on Department', href: '/your-assets', icon: UsersIcon, current: false },
     ]
 
     const actions = [
