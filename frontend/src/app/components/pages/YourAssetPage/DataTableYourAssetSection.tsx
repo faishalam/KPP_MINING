@@ -221,12 +221,12 @@ export default function DataTableYourAssetSection() {
                         <>
                             <ButtonSubmit
                                 type="button"
-                                btnIcon={<FaRegEdit size={23} className="text-purple-700 hover:text-purple-800 transition-all" />}
+                                btnIcon={<FaRegEdit size={23} className="text-gray-500 hover:text-purple-700 transition-all" />}
                                 onClick={() => handleEditAsset(row.id)}
                             />
                             <ButtonSubmit
                                 type="button"
-                                btnIcon={<MdDelete size={23} className="text-red-600 hover:text-red-700 transition-all" />}
+                                btnIcon={<MdDelete size={23} className="text-gray-500 hover:text-red-700 transition-all" />}
                                 onClick={() => handleDeleteYourAsset(row.id)}
                             />
                         </>
@@ -269,13 +269,13 @@ export default function DataTableYourAssetSection() {
                     ) : (
                         <>
                             <ButtonSubmit
-                                classname={`bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline mr-2`}
+                                classname={`bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline mr-2`}
                                 type={"button"}
                                 btnText="Worked"
                                 onClick={() => handleUpdateAction(row.id, 'worked')}
                             />
                             <ButtonSubmit
-                                classname={`bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline mr-2`}
+                                classname={`bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline mr-2`}
                                 type={"button"}
                                 btnText="Cancel"
                                 onClick={() => handleUpdateAction(row.id, 'canceled')}

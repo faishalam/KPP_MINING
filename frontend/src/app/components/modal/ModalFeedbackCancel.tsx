@@ -1,6 +1,7 @@
 import { DialogTitle } from "@headlessui/react";
 import ModalFeedback from "./modalLayout/ModalFeedbackLayout";
 import { SubmitHandler, useForm } from "react-hook-form";
+import ButtonSubmit from "../button/ButtonSubmit";
 
 type ModalFeedbackCancelProps = {
     openModal: { id: number | undefined, show: boolean }
@@ -42,13 +43,11 @@ export default function ModalFeedbackCancel({ openModal, setOpenModal, mutate }:
                     </div>
 
                     <div className="mt-5 sm:mt-6 p-4">
-                        <button
+                        <ButtonSubmit
                             type="submit"
-                            // onClick={() => setOpenModal(false)}
-                            className="inline-flex w-full justify-center rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        >
-                            canceled
-                        </button>
+                            classname="inline-flex w-full justify-center rounded-md bg-red-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-800 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            btnText="Cancel"
+                        />
                     </div>
                 </form>
 
