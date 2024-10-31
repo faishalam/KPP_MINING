@@ -335,6 +335,8 @@ export default function DataTableYourAssetSection() {
         setOpenModalEdit(true)
     };
 
+    console.log(role, '<<<<<')
+
     return (
         <>
             {isLoadingDataUserAssetList || isFetchingDataUserAssetList || !role ? (

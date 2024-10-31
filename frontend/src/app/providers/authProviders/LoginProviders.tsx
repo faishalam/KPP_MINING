@@ -29,6 +29,7 @@ interface LoginProviderProps {
 
 interface DataLogin {
     access_token: string
+    role: string
 }
 
 const LoginContext = createContext<LoginContextProps | undefined>(undefined);
@@ -48,6 +49,7 @@ const LoginProvider = ({ children }: LoginProviderProps) => {
     const { mutate: mutateLogin, data: dataLogin, isLoading: isLoadingLogin } = useLogin({
         onSuccess: (data: DataLogin) => {
             localStorage.setItem("access_token", data.access_token)
+            localStorage.setItem("role", data.role)
             router.push("/")
         },
         onError: (error: string) => {

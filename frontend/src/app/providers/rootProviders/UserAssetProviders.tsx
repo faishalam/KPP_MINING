@@ -30,7 +30,7 @@ export interface AssetFormInputs {
 
 
 export interface TypeYourDataAssetList {
-    no : number
+    no: number
     index: number
     id: number;
     site: string;
@@ -287,14 +287,11 @@ const UserAssetProvider = ({ children }: UserAssetProviderContext) => {
         }
     }, [dataAssetById, reset]);
 
-    //get role
     useEffect(() => {
         const role = localStorage.getItem('role')
-        if (role) {
-            setRole(role)
-        }
+        if (!role) return
+        setRole(role)
     }, [])
-
 
     return (
         <UserAssetContext.Provider value={{

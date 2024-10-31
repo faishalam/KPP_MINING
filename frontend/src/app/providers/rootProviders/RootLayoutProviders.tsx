@@ -69,17 +69,11 @@ const RootLayoutProvider = ({ children }: HomeProviderContext) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<AssetFormInputs>();
     const [openModalAddAsset, setOpenModalAddAsset] = useState<boolean>(false);
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
-    const [role, setRole] = useState<string | null>('');
-    
+    const [role, setRole] = useState<string | null>('head');
+
     const queryClient = useQueryClient()
 
-    const { data: dataUser, isLoading: isLoadingDataUser } = useUser({
-        onSuccess: (data: User) => {
-            if (data?.role) {
-                localStorage.setItem('role', data?.role)
-            }
-        }
-    })
+    const { data: dataUser, isLoading: isLoadingDataUser } = useUser()
 
 
     const { mutate: mutateAddAsset, isLoading: isLoadingAddAsset, error: errorAddAsset } = useAddAsset({
@@ -99,11 +93,11 @@ const RootLayoutProvider = ({ children }: HomeProviderContext) => {
     }
 
     useEffect(() => {
-        const role = localStorage.getItem('role');
-        if (role) {
-            setRole(role)
-        }
-    }, [dataUser]);
+        const role = localStorage.getItem('role')
+        if(!role) return
+        setRole(role)
+    }, [])
+
 
     return (
         <RootLayoutContext.Provider value={{
