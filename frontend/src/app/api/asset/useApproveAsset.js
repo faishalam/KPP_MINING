@@ -5,10 +5,8 @@ import { useMutation } from "react-query";
 
 const useApproveAsset = (props) => {
     const useApproveAssetFn = async (id) => {
-        console.log(id)
         try {
             const access_token = localStorage.getItem("access_token")
-            console.log(access_token)
             if (!access_token) throw new Error("Access token not found")
 
             const response = await heroService.patch(`/asset/${id}`, {}, {
