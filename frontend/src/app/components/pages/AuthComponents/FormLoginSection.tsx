@@ -1,3 +1,4 @@
+'use client'
 import Link from "next/link";
 import ButtonSubmit from "../../button/ButtonSubmit";
 import ContinueWithSection from "./ContinueWithSection";

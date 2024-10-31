@@ -1,4 +1,4 @@
-'use client'
+// 'use client'
 
 import HeaderForm from "@/app/components/pages/AuthComponents/HeaderForm";
 import FormLoginSection from "@/app/components/pages/AuthComponents/FormLoginSection";

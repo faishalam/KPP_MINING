@@ -1,3 +1,4 @@
+'use client'
 interface HeaderFormProps {
     title: string,
     description: string
