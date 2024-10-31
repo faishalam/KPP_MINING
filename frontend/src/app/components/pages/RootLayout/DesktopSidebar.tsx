@@ -14,7 +14,7 @@ export default function DesktopSidebar() {
     const pathname = usePathname()
 
     const navigation = [
-        { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: false },
+        { name: 'Dashboard', href: '/', icon: HomeIcon, current: false },
         { name: 'Assets', href: '/assets', icon: FolderIcon, current: true },
         { name: 'Asset on Department', href: '/your-assets', icon: UsersIcon, current: false },
     ]
