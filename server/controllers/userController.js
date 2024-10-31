@@ -53,7 +53,7 @@ class UserController {
 
             let access_token = signToken({ id: findUser.id, email: findUser.email })
 
-            res.status(200).json({ access_token: access_token })
+            res.status(200).json({ access_token: access_token, role: findUser.role })
         } catch (error) {
             console.log(error)
             if (error.name === "SequelizeValidationError") {

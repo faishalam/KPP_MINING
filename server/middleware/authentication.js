@@ -4,7 +4,6 @@ const { User } = require("../models");
 async function authentication(req, res, next) {
     try {
         let token = req.headers.authorization
-        console.log(token)
 
         if (!token) return res.status(401).json({ message: "Invalid token" })
         if (token.slice(0, 7) !== "Bearer ") return res.status(401).json({ message: "Invalid token" })
