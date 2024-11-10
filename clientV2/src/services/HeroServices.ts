@@ -6,7 +6,7 @@ const baseURL = "https://server.kppmonitoring.online/";
 
 export const HeroServices = Axios.create({
   baseURL: baseURL,
-  headers: {
+  headers: { 
     "Content-Type": "application/json",
   },
 });

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function AuthLayoutComponents({
   children,
 }: Readonly<{
@@ -7,18 +9,22 @@ export default function AuthLayoutComponents({
     <>
       <div className="max-w-full w-full bg-white flex min-h-screen">
         <section className="max-w-full w-full flex flex-col justify-center items-center">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReW8lr0R3L6JBwPdJVTnbJ38rA2QWLWTfwSw&s"
+          <Image
+            src={'/assets/logoGreen.png'}
             alt="logo"
             className="w-full max-w-xs object-cover"
+            width={400}
+            height={400}
           />
             {children}
         </section>
 
         <section className="hidden md:block md:relative md:max-w-full md:w-full ">
-          <img
-            src="https://www.kppmining.com/assets/images/kpp-home-banner.png"
+          <Image
+            src="/assets/kpp-home-banner.png"
             alt="image"
+            width={1000}
+            height={1000}
             className="w-full max-w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black opacity-60"></div>

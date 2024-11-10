@@ -6,6 +6,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import ModalAddAsset from "../../modal/ModalAddAsset"
 import Cookies from "js-cookie"
+import Image from "next/image"
 
 export default function DesktopSidebar() {
     const {
@@ -35,11 +36,12 @@ export default function DesktopSidebar() {
         <>
             <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
                 <div className="flex bg-[#0e342d] border-gray-500 shadow-xl items-center p-1 border-b">
-                    <img
-                        src="https://www.kppmining.com/assets/images/logo.svg"
+                    <Image
+                        src="/assets/logoWhite.png"
                         alt="Logo KPP Mining"
-                        className="filter brightness-0 invert"
-                        style={{ width: '80px', height: '50px' }} 
+                        width={80}
+                        height={80}
+                        className="p-3"
                     />
                     <p className="text-white font-medium">KPP MONITORING</p> {/* Tambahkan margin jika perlu */}
                 </div>
