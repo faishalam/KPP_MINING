@@ -4,6 +4,7 @@ import { Bars3Icon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useRootLayoutContext } from "@/providers/rootProviders/RootLayoutProviders";
 import Link from "next/link";
 import Image from "next/image";
+import Cookies from "js-cookie";
 
 const userNavigation = [{ name: "Sign out" }];
 
@@ -11,6 +12,10 @@ export default function Navbar() {
   const { dataUser, setSidebarOpen, isLoadingDataUser } =
     useRootLayoutContext();
 
+    const handleLogout = () => {
+        Cookies.remove("Authorization");
+        localStorage.clear()
+    }
   return (
     <>
       <div className="sticky top-0 z-40 flex shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
@@ -82,7 +87,7 @@ export default function Navbar() {
                   <MenuItem key={item.name}>
                     <Link
                       href={"/login"}
-                      onClick={() => localStorage.removeItem("access_token")}
+                      onClick={() => handleLogout()}
                       className="block px-3 py-1 text-sm leading-6 text-gray-900 data-[focus]:bg-gray-50"
                     >
                       {item.name}
