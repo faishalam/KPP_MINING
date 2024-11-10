@@ -5,6 +5,7 @@ import { useRootLayoutContext } from "@/providers/rootProviders/RootLayoutProvid
 import Link from "next/link";
 import Image from "next/image";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 const userNavigation = [{ name: "Sign out" }];
 
@@ -12,9 +13,12 @@ export default function Navbar() {
   const { dataUser, setSidebarOpen, isLoadingDataUser } =
     useRootLayoutContext();
 
+    const router = useRouter()
+
     const handleLogout = () => {
         Cookies.remove("Authorization");
         localStorage.clear()
+        router.push('/login')
     }
   return (
     <>

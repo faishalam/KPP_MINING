@@ -3,7 +3,7 @@ import { classNames } from "@/helper/classnames"
 import { useRootLayoutContext } from "@/providers/rootProviders/RootLayoutProviders"
 import { Cog6ToothIcon, FolderIcon, HomeIcon, UsersIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import ModalAddAsset from "../../modal/ModalAddAsset"
 import Cookies from "js-cookie"
 import Image from "next/image"
@@ -14,6 +14,7 @@ export default function DesktopSidebar() {
         role
     } = useRootLayoutContext()
     const pathname = usePathname()
+    const router = useRouter()
 
     const navigation = [
         { name: 'Dashboard', href: '/', icon: HomeIcon, current: false },
@@ -29,6 +30,7 @@ export default function DesktopSidebar() {
     const handleLogout = () => {
         Cookies.remove("Authorization");
         localStorage.clear()
+        router.push('/login')
     }
 
 
