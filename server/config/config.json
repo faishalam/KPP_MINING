@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "postgres",
-    "database": "project_opal",
+    "database": "asset_management_kpp",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
