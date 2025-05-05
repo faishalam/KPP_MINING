@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const baseURL = "https://server.kppmonitoring.online/";
+const baseURL = "https://kppassetmanagement.cloud/";
 
 export const AuthServices = Axios.create({
   baseURL: baseURL,
