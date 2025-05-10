@@ -42,7 +42,6 @@ export default function HomePage() {
     if (mode === "add") return "Add Asset";
     if (mode === "edit") return "Edit Asset";
   }, [mode]);
-  console.log(dataAssetById?.progress?.length);
   return (
     <>
       {isLoadingDataAssetList ? (

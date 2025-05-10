@@ -28,9 +28,7 @@ import {
   TAssetListCol,
   TypeDataAssetList,
 } from "../types";
-import {
-  TMasterProgressCol,
-} from "../../progress-management/types";
+import { TMasterProgressCol } from "../../progress-management/types";
 
 const useAssetManagementHooks = () => {
   const { register, handleSubmit, control, reset } = useForm<AssetFormInputs>();
@@ -180,7 +178,7 @@ const useAssetManagementHooks = () => {
 
   const onInvalidSubmit = (errors: FieldErrors<AssetFormInputs>) => {
     Object.entries(errors).forEach(([key, error]) => {
-      console.log(key)
+      console.log(key);
       if (error?.message) {
         AlertError(error.message);
       }
@@ -573,7 +571,7 @@ const useAssetManagementHooks = () => {
     isLoadingEditAsset,
     mode,
     progressListColumnDef,
-    onDownloadData
+    onDownloadData,
   };
 };
 

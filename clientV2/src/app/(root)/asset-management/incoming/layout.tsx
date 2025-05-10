@@ -1,6 +1,8 @@
 "use client";
 
+import { Suspense } from "react";
 import { AssetManagementProvider } from "./hooks";
+import { BlockingLoader } from "@/components/componentsV2/atoms/loader";
 
 export default function AssetManagementLayout({
   children,
@@ -9,9 +11,17 @@ export default function AssetManagementLayout({
 }) {
   return (
     <>
-      <AssetManagementProvider>
-        <div>{children}</div>
-      </AssetManagementProvider>
+      <Suspense
+        fallback={
+          <div>
+            <BlockingLoader />
+          </div>
+        }
+      >
+        <AssetManagementProvider>
+          <div>{children}</div>
+        </AssetManagementProvider>
+      </Suspense>
     </>
   );
 }

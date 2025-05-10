@@ -8,7 +8,6 @@ import { Button, Typography } from "@mui/material";
 import { CAutoComplete, CInput } from "@/components/componentsV2/atoms";
 import DataGrid from "@/components/componentsV2/molecules/datagrid";
 
-
 export default function AssetManagement() {
   const router = useRouter();
   const {

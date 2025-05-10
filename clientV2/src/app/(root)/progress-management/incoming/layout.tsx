@@ -1,7 +1,8 @@
 "use client";
 
+import { Suspense } from "react";
 import { ProgressAssetManagementProvider } from "./hooks";
-
+import { BlockingLoader } from "@/components/componentsV2/atoms/loader";
 
 export default function ProgressAssetLayout({
   children,
@@ -10,9 +11,17 @@ export default function ProgressAssetLayout({
 }) {
   return (
     <>
-      <ProgressAssetManagementProvider>
-        {children}
-      </ProgressAssetManagementProvider>
+      <Suspense
+        fallback={
+          <div>
+            <BlockingLoader />
+          </div>
+        }
+      >
+        <ProgressAssetManagementProvider>
+          {children}
+        </ProgressAssetManagementProvider>
+      </Suspense>
     </>
   );
 }
