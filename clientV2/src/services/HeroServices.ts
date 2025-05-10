@@ -1,7 +1,8 @@
 import Axios from "axios";
 import Cookies from "js-cookie"; 
 
-const baseURL = "https://kppassetmanagement.cloud/";
+// const baseURL = "https://kppassetmanagement.cloud/";
+const baseURL = "http://localhost:3000/";
 
 export const HeroServices = Axios.create({
   baseURL: baseURL,

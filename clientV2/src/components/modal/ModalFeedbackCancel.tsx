@@ -4,9 +4,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import ButtonSubmit from "../button/ButtonSubmit";
 
 type ModalFeedbackCancelProps = {
-    openModal: { id: number | undefined, show: boolean }
-    setOpenModal: (newOpen: { id: number | undefined, show: boolean }) => void
-    mutate: (params: { id: number | undefined, payload: { keterangan: string, statusRealisasi: string } }) => void
+    openModal: { id: string | undefined, show: boolean }
+    setOpenModal: (newOpen: { id: string | undefined, show: boolean }) => void
+    mutate: (params: { id: string | undefined, payload: { keterangan: string, statusRealisasi: string } }) => void
 }
 
 type FormData = {

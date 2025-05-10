@@ -2,6 +2,7 @@
 import RootLayoutComponents from "@/components/layout/RootLayoutComponents";
 import "../../app/globals.css";
 import { RootProvider } from "../../components/queryProviders/RootProvider";
+import { RootLayoutProvider } from "@/providers/rootProviders/RootLayoutProviders";
 
 export default function RootLayout({
   children,
@@ -10,7 +11,9 @@ export default function RootLayout({
 }>) {
   return (
     <RootProvider>
-      <RootLayoutComponents>{children}</RootLayoutComponents>
+      <RootLayoutProvider>
+        <RootLayoutComponents>{children}</RootLayoutComponents>
+      </RootLayoutProvider>
     </RootProvider>
   );
 }

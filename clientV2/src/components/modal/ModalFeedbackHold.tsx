@@ -5,9 +5,9 @@ import ButtonSubmit from "../button/ButtonSubmit";
 
 
 type ModalFeedbackHoldProps = {
-    openModal: { id: number | undefined, show: boolean }
-    setOpenModal: (newOpen: { id: number | undefined, show: boolean }) => void
-    mutate: (params: { id: number | undefined, payload: { keterangan: string, statusRealisasi: string, planRealisasi: string } }) => void
+    openModal: { id: string | undefined, show: boolean }
+    setOpenModal: (newOpen: { id: string | undefined, show: boolean }) => void
+    mutate: (params: { id: string | undefined, payload: { keterangan: string, statusRealisasi: string, planRealisasi: string } }) => void
 }
 
 type FormData = {

@@ -6,10 +6,7 @@ import { FaRegEdit } from "react-icons/fa";
 import ButtonSubmit from "../../button/ButtonSubmit";
 import { MdDelete } from "react-icons/md";
 import ModalEditAsset from "../../modal/ModalEditAsset";
-import { useState } from "react";
 import Swal from "sweetalert2";
-import ModalFeedbackCancel from "../../modal/ModalFeedbackCancel";
-import ModalFeedbackHold from "../../modal/ModalFeedbackHold";
 import LoadingSkeletonTable from "../../loading/LoadingSkeletonTable";
 
 export default function DataTableYourAssetSection() {
@@ -26,8 +23,8 @@ export default function DataTableYourAssetSection() {
         isFetchingDataUserAssetList,
         role
     } = useUserAssetContext()
-    const [openModalCancel, setOpenModalCancel] = useState<{ id: number | undefined, show: boolean }>({ id: undefined, show: false });
-    const [openModalHold, setOpenModalHold] = useState<{ id: number | undefined, show: boolean }>({ id: undefined, show: false });
+    // const [openModalCancel, setOpenModalCancel] = useState<{ id: number | undefined, show: boolean }>({ id: undefined, show: false });
+    // const [openModalHold, setOpenModalHold] = useState<{ id: number | undefined, show: boolean }>({ id: undefined, show: false });
 
     const columnYourAsset = [
         {
@@ -323,10 +320,10 @@ export default function DataTableYourAssetSection() {
             mutateUpdateActionAsset({ id: id, payload: { keterangan: 'working on', statusRealisasi: statusRealisasi } })
         }
         if (statusRealisasi === 'canceled') {
-            setOpenModalCancel(() => ({ show: true, id: id }))
+            // setOpenModalCancel(() => ({ show: true, id: id }))
         }
         if (statusRealisasi === 'hold') {
-            setOpenModalHold(() => ({ show: true, id: id }))
+            // setOpenModalHold(() => ({ show: true, id: id }))
         }
     }
 
@@ -369,7 +366,7 @@ export default function DataTableYourAssetSection() {
             )}
             <ModalEditAsset />
 
-            <ModalFeedbackCancel
+            {/* <ModalFeedbackCancel
                 openModal={openModalCancel}
                 setOpenModal={setOpenModalCancel}
                 mutate={mutateUpdateActionAsset}
@@ -379,7 +376,7 @@ export default function DataTableYourAssetSection() {
                 openModal={openModalHold}
                 setOpenModal={setOpenModalHold}
                 mutate={mutateUpdateActionAsset}
-            />
+            /> */}
         </>
     )
 }

@@ -5,7 +5,7 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import useLogin from "../../api/login/useLogin";
 import { useRouter } from "next/navigation";
 import { AlertError, AlertSuccess } from "@/components/alert/AlertToastify";
-import useRegister from "@/api/register/useRegister";
+import useRegister from "@/api/user/useRegister";
 import Cookies from "js-cookie";
 
 
@@ -86,7 +86,7 @@ const AuthProviders = ({ children }: AuthProvidersProps) => {
         expires: 7,
       });
       localStorage.setItem("role", data.role);
-      router.push("/");
+      router.push("/dashboard");
     },
     onError: (error: string) => {
       AlertError(error);

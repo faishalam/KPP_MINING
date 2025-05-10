@@ -1,10 +1,10 @@
-import { AuthServices } from "@/services/AuthServices";
+import { HeroServices } from "@/services/HeroServices";
 import { useMutation } from "react-query";
 
 const useRegister = (props) => {
     const userRegisterFn = async (formRegister) => {
         try {
-            const response = await AuthServices.post(`/register`, formRegister);
+            const response = await HeroServices.post(`/register`, formRegister);
 
             const { status } = response
 
