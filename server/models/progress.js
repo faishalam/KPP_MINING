@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Asset extends Model {
+  class Progress extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,231 +9,196 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Asset.belongsTo(models.User, { foreignKey: "userId" });
+      Progress.belongsTo(models.User, { foreignKey: "userId" });
     }
   }
-  Asset.init(
+  Progress.init(
     {
-      site: {
+      dept: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Site is required",
+            msg: "Departmenet is required",
           },
           notEmpty: {
-            msg: "Site is required",
+            msg: "Departmenet is required",
           },
         },
       },
-      namaAsset: {
+      projectNumber: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Nama asset is required",
+            msg: "Project Number is required",
           },
           notEmpty: {
-            msg: "Nama asset is required",
+            msg: "Project Number is required",
           },
         },
       },
       assetNumber: {
         type: DataTypes.STRING,
-        unique: true,
-        allowNull: false, 
-      },      
-      kodePN: {
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Asset Number is required",
+          },
+          notEmpty: {
+            msg: "Asset Number is required",
+          },
+        },
+      },
+      projectDescription: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Kode PN is required",
+            msg: "Project description is required",
           },
           notEmpty: {
-            msg: "Kode PN is required",
+            msg: "Project description is required",
           },
         },
       },
-      nilaiAsset: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Nilai asset is required",
-          },
-          notEmpty: {
-            msg: "Nilai asset is required",
-          },
-        },
-      },
-      quantityAsset: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Quantity asset is required",
-          },
-          notEmpty: {
-            msg: "Quantity asset is required",
-          },
-        },
-      },
-      totalNilaiAsset: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "Total Nilai Asset is required",
-          },
-          notEmpty: {
-            msg: "Total Nilai Asset is required",
-          },
-        },
-      },
-      actionPlan: {
+      totalBudget: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Action Plan is required",
+            msg: "Total Budget is required",
           },
           notEmpty: {
-            msg: "Action Plan is required",
+            msg: "Total Budget is required",
           },
         },
       },
-      userDept: {
+      prOutstanding: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: "User Dept is required",
+            msg: "Total PR outstanding is required",
           },
           notEmpty: {
-            msg: "User Dept is required",
+            msg: "Total PR outstanding is required",
           },
         },
       },
-      depresiasi: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 48,
-        validate: {
-          notNull: {
-            msg: "Depresiasi is required",
-          },
-          notEmpty: {
-            msg: "Depresiasi is required",
-          },
-        },
-      },
-      remark: {
+      poOutstanding: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Remark is required",
+            msg: "Total PO outstanding is required",
           },
           notEmpty: {
-            msg: "Remark is required",
+            msg: "Total PO outstanding is required",
           },
         },
       },
-      areaKerja: {
+      totalRecipt: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Area Kerja is required",
+            msg: "Total Recipt is required",
           },
           notEmpty: {
-            msg: "Area Kerja is required",
+            msg: "Total Recipt is required",
           },
         },
       },
-      benefit: {
+      totalPr: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Benefit is required",
+            msg: "Total PR is required",
           },
           notEmpty: {
-            msg: "Benefit is required",
+            msg: "Total PR is required",
           },
         },
       },
-      planRealisasi: {
+      balance: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Balance is required",
+          },
+          notEmpty: {
+            msg: "Balance is required",
+          },
+        },
+      },
+      bulanRealisasi: {
         type: DataTypes.DATE,
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Plan realisasi is required",
+            msg: "Bulan Realiasasi is required",
           },
           notEmpty: {
-            msg: "Plan realisasi is required",
+            msg: "Bulan Realiasasi is required",
           },
         },
       },
-      realisasiAsset: {
-        type: DataTypes.DATE,
+      remarks: {
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Realisasi Asset is required",
+            msg: "Remarks is required",
           },
           notEmpty: {
-            msg: "Realisasi Asset is required",
+            msg: "Remarks is required",
           },
         },
       },
-      statusApproval: {
+      progressCapex: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: "waiting",
         validate: {
           notNull: {
-            msg: "Status Approval is required",
+            msg: "Progress Capex is required",
           },
           notEmpty: {
-            msg: "Status Approval is required",
+            msg: "Progress Capex is required",
           },
         },
       },
-      statusRealisasi: {
+      posisiUnit: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: "realisasi waiting",
         validate: {
           notNull: {
-            msg: "Status Realisasi is required",
+            msg: "Posisi Unit is required",
           },
           notEmpty: {
-            msg: "Status Realisasi is required",
+            msg: "Posisi Unit is required",
           },
         },
-      },
-      keterangan: {
-        type: DataTypes.STRING,
       },
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
           notNull: {
-            msg: "is required",
+            msg: "User ID is required",
           },
           notEmpty: {
-            msg: "is required",
+            msg: "User IDis required",
           },
         },
       },
     },
     {
       sequelize,
-      modelName: "Asset",
+      modelName: "Progress",
     }
   );
-  return Asset;
+  return Progress;
 };

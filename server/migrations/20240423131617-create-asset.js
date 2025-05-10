@@ -1,83 +1,87 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Assets', {
+    await queryInterface.createTable("Assets", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+      },
+      assetNumber: {
+        type: Sequelize.STRING,
+        unique: true, 
       },
       site: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       namaAsset: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       kodePN: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       nilaiAsset: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       quantityAsset: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       totalNilaiAsset: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       actionPlan: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       userDept: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       depresiasi: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       remark: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       areaKerja: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       benefit: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       realisasiAsset: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       planRealisasi: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       statusApproval: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       statusRealisasi: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       keterangan: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       userId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Users',
-          key: 'id'
-        }
+          model: "Users",
+          key: "id",
+        },
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Assets');
-  }
+    await queryInterface.dropTable("Assets");
+  },
 };

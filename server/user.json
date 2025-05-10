@@ -9,6 +9,24 @@
         "site": "TMRB"
     },
     {
+        "username": "superadmin",
+        "password": "P@ssw0rdadmin",
+        "email": "superadmin@gmail.com",
+        "role": "super_admin",
+        "district": "Jakarta",
+        "department": "Plant",
+        "site": "TMRB"
+    },
+    {
+        "username": "useradmin",
+        "password": "P@ssw0rdadmin",
+        "email": "useradmin@gmail.com",
+        "role": "user_admin",
+        "district": "Jakarta",
+        "department": "Plant",
+        "site": "TMRB"
+    },
+    {
         "username": "head-plant-inde",
         "password": "headplantinde",
         "email": "headplantindeb@gmail.com",
