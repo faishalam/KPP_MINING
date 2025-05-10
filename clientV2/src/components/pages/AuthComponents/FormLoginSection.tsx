@@ -74,10 +74,6 @@ export default function FormLoginSection() {
                         btnText="Login"
                         btnLoading={isLoadingLogin}
                     />
-                    <p className="text-sm text-gray-500">
-                        No account?
-                        <Link href={'/register'} className="underline"> Sign up</Link>
-                    </p>
                 </div>
                 <ContinueWithSection />
             </form >
