@@ -1,58 +1,84 @@
 "use client";
-import { classNames } from "@/helper/classnames";
+import { InquiryIcon } from "@/assets/svg/inquiry-icon";
+import { HomeIcon } from "@/assets/svg/home-icon";
 import {
   Dialog,
   DialogBackdrop,
   DialogPanel,
   TransitionChild,
 } from "@headlessui/react";
-import {
-  Cog6ToothIcon,
-  FolderIcon,
-  HomeIcon,
-  UsersIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import Cookies from "js-cookie";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import useRootLayoutContext from "@/app/(root)/hooks";
+import CLink from "@/components/componentsV2/atoms/link";
+import { useMemo } from "react";
 
 export default function MobileSidebar() {
-  const { sidebarOpen, setSidebarOpen, setOpenModalAddAsset, role } =
-    useRootLayoutContext();
+  const { sidebarOpen, setSidebarOpen, role } = useRootLayoutContext();
 
   const pathname = usePathname();
-  const router = useRouter()
 
-  const navigation = [
-    { name: "Dashboard", href: "/", icon: HomeIcon, current: false },
-    { name: "Assets", href: "/assets", icon: FolderIcon, current: true },
-    {
-      name: "Assets on Department",
-      href: "/your-assets",
-      icon: UsersIcon,
-      current: false,
-    },
-  ];
-
-  const actions = [
-    {
-      id: 1,
-      name: "Add Assets",
-      onclick: () => setOpenModalAddAsset(true),
-      initial: "A",
-      current: false,
-    },
-    { id: 2, name: "Guide Apps", href: "#", initial: "G", current: false },
-  ].filter((action) => !(role === "head" && action.name === "Add Assets"));
-
-  const handleLogout = () => {
-    Cookies.remove("Authorization");
-    localStorage.clear();
-    router.push("/login");
+  const selectedMenu = (path: string) => {
+    if (path === "/inquiry") {
+      return pathname.includes(path) && !pathname.includes("/inquiry-approval");
+    }
+    return pathname.includes(path);
   };
+
+  const handleShowSidebar = useMemo(() => {
+    return (
+      <>
+        <div className="w-full">
+          <MenuItems
+            Icon={HomeIcon}
+            title="Dashboard"
+            selected={selectedMenu("/dashboard")}
+            href="/dashboard"
+          />
+          <MenuItems
+            title="Asset Management"
+            href="/asset-management/incoming"
+            Icon={InquiryIcon}
+            selected={
+              selectedMenu("/asset-management/incoming") ||
+              selectedMenu("/asset-management/department")
+            }
+          />
+          <SubMenuItems
+            title="Incoming Asset"
+            selected={selectedMenu("/asset-management/incoming")}
+            href="/asset-management/incoming"
+            hide={!selectedMenu("/asset-management")}
+          />
+          <SubMenuItems
+            title="Asset on Department"
+            selected={selectedMenu("/asset-management/department")}
+            href="/asset-management/department"
+            hide={!selectedMenu("/asset-management")}
+          />
+          <MenuItems
+            title="Capex Management"
+            href="/progress-management/incoming"
+            Icon={InquiryIcon}
+            selected={selectedMenu("/progress-management")}
+          />
+          <SubMenuItems
+            title="Capex Incoming"
+            selected={selectedMenu("/progress-management/incoming")}
+            href="/progress-management/incoming"
+            hide={!selectedMenu("/progress-management")}
+          />
+          <MenuItems
+            title="User Management"
+            href="/user-management"
+            Icon={InquiryIcon}
+            selected={selectedMenu("/user-management")}
+          />
+        </div>
+      </>
+    );
+  }, [role, selectedMenu]);
 
   return (
     <>
@@ -98,71 +124,9 @@ export default function MobileSidebar() {
                 />
                 <p className="text-white font-medium">KPP MONITORING</p>
               </div>
-              <nav className="flex flex-1 flex-col px-6 pb-4 ">
-                <ul role="list" className="flex flex-1 flex-col gap-y-7">
-                  <li>
-                    <ul role="list" className="-mx-2 space-y-1">
-                      {navigation.map((item) => (
-                        <li key={item.name}>
-                          <Link
-                            href={item.href}
-                            className={classNames(
-                              item.href === pathname
-                                ? "bg-[#207262] text-white"
-                                : "text-white hover:bg-[#207262] hover:w-full hover:text-white",
-                              "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6"
-                            )}
-                          >
-                            <item.icon
-                              aria-hidden="true"
-                              className="h-6 w-6 shrink-0"
-                            />
-                            {item.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                  <li>
-                    <div className="text-xs font-semibold leading-6 text-gray-400">
-                      Settings
-                    </div>
-                    <ul role="list" className="-mx-2 mt-2 space-y-1">
-                      {actions.map((item) => (
-                        <li key={item.name}>
-                          <button
-                            onClick={item.onclick}
-                            className={classNames(
-                              item.current
-                                ? "bg-[#207262] text-white"
-                                : "text-white hover:bg-[#207262] hover:w-full hover:text-white",
-                              "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6"
-                            )}
-                          >
-                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-green-900 bg-green-800 text-[0.625rem] font-medium text-white group-hover:text-white">
-                              {item.initial}
-                            </span>
-                            <span className="truncate">{item.name}</span>
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                  <li className="mt-auto">
-                    <Link
-                      onClick={() => handleLogout()}
-                      className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-white hover:bg-[#207262] hover:w-full hover:text-white"
-                      href="/login"
-                    >
-                      <Cog6ToothIcon
-                        aria-hidden="true"
-                        className="h-6 w-6 shrink-0"
-                      />
-                      Logout
-                    </Link>
-                  </li>
-                </ul>
-              </nav>
+              <div className="bg-[#0e342d] h-screen border-gray-500 shadow-xl items-center p-1 border-b">
+                {handleShowSidebar}
+              </div>
             </div>
           </DialogPanel>
         </div>
@@ -170,3 +134,61 @@ export default function MobileSidebar() {
     </>
   );
 }
+
+type TMenuItemProps = {
+  selected: boolean;
+  title: string;
+  Icon: React.FC<{ fill?: boolean }>;
+  href?: string;
+};
+
+const MenuItems: React.FC<TMenuItemProps> = ({
+  selected,
+  title,
+  Icon,
+  href,
+}) => {
+  return (
+    <CLink href={href ? href : ""} prefetch>
+      <div
+        className={`flex hover:bg-[#207262] rounded-sm p-3 gap-2 items-center cursor-pointer ${
+          selected ? "bg-[#207262]" : ""
+        }`}
+      >
+        <Icon fill={selected} />
+        <small className="font-bold text-white">{title}</small>
+      </div>
+    </CLink>
+  );
+};
+type TSubMenuProps = {
+  selected?: boolean;
+  title?: string;
+  hide?: boolean;
+  href?: string;
+  Icon?: React.FC<{ fill?: boolean }>;
+};
+const SubMenuItems: React.FC<TSubMenuProps> = ({
+  selected,
+  title,
+  hide,
+  href,
+  Icon,
+}) => {
+  return (
+    <CLink href={href ? href : ""} prefetch>
+      <div
+        className={`flex text-white rounded-sm hover:bg-[#207262] p-3 gap-2 items-center cursor-pointer ${
+          selected ? "bg-[#207262]" : ""
+        } ${hide ? "hidden" : ""}`}
+      >
+        {Icon && <Icon fill={selected} />}
+        <small
+          className={`font-bold text-white ${Icon ? "" : "pl-[24px] ml-2"}`}
+        >
+          {title}
+        </small>
+      </div>
+    </CLink>
+  );
+};
