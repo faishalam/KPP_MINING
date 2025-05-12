@@ -8,8 +8,9 @@ import useAssetManagement from "../hooks";
 import ButtonSubmit from "@/components/button/ButtonSubmit";
 import CInputImage from "@/components/componentsV2/atoms/input-file/image";
 import { Controller } from "react-hook-form";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { BlockingLoader } from "@/components/componentsV2/atoms/loader";
+import ModalViewPhoto from "./ModalVIewPhoto";
 
 export default function ModalUploader() {
   const {
@@ -19,12 +20,17 @@ export default function ModalUploader() {
     isLoadingUploadFoto,
     control,
     handleSubmit,
+    dataAssetById,
     mode,
   } = useAssetManagement();
   const title = useMemo(() => {
     if (mode === "view") return "View Photo";
     if (mode === "edit") return "Edit Photo";
   }, [mode]);
+  const [openModalView, setOpenModalView] = useState<{
+    show: boolean;
+    data: string;
+  }>();
   return (
     <Dialog
       open={openModalFoto}
@@ -38,7 +44,7 @@ export default function ModalUploader() {
 
       <div className="fixed max-w-full inset-0 z-10 w-screen overflow-y-auto">
         {isLoadingUploadFoto && <BlockingLoader />}
-        <div className="flex max-w-full min-h-full items-center justify-center">
+        <div className="flex max-w-full min-h-full items-center justify-center px-10">
           <DialogPanel
             transition
             className="relative  transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in max-w-2xl w-full data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
@@ -53,40 +59,58 @@ export default function ModalUploader() {
               <div className="flex flex-col gap-3 mt-4">
                 <form onSubmit={handleSubmit(onSubmitFoto)}>
                   <div className="w-full flex flex-col sm:grid grid-cols-2 gap-2 sm:gap-x-7 sm:gap-y-3 px-4 py-2">
-                    <Controller
-                      name="fotoAsset"
-                      control={control}
-                      render={({ field: { onChange, value } }) => (
-                        <CInputImage
-                          id="foto-asset"
-                          file={value}
-                          label="Foto Asset"
-                          disabled={mode === "view"}
-                          description="Maksimal 5MB. PNG/JPEG. Rekomendasi ukuran 200x200."
-                          className="w-full"
-                          onChange={(file) => {
-                            onChange(file);
-                          }}
-                        />
-                      )}
-                    />
-                    <Controller
-                      name="fotoTandaTerima"
-                      control={control}
-                      render={({ field: { onChange, value } }) => (
-                        <CInputImage
-                          id="foto-tanda-terima"
-                          file={value}
-                          disabled={mode === "view"}
-                          label="Foto Tanda Terima"
-                          description="Maksimal 5MB. PNG/JPEG. Rekomendasi ukuran 200x200."
-                          className="w-full"
-                          onChange={(file) => {
-                            onChange(file);
-                          }}
-                        />
-                      )}
-                    />
+                    <div
+                      onClick={() =>
+                        setOpenModalView({
+                          show: true,
+                          data: dataAssetById?.fotoAsset?.base64,
+                        })
+                      }
+                    >
+                      <Controller
+                        name="fotoAsset"
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                          <CInputImage
+                            id="foto-asset"
+                            file={value}
+                            label="Foto Asset"
+                            disabled={mode === "view"}
+                            description="Maksimal 5MB. PNG/JPEG. Rekomendasi ukuran 200x200."
+                            className="w-full"
+                            onChange={(file) => {
+                              onChange(file);
+                            }}
+                          />
+                        )}
+                      />
+                    </div>
+                    <div
+                      onClick={() =>
+                        setOpenModalView({
+                          show: true,
+                          data: dataAssetById?.fotoTandaTerima?.base64,
+                        })
+                      }
+                    >
+                      <Controller
+                        name="fotoTandaTerima"
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                          <CInputImage
+                            id="foto-tanda-terima"
+                            file={value}
+                            disabled={mode === "view"}
+                            label="Foto Tanda Terima"
+                            description="Maksimal 5MB. PNG/JPEG. Rekomendasi ukuran 200x200."
+                            className="w-full"
+                            onChange={(file) => {
+                              onChange(file);
+                            }}
+                          />
+                        )}
+                      />
+                    </div>
                   </div>
 
                   {mode === "view" ? (
@@ -112,6 +136,12 @@ export default function ModalUploader() {
                 </form>
               </div>
             </div>
+            {openModalView?.show && (
+              <ModalViewPhoto
+                openModalView={openModalView}
+                setOpenModalView={setOpenModalView}
+              />
+            )}
           </DialogPanel>
         </div>
       </div>

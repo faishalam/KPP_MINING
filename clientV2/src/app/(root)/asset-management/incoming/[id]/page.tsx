@@ -55,12 +55,12 @@ export default function HomePage() {
             className="flex items-center gap-2 h-[50px] justify-between"
           >
             <div className="flex gap-2 justify-center items-center">
-              <Link
-                href="/asset-management/incoming"
+              <div
+                onClick={() => router.back()}
                 className="max-w-[40px] w-full bg-[#154940] hover:bg-[#0e342d] rounded flex justify-center items-center p-2"
               >
                 <BackIcon className="text-white" />
-              </Link>
+              </div>
 
               <div className="font-bold">{title}</div>
             </div>
@@ -346,7 +346,7 @@ export default function HomePage() {
                         btnText="Cancel"
                         onClick={handleCancel}
                       />
-                      {(mode !== "view" && role === "user") && (
+                      {mode !== "view" && role === "user" && (
                         <ButtonSubmit
                           type={"submit"}
                           classname={
