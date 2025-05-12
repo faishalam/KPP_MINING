@@ -11,7 +11,7 @@ module.exports = {
       },
       assetNumber: {
         type: Sequelize.STRING,
-        unique: true, 
+        unique: true,
       },
       site: {
         type: Sequelize.STRING,
@@ -63,6 +63,14 @@ module.exports = {
       },
       keterangan: {
         type: Sequelize.STRING,
+      },
+      fotoAsset: {
+        type: Sequelize.JSONB, 
+        allowNull: true,
+      },
+      fotoTandaTerima: {
+        type: Sequelize.JSONB,
+        allowNull: true,
       },
       userId: {
         type: Sequelize.INTEGER,

@@ -41,8 +41,8 @@ module.exports = (sequelize, DataTypes) => {
       assetNumber: {
         type: DataTypes.STRING,
         unique: true,
-        allowNull: false, 
-      },      
+        allowNull: false,
+      },
       kodePN: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -214,6 +214,14 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      fotoAsset: {
+        type: DataTypes.JSONB,  
+        allowNull: true,
+      },
+      fotoTandaTerima: {
+        type: DataTypes.JSONB,  
+        allowNull: true,
+      },      
       keterangan: {
         type: DataTypes.STRING,
       },

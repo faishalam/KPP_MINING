@@ -1,11 +1,19 @@
+require("dotenv").config();
 const { Asset, User, Progress } = require("../models");
 const moment = require("moment-timezone");
 const cron = require("node-cron");
 const { sendEmail } = require("../helpers/nodemailer");
-const { Op, where, col } = require("sequelize");
+const { Op } = require("sequelize");
+const cloudinary = require("cloudinary").v2;
 
 const nowWIB = moment().format("YYYY-MM-DD");
 moment.tz.setDefault("Asia/Jakarta");
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 cron.schedule(
   "0 09 * * *",
@@ -68,7 +76,7 @@ cron.schedule(
 class AssetController {
   static async getAsset(req, res) {
     try {
-      const { filter, search, page = 1, limit = 10, enabled } = req.query;
+      const { search, page = 1, limit = 10, enabled } = req.query;
 
       if (enabled) {
         const response = await Asset.findAll({
@@ -186,7 +194,7 @@ class AssetController {
 
       const asset = await Asset.findOne({
         where: { id },
-        raw: true, 
+        raw: true,
       });
 
       if (!asset) {
@@ -200,10 +208,8 @@ class AssetController {
 
       const response = {
         ...asset,
-        progress: progress ? [progress] : [] 
+        progress: progress ? [progress] : [],
       };
-
-      console.log(response, "ini response");
       return res.status(200).json(response);
     } catch (error) {
       console.error(error);
@@ -330,7 +336,7 @@ class AssetController {
 
       res.status(201).json(newAsset);
     } catch (error) {
-      // console.log(error)
+      console.log(error);
       if (error.name === "SequelizeValidationError") {
         return res.status(400).json({ message: error.errors[0].message });
       }
@@ -496,7 +502,7 @@ class AssetController {
 
   static async updateAssetStatus(req, res) {
     try {
-      const { id } = req.body;
+      const { statusApproval, id } = req.body;
       const role = req.user.role;
       if (role !== "head")
         return res
@@ -508,7 +514,7 @@ class AssetController {
       if (!findAsset.length)
         return res.status(404).json({ message: "No progress entries found" });
       await Asset.update(
-        { statusApproval: "approved" },
+        { statusApproval: statusApproval },
         {
           where: {
             id: id,
@@ -635,6 +641,67 @@ class AssetController {
       res.status(200).json({ message: "Asset action updated successfully" });
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  static async updateAssetFoto(req, res) {
+    try {
+      const { id } = req.params;
+      const { fotoAsset, fotoTandaTerima } = req.body.data;
+
+      const { role } = req.user;
+      if (role !== "user_admin") {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      const asset = await Asset.findByPk(id);
+      if (!asset) {
+        return res.status(404).json({ message: "Asset not found" });
+      }
+
+      const updates = {};
+      const responseData = {};
+      if (fotoAsset?.base64) {
+        const upload = await cloudinary.uploader.upload(fotoAsset.base64);
+        updates.fotoAsset = upload.secure_url;
+        responseData.fotoAsset = {
+          id: fotoAsset.id,
+          base64: fotoAsset.base64,
+          filename: fotoAsset.filename,
+          filetype: fotoAsset.filetype,
+          filesize: fotoAsset.filesize,
+          url: upload.secure_url,
+        };
+      }
+
+      if (fotoTandaTerima?.base64) {
+        const upload = await cloudinary.uploader.upload(fotoTandaTerima.base64);
+        updates.fotoTandaTerima = upload.secure_url;
+        responseData.fotoTandaTerima = {
+          id: fotoTandaTerima.id,
+          base64: fotoTandaTerima.base64,
+          filename: fotoTandaTerima.filename,
+          filetype: fotoTandaTerima.filetype,
+          filesize: fotoTandaTerima.filesize,
+          url: upload.secure_url,
+        };
+      }
+
+      if (Object.keys(updates).length === 0) {
+        return res.status(400).json({ message: "No image data provided" });
+      }
+
+      await asset.update({
+        fotoAsset: responseData.fotoAsset,
+        fotoTandaTerima: responseData.fotoTandaTerima,
+      });
+
+      res.status(200).json({
+        message: "Foto asset updated successfully",
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
     }
   }
 }
