@@ -2,13 +2,8 @@ import {
   Dialog,
   DialogBackdrop,
   DialogPanel,
-  DialogTitle,
 } from "@headlessui/react";
 import useAssetManagement from "../hooks";
-import ButtonSubmit from "@/components/button/ButtonSubmit";
-import CInputImage from "@/components/componentsV2/atoms/input-file/image";
-import { Controller } from "react-hook-form";
-import { useMemo, useState } from "react";
 import { BlockingLoader } from "@/components/componentsV2/atoms/loader";
 import Image from "next/image";
 

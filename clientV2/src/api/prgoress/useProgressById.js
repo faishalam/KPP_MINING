@@ -1,11 +1,14 @@
 "use client";
 
 import { HeroServices } from "@/services/HeroServices";
+import { useState } from "react";
 import { useQuery } from "react-query";
 
 const useProgressById = (props) => {
+  const [isLoadingProgressById, setIsLoading] = useState(false);
   const useProgressByIdFn = async () => {
     try {
+      setIsLoading(true);
       const response = await HeroServices.get(`/progress/${props?.params?.id}`);
 
       const { status } = response;
@@ -14,7 +17,10 @@ const useProgressById = (props) => {
 
       return response.data;
     } catch (error) {
+      setIsLoading(false);
       throw error.message;
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -25,7 +31,7 @@ const useProgressById = (props) => {
     keepPreviousData: true,
   });
 
-  return { ...query };
+  return { ...query, isLoadingProgressById };
 };
 
 export default useProgressById;

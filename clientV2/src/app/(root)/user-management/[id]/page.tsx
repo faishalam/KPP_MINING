@@ -33,7 +33,7 @@ export default function UserManagementAddPage() {
 
   return (
     <>
-      {isLoadingGetUserList ? (
+      {isLoadingGetUserList || isLoadingUserById ? (
         <BlockingLoader />
       ) : (
         <div className="w-full h-full no-scrollbar">
@@ -50,10 +50,10 @@ export default function UserManagementAddPage() {
 
             <div className="font-bold">{title}</div>
           </div>
-          <div className="w-full h-full bg-white p-4 shadow-md rounded-sm mt-5">
-            {isLoadingUserById || isLoadingAddUser ? (
-              <BlockingLoader />
-            ) : (
+          {isLoadingAddUser ? (
+            <BlockingLoader />
+          ) : (
+            <div className="w-full h-full bg-white p-4 shadow-md rounded-sm mt-5">
               <>
                 <form
                   onSubmit={handleSubmitRegister(
@@ -248,8 +248,8 @@ export default function UserManagementAddPage() {
                   </div>
                 </form>
               </>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       )}
     </>

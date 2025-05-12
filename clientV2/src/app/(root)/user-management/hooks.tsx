@@ -125,7 +125,7 @@ const useUserManagementHooks = () => {
     },
   });
 
-  const { data: dataUserById, isLoading: isLoadingUserById } = useUserById({
+  const { data: dataUserById, isLoadingUserById } = useUserById({
     params: {
       id: id || undefined,
     },

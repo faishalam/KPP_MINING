@@ -7,7 +7,6 @@ import { CAutoComplete, CInput } from "@/components/componentsV2/atoms";
 import DataGrid from "@/components/componentsV2/molecules/datagrid";
 import { BlockingLoader } from "@/components/componentsV2/atoms/loader";
 import useAssetManagement from "../hooks";
-import Link from "next/link";
 import { useMemo } from "react";
 import { Controller } from "react-hook-form";
 import { TextArea } from "@/components/componentsV2/atoms/Input-text-area";
@@ -25,7 +24,6 @@ export default function HomePage() {
     onValidSubmit,
     onInvalidSubmit,
     kodePNOptions,
-    isLoadingDataAssetList,
     control,
     isLoadingAddAsset,
     isLoadingDataAssetById,
@@ -46,7 +44,7 @@ export default function HomePage() {
   }, [mode]);
   return (
     <>
-      {isLoadingDataAssetList ? (
+      {isLoadingDataAssetById || isLoadingAddAsset || isLoadingEditAsset ? (
         <BlockingLoader />
       ) : (
         <div className="w-full h-full no-scrollbar">
@@ -83,25 +81,23 @@ export default function HomePage() {
                     </Button>
                   </div>
                 )}
-              {mode === "edit" &&
-                dataAssetById?.progress?.length == 0 &&
-                role === "user_admin" && (
-                  <div>
-                    <Button
-                      onClick={() => {
-                        setOpenModalFoto(!openModalFoto);
-                      }}
-                      className="flex gap-2 text-white !bg-[#154940] hover:!bg-[#0e342d] !rounded-md h-[40px]"
-                    >
-                      <span className="text-white text-[10px] sm:text-sm">
-                        Add Photo
-                      </span>
-                    </Button>
-                  </div>
-                )}
+              {mode === "edit" && role === "user_admin" && (
+                <div>
+                  <Button
+                    onClick={() => {
+                      setOpenModalFoto(!openModalFoto);
+                    }}
+                    className="flex gap-2 text-white !bg-[#154940] hover:!bg-[#0e342d] !rounded-md h-[40px]"
+                  >
+                    <span className="text-white text-[10px] sm:text-sm">
+                      Add Photo
+                    </span>
+                  </Button>
+                </div>
+              )}
               {mode === "view" &&
-                (dataAssetById?.fotoAsset || dataAssetById?.fotoTandaTerima) &&
-                dataAssetById?.progress?.length == 0 && (
+                (dataAssetById?.fotoAsset ||
+                  dataAssetById?.fotoTandaTerima) && (
                   <div>
                     <Button
                       onClick={() => {
@@ -118,248 +114,234 @@ export default function HomePage() {
             </div>
           </div>
           <div className="w-full h-full bg-white sm:max-h-[calc(100vh-390px)] overflow-auto p-4 shadow-md rounded-sm mt-5">
-            {isLoadingDataAssetById ||
-            isLoadingAddAsset ||
-            isLoadingEditAsset ? (
-              <BlockingLoader />
-            ) : (
-              <>
-                <form onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)}>
-                  <div className="w-full flex flex-col sm:grid grid-cols-2 gap-2 sm:gap-x-7 sm:gap-y-3 px-4 py-2">
-                    <Controller
-                      name="assetNumber"
-                      control={control}
-                      render={({ field }) => (
-                        <CInput
-                          label="Asset Number*"
-                          className="w-full"
-                          disabled
-                          placeholder="ASN-XXXXX"
-                          {...field}
-                          autoComplete="off"
-                        />
-                      )}
+            <form onSubmit={handleSubmit(onValidSubmit, onInvalidSubmit)}>
+              <div className="w-full flex flex-col sm:grid grid-cols-2 gap-2 sm:gap-x-7 sm:gap-y-3 px-4 py-2">
+                <Controller
+                  name="assetNumber"
+                  control={control}
+                  render={({ field }) => (
+                    <CInput
+                      label="Asset Number*"
+                      className="w-full"
+                      disabled
+                      placeholder="ASN-XXXXX"
+                      {...field}
+                      autoComplete="off"
                     />
-                    <Controller
-                      name="namaAsset"
-                      control={control}
-                      rules={{
-                        required: "Nama Asset is required",
-                      }}
-                      render={({ field }) => (
-                        <CInput
-                          label="Nama Asset*"
-                          disabled={mode === "view" || role === "user_admin"}
-                          className="w-full"
-                          placeholder="Enter nama asset"
-                          {...field}
-                          autoComplete="off"
-                        />
-                      )}
+                  )}
+                />
+                <Controller
+                  name="namaAsset"
+                  control={control}
+                  rules={{
+                    required: "Nama Asset is required",
+                  }}
+                  render={({ field }) => (
+                    <CInput
+                      label="Nama Asset*"
+                      disabled={mode === "view" || role === "user_admin"}
+                      className="w-full"
+                      placeholder="Enter nama asset"
+                      {...field}
+                      autoComplete="off"
                     />
-                    <Controller
-                      name="kodePN"
-                      control={control}
-                      rules={{
-                        required: "Kode PN is required",
-                      }}
-                      render={({ field }) => (
-                        <CAutoComplete
-                          label="Kode PN*"
-                          className="w-full"
-                          disabled={mode === "view" || role === "user_admin"}
-                          options={kodePNOptions ?? []}
-                          getOptionLabel={(option) => option.label ?? ""}
-                          placeholder="Select role"
-                          value={
-                            kodePNOptions.find(
-                              (opt) => opt.value === field.value
-                            ) || null
-                          }
-                          onChange={(_, newValue) => {
-                            field.onChange(newValue?.value || "");
-                          }}
-                        />
-                      )}
-                    />
-                    <Controller
-                      name="nilaiAsset"
-                      control={control}
-                      rules={{
-                        required: "Nilai Asset is required",
-                      }}
-                      render={({ field }) => {
-                        const formatCurrency = (value: string) => {
-                          const numericValue = value.replace(/\D/g, "");
-                          return numericValue.replace(
-                            /\B(?=(\d{3})+(?!\d))/g,
-                            "."
-                          );
-                        };
-                        const handleChange = (
-                          e: React.ChangeEvent<HTMLInputElement>
-                        ) => {
-                          const rawValue = e.target.value.replace(/\D/g, "");
-                          field.onChange(rawValue);
-                        };
-                        return (
-                          <CInput
-                            label="Nilai Asset*"
-                            disabled={mode === "view" || role === "user_admin"}
-                            className="w-full"
-                            value={formatCurrency(
-                              field.value?.toString() || ""
-                            )}
-                            placeholder="Enter total project"
-                            onChange={handleChange}
-                            autoComplete="off"
-                          />
-                        );
+                  )}
+                />
+                <Controller
+                  name="kodePN"
+                  control={control}
+                  rules={{
+                    required: "Kode PN is required",
+                  }}
+                  render={({ field }) => (
+                    <CAutoComplete
+                      label="Kode PN*"
+                      className="w-full"
+                      disabled={mode === "view" || role === "user_admin"}
+                      options={kodePNOptions ?? []}
+                      getOptionLabel={(option) => option.label ?? ""}
+                      placeholder="Select role"
+                      value={
+                        kodePNOptions.find(
+                          (opt) => opt.value === field.value
+                        ) || null
+                      }
+                      onChange={(_, newValue) => {
+                        field.onChange(newValue?.value || "");
                       }}
                     />
-                    <Controller
-                      name="quantityAsset"
-                      control={control}
-                      rules={{
-                        required: "Quantity is required",
-                      }}
-                      render={({ field }) => (
-                        <CInput
-                          label="Quantity*"
-                          disabled={mode === "view" || role === "user_admin"}
-                          type="number"
-                          className="w-full"
-                          placeholder="Enter quantity asset"
-                          {...field}
-                          autoComplete="off"
-                        />
-                      )}
-                    />
-                    <Controller
-                      name="actionPlan"
-                      control={control}
-                      rules={{
-                        required: "Action plan is required",
-                      }}
-                      render={({ field }) => (
-                        <CAutoComplete
-                          label="Action Plan*"
-                          className="w-full"
-                          disabled={mode === "view" || role === "user_admin"}
-                          options={actionPlan ?? []}
-                          getOptionLabel={(option) => option.label ?? ""}
-                          placeholder="Select role"
-                          value={
-                            actionPlan.find(
-                              (opt) => opt.value === field.value
-                            ) || null
-                          }
-                          onChange={(_, newValue) => {
-                            field.onChange(newValue?.value || "");
-                          }}
-                        />
-                      )}
-                    />
-                    <Controller
-                      name="planRealisasi"
-                      control={control}
-                      rules={{
-                        required: "Plan Realisasi is required",
-                      }}
-                      render={({ field: { onChange, value, ref } }) => (
-                        <CInputDate
-                          label="Plan Realisasi*"
-                          disabled={mode === "view" || role === "user_admin"}
-                          type="date"
-                          className="!w-full"
-                          value={moment(value).format("YYYY-MM-DD")}
-                          onChange={onChange}
-                          inputRef={ref}
-                          autoComplete="off"
-                        />
-                      )}
-                    />
-                    <Controller
-                      name="areaKerja"
-                      control={control}
-                      rules={{
-                        required: "Area Kerja is required",
-                      }}
-                      render={({ field }) => (
-                        <CInput
-                          label="Area Kerja*"
-                          disabled={mode === "view" || role === "user_admin"}
-                          className="w-full"
-                          placeholder="Enter area kerja"
-                          {...field}
-                          autoComplete="off"
-                        />
-                      )}
-                    />
-                    <Controller
-                      name="benefit"
-                      control={control}
-                      rules={{
-                        required: "Benefit is required",
-                      }}
-                      render={({ field: { onChange, value, ref } }) => (
-                        <TextArea
-                          label="Benefit*"
-                          disabled={mode === "view" || role === "user_admin"}
-                          className="!w-full"
-                          placeholder="Enter benefit"
-                          value={value}
-                          onChange={onChange}
-                          inputRef={ref}
-                          autoComplete="off"
-                        />
-                      )}
-                    />
-                    <Controller
-                      name="remark"
-                      control={control}
-                      rules={{
-                        required: "Remarks is required",
-                      }}
-                      render={({ field: { onChange, value, ref } }) => (
-                        <TextArea
-                          label="Remarks*"
-                          disabled={mode === "view" || role === "user_admin"}
-                          className="!w-full"
-                          placeholder="Enter remarks"
-                          value={value}
-                          onChange={onChange}
-                          inputRef={ref}
-                          autoComplete="off"
-                        />
-                      )}
-                    />
-                  </div>
-
-                  <div className="mt-2 px-4">
-                    <div className="flex gap-2 w-full max-w-full justify-end">
-                      <ButtonSubmit
-                        type={"button"}
-                        classname={
-                          "w-[100px] max-w-full text-sm rounded-md bg-white hover:bg-gray-50 text-black border p-2"
-                        }
-                        btnText="Cancel"
-                        onClick={handleCancel}
+                  )}
+                />
+                <Controller
+                  name="nilaiAsset"
+                  control={control}
+                  rules={{
+                    required: "Nilai Asset is required",
+                  }}
+                  render={({ field }) => {
+                    const formatCurrency = (value: string) => {
+                      const numericValue = value.replace(/\D/g, "");
+                      return numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    };
+                    const handleChange = (
+                      e: React.ChangeEvent<HTMLInputElement>
+                    ) => {
+                      const rawValue = e.target.value.replace(/\D/g, "");
+                      field.onChange(rawValue);
+                    };
+                    return (
+                      <CInput
+                        label="Nilai Asset*"
+                        disabled={mode === "view" || role === "user_admin"}
+                        className="w-full"
+                        value={formatCurrency(field.value?.toString() || "")}
+                        placeholder="Enter total project"
+                        onChange={handleChange}
+                        autoComplete="off"
                       />
-                      {mode !== "view" && role === "user" && (
-                        <ButtonSubmit
-                          type={"submit"}
-                          classname={
-                            "w-[100px] max-w-full rounded-md text-sm bg-[#154940] hover:bg-[#0e342d] text-white p-2"
-                          }
-                          btnText="Save"
-                        />
-                      )}
-                    </div>
-                  </div>
-                </form>
-              </>
-            )}
+                    );
+                  }}
+                />
+                <Controller
+                  name="quantityAsset"
+                  control={control}
+                  rules={{
+                    required: "Quantity is required",
+                  }}
+                  render={({ field }) => (
+                    <CInput
+                      label="Quantity*"
+                      disabled={mode === "view" || role === "user_admin"}
+                      type="number"
+                      className="w-full"
+                      placeholder="Enter quantity asset"
+                      {...field}
+                      autoComplete="off"
+                    />
+                  )}
+                />
+                <Controller
+                  name="actionPlan"
+                  control={control}
+                  rules={{
+                    required: "Action plan is required",
+                  }}
+                  render={({ field }) => (
+                    <CAutoComplete
+                      label="Action Plan*"
+                      className="w-full"
+                      disabled={mode === "view" || role === "user_admin"}
+                      options={actionPlan ?? []}
+                      getOptionLabel={(option) => option.label ?? ""}
+                      placeholder="Select role"
+                      value={
+                        actionPlan.find((opt) => opt.value === field.value) ||
+                        null
+                      }
+                      onChange={(_, newValue) => {
+                        field.onChange(newValue?.value || "");
+                      }}
+                    />
+                  )}
+                />
+                <Controller
+                  name="planRealisasi"
+                  control={control}
+                  rules={{
+                    required: "Plan Realisasi is required",
+                  }}
+                  render={({ field: { onChange, value, ref } }) => (
+                    <CInputDate
+                      label="Plan Realisasi*"
+                      disabled={mode === "view" || role === "user_admin"}
+                      type="date"
+                      className="!w-full"
+                      value={moment(value).format("YYYY-MM-DD")}
+                      onChange={onChange}
+                      inputRef={ref}
+                      autoComplete="off"
+                    />
+                  )}
+                />
+                <Controller
+                  name="areaKerja"
+                  control={control}
+                  rules={{
+                    required: "Area Kerja is required",
+                  }}
+                  render={({ field }) => (
+                    <CInput
+                      label="Area Kerja*"
+                      disabled={mode === "view" || role === "user_admin"}
+                      className="w-full"
+                      placeholder="Enter area kerja"
+                      {...field}
+                      autoComplete="off"
+                    />
+                  )}
+                />
+                <Controller
+                  name="benefit"
+                  control={control}
+                  rules={{
+                    required: "Benefit is required",
+                  }}
+                  render={({ field: { onChange, value, ref } }) => (
+                    <TextArea
+                      label="Benefit*"
+                      disabled={mode === "view" || role === "user_admin"}
+                      className="!w-full"
+                      placeholder="Enter benefit"
+                      value={value}
+                      onChange={onChange}
+                      inputRef={ref}
+                      autoComplete="off"
+                    />
+                  )}
+                />
+                <Controller
+                  name="remark"
+                  control={control}
+                  rules={{
+                    required: "Remarks is required",
+                  }}
+                  render={({ field: { onChange, value, ref } }) => (
+                    <TextArea
+                      label="Remarks*"
+                      disabled={mode === "view" || role === "user_admin"}
+                      className="!w-full"
+                      placeholder="Enter remarks"
+                      value={value}
+                      onChange={onChange}
+                      inputRef={ref}
+                      autoComplete="off"
+                    />
+                  )}
+                />
+              </div>
+
+              <div className="mt-2 px-4">
+                <div className="flex gap-2 w-full max-w-full justify-end">
+                  <ButtonSubmit
+                    type={"button"}
+                    classname={
+                      "w-[100px] max-w-full text-sm rounded-md bg-white hover:bg-gray-50 text-black border p-2"
+                    }
+                    btnText="Cancel"
+                    onClick={handleCancel}
+                  />
+                  {mode !== "view" && role === "user" && (
+                    <ButtonSubmit
+                      type={"submit"}
+                      classname={
+                        "w-[100px] max-w-full rounded-md text-sm bg-[#154940] hover:bg-[#0e342d] text-white p-2"
+                      }
+                      btnText="Save"
+                    />
+                  )}
+                </div>
+              </div>
+            </form>
           </div>
 
           {openModalFoto && <ModalUploader />}

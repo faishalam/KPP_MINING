@@ -60,12 +60,15 @@ export default function ModalUploader() {
                 <form onSubmit={handleSubmit(onSubmitFoto)}>
                   <div className="w-full flex flex-col sm:grid grid-cols-2 gap-2 sm:gap-x-7 sm:gap-y-3 px-4 py-2">
                     <div
-                      onClick={() =>
-                        setOpenModalView({
-                          show: true,
-                          data: dataAssetById?.fotoAsset?.base64,
-                        })
-                      }
+                      className="cursor-pointer"
+                      onClick={() => {
+                        if (mode === "view") {
+                          setOpenModalView({
+                            show: true,
+                            data: dataAssetById?.fotoAsset?.base64,
+                          });
+                        }
+                      }}
                     >
                       <Controller
                         name="fotoAsset"
@@ -86,12 +89,15 @@ export default function ModalUploader() {
                       />
                     </div>
                     <div
-                      onClick={() =>
-                        setOpenModalView({
-                          show: true,
-                          data: dataAssetById?.fotoTandaTerima?.base64,
-                        })
-                      }
+                      className="cursor-pointer"
+                      onClick={() => {
+                        if (mode === "view") {
+                          setOpenModalView({
+                            show: true,
+                            data: dataAssetById?.fotoTandaTerima?.base64,
+                          });
+                        }
+                      }}
                     >
                       <Controller
                         name="fotoTandaTerima"

@@ -148,7 +148,7 @@ const useProgressAssetManagementHooks = () => {
       },
     });
 
-  const { data: dataProgressById, isLoading: isLoadingProgressById } =
+  const { data: dataProgressById, isLoadingProgressById } =
     useProgressById({
       params: {
         id: id || undefined,

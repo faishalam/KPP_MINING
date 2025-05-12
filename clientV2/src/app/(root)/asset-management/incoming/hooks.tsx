@@ -178,12 +178,11 @@ const useAssetManagementHooks = () => {
       },
     });
 
-  const { data: dataAssetById, isLoading: isLoadingDataAssetById } =
-    useAssetById({
-      params: {
-        id: id || undefined,
-      },
-    });
+  const { data: dataAssetById, isLoadingDataAssetById } = useAssetById({
+    params: {
+      id: id || undefined,
+    },
+  });
 
   const onValidSubmit: SubmitHandler<AssetFormInputs> = (data) => {
     modalWarningInfo.open({
@@ -452,7 +451,7 @@ const useAssetManagementHooks = () => {
         },
       },
     ];
-  }, [dataGrid]);
+  }, [dataAssetList, dataGrid]);
 
   const progressListColumnDef = useMemo<TMasterProgressCol>(() => {
     return [
@@ -641,7 +640,7 @@ const useAssetManagementHooks = () => {
     } else {
       reset({});
     }
-  }, [mode, dataAssetById]);
+  }, [mode, dataAssetById, id]);
 
   return {
     assetListColumnDef,
