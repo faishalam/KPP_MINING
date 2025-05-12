@@ -23,7 +23,7 @@ import { useQueryClient } from "react-query";
 import { ValueGetterParams } from "@ag-grid-community/core";
 import Image from "next/image";
 import useUserById from "@/api/user/useUserById";
-import { useRootLayoutContext } from "@/providers/rootProviders/RootLayoutProviders";
+import useRootLayoutContext from "../hooks";
 
 const useUserManagementHooks = () => {
   const {

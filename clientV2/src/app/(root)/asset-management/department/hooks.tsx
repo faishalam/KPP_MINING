@@ -11,7 +11,6 @@ import useEditAsset from "@/api/asset/useEditAsset";
 import useUppdateActionAsset from "@/api/asset/useUpdateActionAsset";
 import useUserAssetList from "@/api/asset/useUserAssetList";
 import { AlertError, AlertSuccess } from "@/components/alert/AlertToastify";
-import { useRootLayoutContext } from "@/providers/rootProviders/RootLayoutProviders";
 import { ValueGetterParams } from "@ag-grid-community/core";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -27,6 +26,7 @@ import moment from "moment";
 import { useForm } from "react-hook-form";
 import { useModalWarningInfo } from "@/components/componentsV2/atoms/modal-warning";
 import { Checkbox } from "@mui/material";
+import useRootLayoutContext from "../../hooks";
 
 const useAssetOnDepartmentHooks = () => {
   const { reset } = useForm<AssetFormInputs>();
@@ -221,13 +221,17 @@ const useAssetOnDepartmentHooks = () => {
       {
         width: 80,
         pinned: "left",
-        hide: role === "user",
+        hide:
+          role === "user" || role === "super_admin" || role === "user_admin",
         sortable: false,
         cellRenderer: (params: ValueGetterParams<TypeDataAssetList>) => {
           return (
             <div
               className={`${
-                params?.data?.statusApproval === "approved" ? "hidden" : ""
+                params?.data?.statusApproval === "approved" ||
+                params?.data?.statusApproval === "canceled"
+                  ? "hidden"
+                  : ""
               }`}
             >
               <Checkbox
@@ -257,13 +261,13 @@ const useAssetOnDepartmentHooks = () => {
           (params.node?.rowIndex ?? 0) + 1,
       },
       {
-        field: "site",
-        headerName: "Site",
-        width: 200,
-      },
-      {
         field: "assetNumber",
         headerName: "No Asset",
+        width: 150,
+      },
+      {
+        field: "site",
+        headerName: "Site",
         width: 150,
       },
       {
@@ -378,6 +382,42 @@ const useAssetOnDepartmentHooks = () => {
             )}
             <div>{params?.data?.keterangan}</div>
           </div>;
+        },
+      },
+      {
+        field: "fotoAsset",
+        width: 130,
+        headerName: "Foto Asset",
+        cellRenderer: (params: ValueGetterParams<AssetFormInputs>) => {
+          const imageSrc = params.data?.fotoAsset?.base64;
+          if (!imageSrc) return null;
+          return (
+            <Image
+              src={imageSrc}
+              alt="Foto Asset"
+              width={70}
+              height={70}
+              unoptimized
+            />
+          );
+        },
+      },
+      {
+        field: "fotoTandaTerima",
+        width: 150,
+        headerName: "Foto Tanda Terima",
+        cellRenderer: (params: ValueGetterParams<AssetFormInputs>) => {
+          const imageSrc = params.data?.fotoTandaTerima?.base64;
+          if (!imageSrc) return null;
+          return (
+            <Image
+              src={imageSrc}
+              alt="Foto Tanda Terima"
+              width={70}
+              height={70}
+              unoptimized
+            />
+          );
         },
       },
       {
@@ -586,14 +626,28 @@ const useAssetOnDepartmentHooks = () => {
 
   const handleApproveAsset = (id: string[]) => {
     modalWarningInfo.open({
-      title: "Confirm Save",
+      title: "Confirm Approved",
       message: (
         <div>
           <p>Are you sure you want to Approve this Asset?</p>
         </div>
       ),
       onConfirm: () => {
-        mutateApproveAsset(id);
+        mutateApproveAsset({ id: id, statusApproval: "approved" });
+      },
+    });
+  };
+
+  const handleCancelAsset = (id: string[]) => {
+    modalWarningInfo.open({
+      title: "Confirm Cancelled",
+      message: (
+        <div>
+          <p>Are you sure you want to Cancel this Asset?</p>
+        </div>
+      ),
+      onConfirm: () => {
+        mutateApproveAsset({ id: id, statusApproval: "canceled" });
       },
     });
   };
@@ -661,6 +715,7 @@ const useAssetOnDepartmentHooks = () => {
     openModalCancel,
     setOpenModalCancel,
     openModalHold,
+    handleCancelAsset,
     setOpenModalHold,
   };
 };

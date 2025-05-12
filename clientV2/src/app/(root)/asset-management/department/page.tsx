@@ -1,22 +1,19 @@
 "use client";
-import { useRouter } from "next/navigation";
 import DownloadIcon from "@mui/icons-material/Download";
 import { CAutoComplete, CInput } from "@/components/componentsV2/atoms";
 import { BlockingLoader } from "@/components/componentsV2/atoms/loader";
 import { Button, Typography } from "@mui/material";
 import DataGrid from "@/components/componentsV2/molecules/datagrid";
-import AddIcon from "@mui/icons-material/Add";
 import useAssetOnDepartment from "./hooks";
 import ModalFeedbackCancel from "@/components/modal/ModalFeedbackCancel";
 import ModalFeedbackHold from "@/components/modal/ModalFeedbackHold";
+import useRootLayoutContext from "../../hooks";
 
 export default function AssetDepartment() {
-  const router = useRouter();
   const {
     assetOnDepartmentColumnDef,
     isLoadingDataUserAssetList,
     dataGrid,
-    reset,
     statisticsDataTop,
     filter,
     setFilter,
@@ -28,8 +25,10 @@ export default function AssetDepartment() {
     setOpenModalCancel,
     openModalHold,
     setOpenModalHold,
-    mutateUpdateActionAsset
+    mutateUpdateActionAsset,
+    handleCancelAsset,
   } = useAssetOnDepartment();
+  const { role } = useRootLayoutContext();
   return (
     <>
       {isLoadingDataUserAssetList ? (
@@ -48,18 +47,6 @@ export default function AssetDepartment() {
                 className="text-black flex gap-2 !rounded-md h-[40px] !text-[10px] sm:!text-sm"
               >
                 Download
-              </Button>
-              <Button
-                onClick={() => {
-                  router.push("/asset-management/incoming/new?mode=add");
-                  reset();
-                }}
-                className="flex gap-2 text-white !bg-[#154940] hover:!bg-[#0e342d] !rounded-md h-[40px]"
-              >
-                <AddIcon className="text-white text-[10px] sm:text-sm" />
-                <span className="text-white text-[10px] sm:text-sm">
-                  Add Data
-                </span>
               </Button>
             </div>
           </div>
@@ -124,17 +111,28 @@ export default function AssetDepartment() {
               columnDefs={assetOnDepartmentColumnDef}
               rowData={dataGrid}
             />
-            <div className="flex justify-end gap-2 p-4">
-              <Button
-                disabled={selectedIds.length === 0}
-                variant="contained"
-                color="primary"
-                className="text-black flex gap-2 !rounded-md h-[40px] !bg-ckbColor"
-                onClick={() => handleApproveAsset(selectedIds)}
-              >
-                Approve
-              </Button>
-            </div>
+            {role === "head" && (
+              <div className="flex justify-end gap-2 p-4">
+                <Button
+                  disabled={selectedIds.length === 0 || selectedIds.length > 1}
+                  variant="contained"
+                  color="primary"
+                  className="text-black !bg-red-700 flex gap-2 !rounded-md h-[40px]"
+                  onClick={() => handleCancelAsset(selectedIds)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  disabled={selectedIds.length === 0}
+                  variant="contained"
+                  color="primary"
+                  className="text-black flex gap-2 !rounded-md h-[40px]"
+                  onClick={() => handleApproveAsset(selectedIds)}
+                >
+                  Approve
+                </Button>
+              </div>
+            )}
           </div>
           <ModalFeedbackCancel
             openModal={openModalCancel}

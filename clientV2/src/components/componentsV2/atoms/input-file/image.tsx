@@ -4,6 +4,7 @@ import Image from "next/image";
 import IconUploadImage from "@/assets/svg/icon-upload-image.svg";
 import { toast } from "react-toastify";
 import IconTrash from "@/assets/svg/delete-icon.svg";
+import { serializeFile } from "@/helper/serializeFile";
 
 export type TSerializableFile = {
   id: string;
@@ -66,10 +67,8 @@ const CInputImage: React.FC<TProps> = ({
             if (e.target.files && e.target.files.length > 0) {
               const file = e.target.files[0];
               if (file.size <= maxSize) {
-                // if (onChange) {
-                  // const serializedFile = await serializeFile(file);
-                  // onChange(serializedFile);
-                // }
+                const serializedFile = await serializeFile(file);
+                onChange(serializedFile);
               } else {
                 toast.error(onError || "File size is too large");
               }
@@ -109,7 +108,7 @@ const CInputImage: React.FC<TProps> = ({
             }}
           />
         )}
-        <small className="w-[calc(100%-110px)]">{description}</small>
+        <small className="w-[calc(100%-110px)] text-gray-500">{description}</small>
       </div>
     </div>
   );

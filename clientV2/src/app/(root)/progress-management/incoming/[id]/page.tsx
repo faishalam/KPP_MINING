@@ -101,7 +101,7 @@ export default function ProgressAssetPage() {
                       label="Department*"
                       className="w-full"
                       options={departmentOptions ?? []}
-                      disabled={mode === "view"}
+                      disabled
                       getOptionLabel={(option) => option.label ?? ""}
                       placeholder="Select department"
                       value={
@@ -325,8 +325,8 @@ export default function ProgressAssetPage() {
                   render={({ field: { onChange, value, ref } }) => (
                     <CInputDate
                       label="Bulan Realisasi*"
-                      disabled={mode === "view"}
                       className="!w-full"
+                      disabled
                       placeholder="Enter bulan realisasi"
                       value={moment(value).format("YYYY-MM-DD")}
                       onChange={onChange}

@@ -1,7 +1,13 @@
+import { TSerializableFile } from "@/components/componentsV2/atoms/input-file/image";
 import { ValueGetterParams } from "@ag-grid-community/core";
 
 export type InputsSearch = {
   search: string;
+};
+
+export type FotoAssetFormData = {
+  fotoAsset: TSerializableFile;
+  fotoTandaTerima: TSerializableFile;
 };
 
 export interface TypeDataAssetList {
@@ -53,6 +59,8 @@ export interface AssetFormInputs {
   areaKerja: string;
   benefit: string;
   planRealisasi: string | Date;
+  fotoAsset: TSerializableFile
+  fotoTandaTerima: TSerializableFile
 }
 
 export type TAssetListCol =

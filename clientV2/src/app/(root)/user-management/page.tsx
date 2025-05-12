@@ -7,7 +7,7 @@ import useUserManagementHooks from "@/app/(root)/user-management/hooks";
 import DataGrid from "@/components/componentsV2/molecules/datagrid";
 import { CAutoComplete, CInput } from "@/components/componentsV2/atoms";
 import { BlockingLoader } from "@/components/componentsV2/atoms/loader";
-import { useRootLayoutContext } from "@/providers/rootProviders/RootLayoutProviders";
+import useRootLayoutContext from "../hooks";
 
 export default function UserManagementPage() {
   const {

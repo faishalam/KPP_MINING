@@ -1,6 +1,5 @@
 "use client";
 import { classNames } from "@/helper/classnames";
-import { useRootLayoutContext } from "@/providers/rootProviders/RootLayoutProviders";
 import {
   Dialog,
   DialogBackdrop,
@@ -14,11 +13,11 @@ import {
   UsersIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import ModalAddAsset from "../../modal/ModalAddAsset";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import Image from "next/image";
+import useRootLayoutContext from "@/app/(root)/hooks";
 
 export default function MobileSidebar() {
   const { sidebarOpen, setSidebarOpen, setOpenModalAddAsset, role } =
@@ -167,7 +166,6 @@ export default function MobileSidebar() {
             </div>
           </DialogPanel>
         </div>
-        <ModalAddAsset />
       </Dialog>
     </>
   );

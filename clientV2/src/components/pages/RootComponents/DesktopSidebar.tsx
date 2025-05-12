@@ -159,9 +159,9 @@ import { HomeIcon } from "@/assets/svg/home-icon";
 import { InquiryIcon } from "@/assets/svg/inquiry-icon";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
-import { useRootLayoutContext } from "@/providers/rootProviders/RootLayoutProviders";
 import CLink from "@/components/componentsV2/atoms/link";
 import Image from "next/image";
+import useRootLayoutContext from "@/app/(root)/hooks";
 // import { RevisionIcon } from '@/assets/svg/revision-icon'
 
 const Sidebar: React.FC = () => {

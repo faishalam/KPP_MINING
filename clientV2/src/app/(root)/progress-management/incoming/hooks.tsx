@@ -23,7 +23,7 @@ import { Checkbox } from "@mui/material";
 import { toast } from "react-toastify";
 import useAssetById from "@/api/asset/useAssetById";
 import { TInputsProgress, TMasterProgressCol, TMasterResponse } from "../types";
-import { useRootLayoutContext } from "@/providers/rootProviders/RootLayoutProviders";
+import useRootLayoutContext from "../../hooks";
 
 const useProgressAssetManagementHooks = () => {
   const router = useRouter();
@@ -219,7 +219,7 @@ const useProgressAssetManagementHooks = () => {
 
   const onInvalidSubmit = (errors: FieldErrors<TInputsProgress>) => {
     Object.entries(errors).forEach(([key, error]) => {
-      console.log(key)
+      console.log(key);
       if (error?.message) {
         AlertError(error.message);
       }
@@ -586,6 +586,8 @@ const useProgressAssetManagementHooks = () => {
       resetProgress({
         projectDescription: dataAssetById.namaAsset || "",
         assetNumber: dataAssetById.assetNumber || "",
+        bulanRealisasi: dataAssetById?.planRealisasi || "",
+        dept: dataAssetById?.userDept.toUpperCase() || "",
       });
     }
   }, [mode, dataAssetById]);
@@ -623,7 +625,7 @@ const useProgressAssetManagementHooks = () => {
     setFilter,
     statisticsDataTop,
     onDownloadData,
-    isLoadingDataAssetById
+    isLoadingDataAssetById,
   };
 };
 

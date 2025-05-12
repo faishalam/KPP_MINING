@@ -1,5 +1,6 @@
 "use client";
 import * as XLSX from "xlsx";
+import IconPencil from "@/assets/svg/icon-pencil.svg";
 import { saveAs } from "file-saver";
 import IconEye from "@/assets/svg/eye-icon.svg";
 import {
@@ -25,13 +26,24 @@ import useAssetById from "@/api/asset/useAssetById";
 import {
   AssetFormInputs,
   AssetResponse,
+  FotoAssetFormData,
   TAssetListCol,
   TypeDataAssetList,
 } from "../types";
 import { TMasterProgressCol } from "../../progress-management/types";
+import useUploadFoto from "../../../../api/asset/useUploadFoto";
+import useRootLayoutContext from "../../hooks";
 
 const useAssetManagementHooks = () => {
   const { register, handleSubmit, control, reset } = useForm<AssetFormInputs>();
+  const { role } = useRootLayoutContext();
+  const {
+    register: registerFoto,
+    control: controlFoto,
+    reset: resetFoto,
+    handleSubmit: handleSubmitFoto,
+  } = useForm<FotoAssetFormData>();
+  const [openModalFoto, setOpenModalFoto] = useState<boolean>(false);
   const modalWarningInfo = useModalWarningInfo();
   const [pagination, setPagination] = useState({ page: 1, limit: 13 });
   const [filter, setFilter] = useState<{
@@ -151,6 +163,21 @@ const useAssetManagementHooks = () => {
       },
     });
 
+  const { mutate: mutateUploadFoto, isLoading: isLoadingUploadFoto } =
+    useUploadFoto({
+      onSuccess: () => {
+        queryClient.refetchQueries("useAssetList");
+        queryClient.refetchQueries("useAssetById");
+        queryClient.refetchQueries("useUserAssetList");
+        resetFoto();
+        setOpenModalFoto(!openModalFoto);
+        AlertSuccess("Upload Foto Successfully");
+      },
+      onError: (errorEditAsset: string) => {
+        AlertError(errorEditAsset);
+      },
+    });
+
   const { data: dataAssetById, isLoading: isLoadingDataAssetById } =
     useAssetById({
       params: {
@@ -171,6 +198,24 @@ const useAssetManagementHooks = () => {
           mutateAddAsset(data);
         } else {
           mutateEditAsset({ id, data });
+        }
+      },
+    });
+  };
+
+  const onSubmitFoto = (data: FotoAssetFormData) => {
+    modalWarningInfo.open({
+      title: "Confirm Save",
+      message: (
+        <div>
+          <p>Are you sure you want to save this Asset Photo?</p>
+        </div>
+      ),
+      onConfirm: () => {
+        if (mode === "view") {
+          mutateUploadFoto({ id: id, data: data });
+        } else {
+          mutateUploadFoto({ id: id, data: data });
         }
       },
     });
@@ -327,6 +372,42 @@ const useAssetManagementHooks = () => {
         field: "keterangan",
       },
       {
+        field: "fotoAsset",
+        width: 130,
+        headerName: "Foto Asset",
+        cellRenderer: (params: ValueGetterParams<AssetFormInputs>) => {
+          const imageSrc = params.data?.fotoAsset?.base64;
+          if (!imageSrc) return null;
+          return (
+            <Image
+              src={imageSrc}
+              alt="Foto Asset"
+              width={70}
+              height={70}
+              unoptimized
+            />
+          );
+        },
+      },
+      {
+        field: "fotoTandaTerima",
+        width: 150,
+        headerName: "Foto Tanda Terima",
+        cellRenderer: (params: ValueGetterParams<AssetFormInputs>) => {
+          const imageSrc = params.data?.fotoTandaTerima?.base64;
+          if (!imageSrc) return null;
+          return (
+            <Image
+              src={imageSrc}
+              alt="Foto Tanda Terima"
+              width={70}
+              height={70}
+              unoptimized
+            />
+          );
+        },
+      },
+      {
         width: 130,
         headerName: "Action",
         pinned: "right",
@@ -348,6 +429,24 @@ const useAssetManagementHooks = () => {
                   alt="view"
                 />
               </div>
+              {role === "user_admin" && (
+                <>
+                  <div className="cursor-point">
+                    <Image
+                      onClick={() => {
+                        if (params?.data) {
+                          reset(params?.data);
+                          router.push(
+                            `/asset-management/incoming/${params?.data.id}?mode=edit`
+                          );
+                        }
+                      }}
+                      src={IconPencil}
+                      alt="edit"
+                    />
+                  </div>
+                </>
+              )}
             </div>
           );
         },
@@ -555,6 +654,7 @@ const useAssetManagementHooks = () => {
     control,
     onInvalidSubmit,
     pagination,
+    onSubmitFoto,
     setPagination,
     dataAssetList,
     isLoadingDataAssetList,
@@ -572,6 +672,12 @@ const useAssetManagementHooks = () => {
     mode,
     progressListColumnDef,
     onDownloadData,
+    openModalFoto,
+    setOpenModalFoto,
+    registerFoto,
+    controlFoto,
+    handleSubmitFoto,
+    isLoadingUploadFoto,
   };
 };
 

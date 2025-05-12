@@ -3,18 +3,14 @@
 import { HeroServices } from "@/services/HeroServices";
 import { useMutation } from "react-query";
 
-const useApproveAsset = (props) => {
-  const useApproveAssetFn = async (params) => {
-    console.log(params)
+const useUploadFoto = (props) => {
+  const useUploadFotoFn = async (form) => {
     try {
-      const response = await HeroServices.patch(`/asset`, {
-        id: params?.id,
-        statusApproval: params?.statusApproval,
+      const response = await HeroServices.patch(`/asset/${form.id}/foto`, {
+        data: form.data,
       });
 
-      const { status } = response;
-
-      if (status !== 200) return;
+      if (response.status !== 200) throw new Error("Upload failed");
 
       return response.data;
     } catch (error) {
@@ -23,8 +19,8 @@ const useApproveAsset = (props) => {
   };
 
   const mutation = useMutation({
-    mutationKey: ["useApproveAsset"],
-    mutationFn: useApproveAssetFn,
+    mutationKey: ["useUploadFoto"],
+    mutationFn: useUploadFotoFn,
     onSuccess: (data) => {
       if (props?.onSuccess) {
         props.onSuccess(data);
@@ -40,4 +36,4 @@ const useApproveAsset = (props) => {
   return { ...mutation };
 };
 
-export default useApproveAsset;
+export default useUploadFoto;

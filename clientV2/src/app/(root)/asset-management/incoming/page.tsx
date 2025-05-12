@@ -7,6 +7,7 @@ import { BlockingLoader } from "@/components/componentsV2/atoms/loader";
 import { Button, Typography } from "@mui/material";
 import { CAutoComplete, CInput } from "@/components/componentsV2/atoms";
 import DataGrid from "@/components/componentsV2/molecules/datagrid";
+import useRootLayoutContext from "../../hooks";
 
 export default function AssetManagement() {
   const router = useRouter();
@@ -23,6 +24,7 @@ export default function AssetManagement() {
     dataAssetList,
     onDownloadData,
   } = useAssetManagement();
+  const { role } = useRootLayoutContext();
   return (
     <>
       {isLoadingDataAssetList ? (
@@ -43,18 +45,20 @@ export default function AssetManagement() {
               >
                 Download
               </Button>
-              <Button
-                onClick={() => {
-                  router.push("/asset-management/incoming/new?mode=add");
-                  reset();
-                }}
-                className="flex gap-2 text-white !bg-[#154940] hover:!bg-[#0e342d] !rounded-md h-[40px]"
-              >
-                <AddIcon className="text-white text-[10px] sm:text-sm" />
-                <span className="text-white text-[10px] sm:text-sm">
-                  Add Data
-                </span>
-              </Button>
+              {role === "user" && (
+                <Button
+                  onClick={() => {
+                    router.push("/asset-management/incoming/new?mode=add");
+                    reset();
+                  }}
+                  className="flex gap-2 text-white !bg-[#154940] hover:!bg-[#0e342d] !rounded-md h-[40px]"
+                >
+                  <AddIcon className="text-white text-[10px] sm:text-sm" />
+                  <span className="text-white text-[10px] sm:text-sm">
+                    Add Data
+                  </span>
+                </Button>
+              )}
             </div>
           </div>
 

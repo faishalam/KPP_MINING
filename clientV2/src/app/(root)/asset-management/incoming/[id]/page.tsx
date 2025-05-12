@@ -3,7 +3,6 @@
 import { Button } from "@mui/material";
 import BackIcon from "@mui/icons-material/KeyboardBackspace";
 import { useRouter } from "next/navigation";
-import AddIcon from "@mui/icons-material/Add";
 import { CAutoComplete, CInput } from "@/components/componentsV2/atoms";
 import DataGrid from "@/components/componentsV2/molecules/datagrid";
 import { BlockingLoader } from "@/components/componentsV2/atoms/loader";
@@ -15,7 +14,8 @@ import { TextArea } from "@/components/componentsV2/atoms/Input-text-area";
 import CInputDate from "@/components/componentsV2/atoms/input-date";
 import ButtonSubmit from "@/components/button/ButtonSubmit";
 import moment from "moment";
-import { useRootLayoutContext } from "@/providers/rootProviders/RootLayoutProviders";
+import ModalUploader from "../components/ModalUploader";
+import useRootLayoutContext from "@/app/(root)/hooks";
 
 export default function HomePage() {
   const router = useRouter();
@@ -35,6 +35,8 @@ export default function HomePage() {
     id,
     progressListColumnDef,
     dataAssetById,
+    openModalFoto,
+    setOpenModalFoto,
   } = useAssetManagement();
   const { role } = useRootLayoutContext();
   const title = useMemo(() => {
@@ -62,28 +64,60 @@ export default function HomePage() {
 
               <div className="font-bold">{title}</div>
             </div>
-
-            {mode === "view" &&
-              dataAssetById?.progress?.length == 0 &&
-              role === "super_admin" && (
-                <div>
-                  <Button
-                    onClick={() => {
-                      router.push(
-                        `/progress-management/incoming/${id}?mode=add`
-                      );
-                    }}
-                    className="flex gap-2 text-white !bg-[#154940] hover:!bg-[#0e342d] !rounded-md h-[40px]"
-                  >
-                    <AddIcon className="text-white text-[10px] sm:text-sm" />
-                    <span className="text-white text-[10px] sm:text-sm">
-                      Add Progress
-                    </span>
-                  </Button>
-                </div>
-              )}
+            <div className="flex items-center gap-2">
+              {mode === "view" &&
+                dataAssetById?.progress?.length == 0 &&
+                role === "super_admin" && (
+                  <div>
+                    <Button
+                      onClick={() => {
+                        router.push(
+                          `/progress-management/incoming/${id}?mode=add`
+                        );
+                      }}
+                      className="flex gap-2 text-white !bg-[#154940] hover:!bg-[#0e342d] !rounded-md h-[40px]"
+                    >
+                      <span className="text-white text-[10px] sm:text-sm">
+                        Add Progress
+                      </span>
+                    </Button>
+                  </div>
+                )}
+              {mode === "edit" &&
+                dataAssetById?.progress?.length == 0 &&
+                role === "user_admin" && (
+                  <div>
+                    <Button
+                      onClick={() => {
+                        setOpenModalFoto(!openModalFoto);
+                      }}
+                      className="flex gap-2 text-white !bg-[#154940] hover:!bg-[#0e342d] !rounded-md h-[40px]"
+                    >
+                      <span className="text-white text-[10px] sm:text-sm">
+                        Add Photo
+                      </span>
+                    </Button>
+                  </div>
+                )}
+              {mode === "view" &&
+                (dataAssetById?.fotoAsset || dataAssetById?.fotoTandaTerima) &&
+                dataAssetById?.progress?.length == 0 && (
+                  <div>
+                    <Button
+                      onClick={() => {
+                        setOpenModalFoto(!openModalFoto);
+                      }}
+                      className="flex gap-2 text-white !bg-[#154940] hover:!bg-[#0e342d] !rounded-md h-[40px]"
+                    >
+                      <span className="text-white text-[10px] sm:text-sm">
+                        View Photo
+                      </span>
+                    </Button>
+                  </div>
+                )}
+            </div>
           </div>
-          <div className="w-full h-full bg-white p-4 shadow-md rounded-sm mt-5">
+          <div className="w-full h-full bg-white sm:max-h-[calc(100vh-390px)] overflow-auto p-4 shadow-md rounded-sm mt-5">
             {isLoadingDataAssetById ||
             isLoadingAddAsset ||
             isLoadingEditAsset ? (
@@ -115,7 +149,7 @@ export default function HomePage() {
                       render={({ field }) => (
                         <CInput
                           label="Nama Asset*"
-                          disabled={mode === "view"}
+                          disabled={mode === "view" || role === "user_admin"}
                           className="w-full"
                           placeholder="Enter nama asset"
                           {...field}
@@ -133,7 +167,7 @@ export default function HomePage() {
                         <CAutoComplete
                           label="Kode PN*"
                           className="w-full"
-                          disabled={mode === "view"}
+                          disabled={mode === "view" || role === "user_admin"}
                           options={kodePNOptions ?? []}
                           getOptionLabel={(option) => option.label ?? ""}
                           placeholder="Select role"
@@ -171,7 +205,7 @@ export default function HomePage() {
                         return (
                           <CInput
                             label="Nilai Asset*"
-                            disabled={mode === "view"}
+                            disabled={mode === "view" || role === "user_admin"}
                             className="w-full"
                             value={formatCurrency(
                               field.value?.toString() || ""
@@ -192,7 +226,7 @@ export default function HomePage() {
                       render={({ field }) => (
                         <CInput
                           label="Quantity*"
-                          disabled={mode === "view"}
+                          disabled={mode === "view" || role === "user_admin"}
                           type="number"
                           className="w-full"
                           placeholder="Enter quantity asset"
@@ -211,7 +245,7 @@ export default function HomePage() {
                         <CAutoComplete
                           label="Action Plan*"
                           className="w-full"
-                          disabled={mode === "view"}
+                          disabled={mode === "view" || role === "user_admin"}
                           options={actionPlan ?? []}
                           getOptionLabel={(option) => option.label ?? ""}
                           placeholder="Select role"
@@ -235,7 +269,7 @@ export default function HomePage() {
                       render={({ field: { onChange, value, ref } }) => (
                         <CInputDate
                           label="Plan Realisasi*"
-                          disabled={mode === "view"}
+                          disabled={mode === "view" || role === "user_admin"}
                           type="date"
                           className="!w-full"
                           value={moment(value).format("YYYY-MM-DD")}
@@ -254,7 +288,7 @@ export default function HomePage() {
                       render={({ field }) => (
                         <CInput
                           label="Area Kerja*"
-                          disabled={mode === "view"}
+                          disabled={mode === "view" || role === "user_admin"}
                           className="w-full"
                           placeholder="Enter area kerja"
                           {...field}
@@ -271,7 +305,7 @@ export default function HomePage() {
                       render={({ field: { onChange, value, ref } }) => (
                         <TextArea
                           label="Benefit*"
-                          disabled={mode === "view"}
+                          disabled={mode === "view" || role === "user_admin"}
                           className="!w-full"
                           placeholder="Enter benefit"
                           value={value}
@@ -290,7 +324,7 @@ export default function HomePage() {
                       render={({ field: { onChange, value, ref } }) => (
                         <TextArea
                           label="Remarks*"
-                          disabled={mode === "view"}
+                          disabled={mode === "view" || role === "user_admin"}
                           className="!w-full"
                           placeholder="Enter remarks"
                           value={value}
@@ -312,7 +346,7 @@ export default function HomePage() {
                         btnText="Cancel"
                         onClick={handleCancel}
                       />
-                      {mode !== "view" && (
+                      {(mode !== "view" && role === "user") && (
                         <ButtonSubmit
                           type={"submit"}
                           classname={
@@ -327,6 +361,8 @@ export default function HomePage() {
               </>
             )}
           </div>
+
+          {openModalFoto && <ModalUploader />}
 
           {dataAssetById?.progress?.length > 0 && (
             <div className="w-full p-5 bg-white shadow-md rounded-sm mt-5">
