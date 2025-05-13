@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       assetNumber: {
         type: DataTypes.STRING,
         unique: true,
-        allowNull: false,
+        allowNull: true,
       },
       kodePN: {
         type: DataTypes.STRING,

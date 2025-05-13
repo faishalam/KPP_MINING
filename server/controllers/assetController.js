@@ -273,9 +273,9 @@ class AssetController {
           return res.status(400).json({ message: "Invalid kodePN" });
       }
 
-      const assetCount = await Asset.count();
-      const nextNumber = assetCount + 1;
-      const assetNumber = `ASN-${String(nextNumber).padStart(4, "0")}`;
+      // const assetCount = await Asset.count();
+      // const nextNumber = assetCount + 1;
+      // const assetNumber = `ASN-${String(nextNumber).padStart(4, "0")}`;
 
       let newAsset = await Asset.create({
         site: req.user.site,
@@ -292,9 +292,12 @@ class AssetController {
         planRealisasi: plan,
         realisasiAsset: assetRealisasi,
         userId: req.user.id,
-        assetNumber: assetNumber,
+        // assetNumber: assetNumber,
       });
 
+
+      const assetNumber = `ASN-${String(newAsset.id).padStart(4, "0")}`;
+      await Asset.update({ assetNumber }, { where: { id: newAsset.id } });
       res.status(201).json(newAsset);
     } catch (error) {
       console.log(error);
@@ -627,7 +630,7 @@ class AssetController {
         updates.fotoAsset = upload.secure_url;
         responseData.fotoAsset = {
           id: fotoAsset.id,
-          base64: fotoAsset.base64,
+          base64: undefined,
           filename: fotoAsset.filename,
           filetype: fotoAsset.filetype,
           filesize: fotoAsset.filesize,
@@ -640,7 +643,7 @@ class AssetController {
         updates.fotoTandaTerima = upload.secure_url;
         responseData.fotoTandaTerima = {
           id: fotoTandaTerima.id,
-          base64: fotoTandaTerima.base64,
+          base64: undefined,
           filename: fotoTandaTerima.filename,
           filetype: fotoTandaTerima.filetype,
           filesize: fotoTandaTerima.filesize,
