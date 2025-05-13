@@ -65,11 +65,15 @@ module.exports = {
         type: Sequelize.STRING,
       },
       fotoAsset: {
-        type: Sequelize.JSONB, 
+        type: Sequelize.JSONB,
         allowNull: true,
       },
       fotoTandaTerima: {
         type: Sequelize.JSONB,
+        allowNull: true,
+      },
+      poReciept: {
+        type: Sequelize.INTEGER,
         allowNull: true,
       },
       userId: {

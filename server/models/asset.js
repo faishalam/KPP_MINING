@@ -215,13 +215,17 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       fotoAsset: {
-        type: DataTypes.JSONB,  
+        type: DataTypes.JSONB,
         allowNull: true,
       },
       fotoTandaTerima: {
-        type: DataTypes.JSONB,  
+        type: DataTypes.JSONB,
         allowNull: true,
-      },      
+      },
+      poReciept: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       keterangan: {
         type: DataTypes.STRING,
       },

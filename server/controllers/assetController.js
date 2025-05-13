@@ -76,45 +76,17 @@ cron.schedule(
 class AssetController {
   static async getAsset(req, res) {
     try {
-      const { search, page = 1, limit = 10, enabled } = req.query;
-
-      if (enabled) {
-        const response = await Asset.findAll({
-          include: {
-            model: User,
-            attributes: ["username", "email"],
-          },
-          include: {
-            model: Progress,
-          },
-          order: [["createdAt", "DESC"]],
-        });
-        return res.status(200).json(response);
-      }
+      const { page = 1, limit = 10 } = req.query;
 
       const pageNum = parseInt(page, 10);
       const limitNum = parseInt(limit, 10);
       const offset = (pageNum - 1) * limitNum;
-
-      const whereConditions = {
-        [Op.and]: [
-          {
-            [Op.or]: [
-              { namaAsset: { [Op.iLike]: search ? `%${search}%` : "%" } },
-              {
-                "$User.username$": { [Op.iLike]: search ? `%${search}%` : "%" },
-              },
-            ],
-          },
-        ],
-      };
 
       const { count, rows } = await Asset.findAndCountAll({
         include: {
           model: User,
           attributes: ["username", "email"],
         },
-        where: whereConditions,
         order: [["createdAt", "DESC"]],
         limit: limitNum,
         offset,
@@ -136,18 +108,7 @@ class AssetController {
 
   static async getAssetByUser(req, res) {
     try {
-      const { filter, search, page = 1, limit = 10, enabled } = req.query;
-
-      if (enabled) {
-        const response = await Asset.findAll({
-          where: { userId: req.user.id },
-          include: {
-            model: User,
-          },
-          order: [["createdAt", "DESC"]],
-        });
-        return res.status(200).json(response);
-      }
+      const { filter, search, page = 1, limit = 10 } = req.query;
 
       const pageNum = parseInt(page, 10);
       const limitNum = parseInt(limit, 10);
@@ -647,7 +608,7 @@ class AssetController {
   static async updateAssetFoto(req, res) {
     try {
       const { id } = req.params;
-      const { fotoAsset, fotoTandaTerima } = req.body.data;
+      const { fotoAsset, fotoTandaTerima, poReciept } = req.body.data;
 
       const { role } = req.user;
       if (role !== "user_admin") {
@@ -694,6 +655,7 @@ class AssetController {
       await asset.update({
         fotoAsset: responseData.fotoAsset,
         fotoTandaTerima: responseData.fotoTandaTerima,
+        poReciept: poReciept,
       });
 
       res.status(200).json({
