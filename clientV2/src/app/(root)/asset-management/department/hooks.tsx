@@ -126,7 +126,11 @@ const useAssetOnDepartmentHooks = () => {
   const { data: dataAssetById, isLoading: isLoadingDataAssetById } =
     useAssetById({
       params: {
-        id: id || undefined,
+        id:
+          (typeof id === "string" || typeof id === "number") &&
+          !isNaN(Number(id))
+            ? Number(id)
+            : undefined,
       },
     });
 

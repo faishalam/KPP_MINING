@@ -17,11 +17,7 @@ import { useModalWarningInfo } from "@/components/componentsV2/atoms/modal-warni
 import { AlertError, AlertSuccess } from "@/components/alert/AlertToastify";
 import useAddAsset from "@/api/asset/useAddAsset";
 import { useQueryClient } from "react-query";
-import {
-  useParams,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import useEditAsset from "@/api/asset/useEditAsset";
 import { ValueGetterParams } from "@ag-grid-community/core";
 import moment from "moment";
@@ -244,7 +240,10 @@ const useAssetManagementHooks = () => {
 
   const { data: dataAssetById, isLoadingDataAssetById } = useAssetById({
     params: {
-      id: id || undefined,
+      id:
+        (typeof id === "string" || typeof id === "number") && !isNaN(Number(id))
+          ? Number(id)
+          : undefined,
     },
   });
 

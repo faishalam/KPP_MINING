@@ -1,6 +1,5 @@
 "use client";
 import { useMemo } from "react";
-import Link from "next/link";
 import { Controller } from "react-hook-form";
 import BackIcon from "@mui/icons-material/KeyboardBackspace";
 import { CAutoComplete, CInput } from "@/components/componentsV2/atoms";
@@ -10,8 +9,10 @@ import ButtonSubmit from "@/components/button/ButtonSubmit";
 import { BlockingLoader } from "@/components/componentsV2/atoms/loader";
 import moment from "moment";
 import useProgressAssetManagement from "../hooks";
+import { useRouter } from "next/navigation";
 
 export default function ProgressAssetPage() {
+  const router = useRouter();
   const {
     handleSubmitProgress,
     controlProgress,
@@ -33,20 +34,20 @@ export default function ProgressAssetPage() {
   }, [mode]);
   return (
     <>
-      {(isLoadingProgressById || isLoadingProgressList || isLoadingMutateEdit || isLoadingAddProgress)  ? (
+      {isLoadingProgressById ||
+      isLoadingProgressList ||
+      isLoadingMutateEdit ||
+      isLoadingAddProgress ? (
         <BlockingLoader />
       ) : (
         <div className="w-full h-full no-scrollbar">
-          <div
-            id="master-user-form-header"
-            className="flex items-center gap-2 h-[50px]"
-          >
-            <Link
-              href="/progress-management/incoming"
+          <div className="flex gap-2 justify-start items-center">
+            <div
+              onClick={() => router.back()}
               className="max-w-[40px] w-full bg-[#154940] hover:bg-[#0e342d] rounded flex justify-center items-center p-2"
             >
               <BackIcon className="text-white" />
-            </Link>
+            </div>
 
             <div className="font-bold">{title}</div>
           </div>
@@ -226,7 +227,7 @@ export default function ProgressAssetPage() {
                     );
                   }}
                 />
-                 <Controller
+                <Controller
                   name="poOutstanding"
                   control={controlProgress}
                   rules={{
@@ -256,7 +257,7 @@ export default function ProgressAssetPage() {
                     );
                   }}
                 />
-                 <Controller
+                <Controller
                   name="prOutstanding"
                   control={controlProgress}
                   rules={{

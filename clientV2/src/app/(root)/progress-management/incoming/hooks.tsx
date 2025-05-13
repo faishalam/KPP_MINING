@@ -143,7 +143,13 @@ const useProgressAssetManagementHooks = () => {
 
   const { data: dataProgressById, isLoadingProgressById } = useProgressById({
     params: {
-      id: id || undefined,
+      id:
+        (typeof id === "string" || typeof id === "number") &&
+        mode !== "add" &&
+        mode !== "edit" &&
+        !isNaN(Number(id))
+          ? Number(id)
+          : undefined,
     },
   });
 

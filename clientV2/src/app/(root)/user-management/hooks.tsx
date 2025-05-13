@@ -5,11 +5,7 @@ import { saveAs } from "file-saver";
 import DeleteIcon from "@/assets/svg/delete-icon.svg";
 import IconEye from "@/assets/svg/eye-icon.svg";
 import { AlertError, AlertSuccess } from "@/components/alert/AlertToastify";
-import {
-  useParams,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useContext, createContext, useState, useMemo, useEffect } from "react";
 import { FieldErrors, SubmitHandler, useForm } from "react-hook-form";
 import useUserList from "@/api/user/useGetUserList";
@@ -124,7 +120,10 @@ const useUserManagementHooks = () => {
 
   const { data: dataUserById, isLoadingUserById } = useUserById({
     params: {
-      id: id || undefined,
+      id:
+        (typeof id === "string" || typeof id === "number") && !isNaN(Number(id))
+          ? Number(id)
+          : undefined,
     },
   });
 
