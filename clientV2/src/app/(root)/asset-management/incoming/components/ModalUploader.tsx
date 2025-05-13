@@ -13,6 +13,7 @@ import { BlockingLoader } from "@/components/componentsV2/atoms/loader";
 import ModalViewPhoto from "./ModalVIewPhoto";
 import { CInput } from "@/components/componentsV2/atoms";
 import useRootLayoutContext from "@/app/(root)/hooks";
+import Image from "next/image";
 
 export default function ModalUploader() {
   const {
@@ -67,12 +68,12 @@ export default function ModalUploader() {
                 >
                   <div className="w-full flex flex-col sm:grid grid-cols-2 gap-2 sm:gap-x-7 sm:gap-y-3 px-4 py-2">
                     <div
-                      className="cursor-pointer"
+                      className="cursor-pointer w-full"
                       onClick={() => {
                         if (mode === "view") {
                           setOpenModalView({
                             show: true,
-                            data: dataAssetById?.fotoAsset?.base64,
+                            data: dataAssetById?.fotoAsset?.url,
                           });
                         }
                       }}
@@ -81,28 +82,59 @@ export default function ModalUploader() {
                         name="fotoAsset"
                         control={control}
                         rules={{ required: "Foto Asset is Required" }}
-                        render={({ field: { onChange, value } }) => (
-                          <CInputImage
-                            id="foto-asset"
-                            file={value}
-                            label="Foto Asset*"
-                            disabled={mode === "view"}
-                            description="Maksimal 5MB. PNG/JPEG. Rekomendasi ukuran 200x200."
-                            className="w-full"
-                            onChange={(file) => {
-                              onChange(file);
-                            }}
-                          />
-                        )}
+                        render={({ field: { onChange, value } }) => {
+                          if (mode === "view") {
+                            const url = value?.url;
+                            if (!url) return <></>;
+                            return (
+                              <>
+                                <small>
+                                  <label>
+                                    Foto Asset
+                                    <span style={{ color: "red" }}>*</span>
+                                  </label>
+                                </small>
+                                <div className="w-full flex gap-2">
+                                  <Image
+                                    src={url}
+                                    width={200}
+                                    height={200}
+                                    alt="Foto Asset"
+                                    unoptimized
+                                    className="!w-[102px] !h-[102px] object-cover"
+                                  />
+                                  <small className="w-[calc(100%-110px)] text-gray-500 mt-4">
+                                    Maksimal 5MB. PNG/JPEG. Rekomendasi ukuran
+                                    200x200.
+                                  </small>
+                                </div>
+                              </>
+                            );
+                          } else {
+                            return (
+                              <CInputImage
+                                id="foto-asset"
+                                file={value ?? null}
+                                label="Foto Asset*"
+                                disabled={mode === "view"}
+                                description="Maksimal 5MB. PNG/JPEG. Rekomendasi ukuran 200x200."
+                                className="w-full"
+                                onChange={(file) => {
+                                  onChange(file);
+                                }}
+                              />
+                            );
+                          }
+                        }}
                       />
                     </div>
                     <div
-                      className="cursor-pointer"
+                      className="cursor-pointer w-full"
                       onClick={() => {
                         if (mode === "view") {
                           setOpenModalView({
                             show: true,
-                            data: dataAssetById?.fotoTandaTerima?.base64,
+                            data: dataAssetById?.fotoTandaTerima?.url,
                           });
                         }
                       }}
@@ -111,19 +143,50 @@ export default function ModalUploader() {
                         name="fotoTandaTerima"
                         control={control}
                         rules={{ required: "Foto Tanda Terima is Required" }}
-                        render={({ field: { onChange, value } }) => (
-                          <CInputImage
-                            id="foto-tanda-terima"
-                            file={value}
-                            disabled={mode === "view"}
-                            label="Foto Tanda Terima*"
-                            description="Maksimal 5MB. PNG/JPEG. Rekomendasi ukuran 200x200."
-                            className="w-full"
-                            onChange={(file) => {
-                              onChange(file);
-                            }}
-                          />
-                        )}
+                        render={({ field: { onChange, value } }) => {
+                          if (mode === "view") {
+                            const url = value?.url;
+                            if (!url) return <></>;
+                            return (
+                              <>
+                                <small>
+                                  <label>
+                                    Foto Tanda Terima
+                                    <span style={{ color: "red" }}>*</span>
+                                  </label>
+                                </small>
+                                <div className="flex gap-2 justify-start items-start">
+                                  <Image
+                                    src={url}
+                                    width={200}
+                                    height={200}
+                                    alt="Foto Asset"
+                                    unoptimized
+                                    className="!w-[102px] !h-[102px] object-cover"
+                                  />
+                                  <small className="w-[calc(100%-110px)] text-gray-500 mt-4">
+                                    Maksimal 5MB. PNG/JPEG. Rekomendasi ukuran
+                                    200x200.
+                                  </small>
+                                </div>
+                              </>
+                            );
+                          } else {
+                            return (
+                              <CInputImage
+                                id="foto-tanda-terima"
+                                file={value ?? null}
+                                label="Foto Tanda Terima*"
+                                disabled={mode === "view"}
+                                description="Maksimal 5MB. PNG/JPEG. Rekomendasi ukuran 200x200."
+                                className="w-full"
+                                onChange={(file) => {
+                                  onChange(file);
+                                }}
+                              />
+                            );
+                          }
+                        }}
                       />
                     </div>
                   </div>

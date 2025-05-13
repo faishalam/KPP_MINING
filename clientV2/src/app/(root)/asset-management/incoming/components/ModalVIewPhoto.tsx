@@ -44,6 +44,7 @@ export default function ModalViewPhoto({
               height={500}
               alt="Foto Asset"
               className="w-full h-full"
+              unoptimized
             />
           </DialogPanel>
         </div>

@@ -94,7 +94,7 @@ export default function HomePage() {
                     className="flex gap-2 text-white !bg-[#154940] hover:!bg-[#0e342d] !rounded-md h-[40px]"
                   >
                     <span className="text-white text-[10px] sm:text-sm">
-                      Add Photo
+                      Upload Photo
                     </span>
                   </Button>
                 </div>

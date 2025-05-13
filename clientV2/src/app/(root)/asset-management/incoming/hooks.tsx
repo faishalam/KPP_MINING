@@ -275,7 +275,6 @@ const useAssetManagementHooks = () => {
   };
 
   const onSubmitFoto = (data: FotoAssetFormData) => {
-    console.log(data, "<<<<");
     modalWarningInfo.open({
       title: "Confirm Save",
       message: (
@@ -448,7 +447,7 @@ const useAssetManagementHooks = () => {
         width: 150,
         headerName: "Foto Asset",
         cellRenderer: (params: ValueGetterParams<AssetFormInputs>) => {
-          const imageSrc = params.data?.fotoAsset?.base64;
+          const imageSrc = params.data?.fotoAsset?.url;
           if (!imageSrc) return null;
           return (
             <Image
@@ -466,7 +465,7 @@ const useAssetManagementHooks = () => {
         width: 150,
         headerName: "Foto Tanda Terima",
         cellRenderer: (params: ValueGetterParams<AssetFormInputs>) => {
-          const imageSrc = params.data?.fotoTandaTerima?.base64;
+          const imageSrc = params.data?.fotoTandaTerima?.url;
           if (!imageSrc) return null;
           return (
             <Image

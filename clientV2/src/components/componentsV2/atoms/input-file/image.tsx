@@ -78,10 +78,11 @@ const CInputImage: React.FC<TProps> = ({
         {file ? (
           <div className="relative !w-[102px] h-[102px]">
             <Image
-              src={file?.base64 || ""}
+              src={file?.base64 ?? file?.url}
               alt={file?.filename || "image"}
               width={102}
               height={102}
+              unoptimized
               className="!w-[102px] !h-[102px] object-cover"
             />
             {!disabled && (
@@ -108,7 +109,9 @@ const CInputImage: React.FC<TProps> = ({
             }}
           />
         )}
-        <small className="w-[calc(100%-110px)] text-gray-500">{description}</small>
+        <small className="w-[calc(100%-110px)] text-gray-500">
+          {description}
+        </small>
       </div>
     </div>
   );

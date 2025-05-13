@@ -17,7 +17,6 @@ export default function FormRegisterSection() {
     } = useAuthContext();
 
     const onSubmit: SubmitHandler<InputsRegister> = (data) => {
-        console.log(data);
         mutateRegister(data)
     }
 
