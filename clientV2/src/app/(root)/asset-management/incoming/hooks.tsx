@@ -17,7 +17,11 @@ import { useModalWarningInfo } from "@/components/componentsV2/atoms/modal-warni
 import { AlertError, AlertSuccess } from "@/components/alert/AlertToastify";
 import useAddAsset from "@/api/asset/useAddAsset";
 import { useQueryClient } from "react-query";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  useParams,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import useEditAsset from "@/api/asset/useEditAsset";
 import { ValueGetterParams } from "@ag-grid-community/core";
 import moment from "moment";
@@ -55,14 +59,7 @@ const useAssetManagementHooks = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const mode = searchParams.get("mode");
-  const pathName = usePathname();
-  const id = useMemo(() => {
-    const lastPath = pathName.split("/").pop();
-    if (lastPath === "new") {
-      return null;
-    }
-    return lastPath;
-  }, [pathName]);
+  const { id } = useParams();
   const {
     data: dataAssetList,
     isLoading: isLoadingDataAssetList,
@@ -76,7 +73,73 @@ const useAssetManagementHooks = () => {
   });
 
   const dataGrid = useMemo(() => {
-    const dataFilter = dataAssetList?.data?.filter((x: TypeDataAssetList) => {
+    const dataIncomingAsset = dataAssetList?.data?.filter(
+      (item: TypeDataAssetList) => !item.fotoTandaTerima && !item.fotoAsset
+    );
+
+    const dataFilter = dataIncomingAsset?.filter((x: TypeDataAssetList) => {
+      const search1 = x.site
+        .toLowerCase()
+        .includes(filter.search.toLowerCase());
+      const search2 = x.namaAsset
+        .toLowerCase()
+        .includes(filter.search.toLowerCase());
+      const search3 = x.kodePN
+        .toLowerCase()
+        .includes(filter.search.toLowerCase());
+      const search4 = x.remark
+        .toLowerCase()
+        .includes(filter.search.toLowerCase());
+      const search5 = x.actionPlan
+        .toLowerCase()
+        .includes(filter.search.toLowerCase());
+      const search6 = x.areaKerja
+        .toLowerCase()
+        .includes(filter.search.toLowerCase());
+      const search7 = x.benefit
+        .toLowerCase()
+        .includes(filter.search.toLowerCase());
+      const search8 = x.User?.username
+        .toLowerCase()
+        .includes(filter.search.toLowerCase());
+      const search9 = x.statusApproval
+        .toLowerCase()
+        .includes(filter.search.toLowerCase());
+      const search10 = x.assetNumber
+        .toLowerCase()
+        .includes(filter.search.toLowerCase());
+      // const search10 = x.keterangan
+      //   .toLowerCase()
+      //   .includes(filter.search.toLowerCase());
+      const search =
+        search1 ||
+        search2 ||
+        search3 ||
+        search4 ||
+        search5 ||
+        search6 ||
+        search7 ||
+        search8 ||
+        search9 ||
+        search10;
+      // search10;
+
+      const byKodePN = filter.kodePN ? x.kodePN === filter.kodePN : true;
+      const byActionPlan = filter.actionPlan
+        ? x.actionPlan === filter.actionPlan
+        : true;
+
+      return search && byKodePN && byActionPlan;
+    });
+    return dataFilter;
+  }, [dataAssetList, filter]);
+
+  const dataGridCompletedAsset = useMemo(() => {
+    const dataIncomingAsset = dataAssetList?.data?.filter(
+      (item: TypeDataAssetList) => item.fotoTandaTerima && item.fotoAsset
+    );
+
+    const dataFilter = dataIncomingAsset?.filter((x: TypeDataAssetList) => {
       const search1 = x.site
         .toLowerCase()
         .includes(filter.search.toLowerCase());
@@ -171,6 +234,7 @@ const useAssetManagementHooks = () => {
         queryClient.refetchQueries("useUserAssetList");
         resetFoto();
         setOpenModalFoto(!openModalFoto);
+        router.push("/asset-management/completed-asset");
         AlertSuccess("Upload Foto Successfully");
       },
       onError: (errorEditAsset: string) => {
@@ -202,7 +266,17 @@ const useAssetManagementHooks = () => {
     });
   };
 
+  const onInvalidSubmit = (errors: FieldErrors<AssetFormInputs>) => {
+    Object.entries(errors).forEach(([key, error]) => {
+      console.log(key);
+      if (error?.message) {
+        AlertError(error.message);
+      }
+    });
+  };
+
   const onSubmitFoto = (data: FotoAssetFormData) => {
+    console.log(data, "<<<<");
     modalWarningInfo.open({
       title: "Confirm Save",
       message: (
@@ -217,15 +291,6 @@ const useAssetManagementHooks = () => {
           mutateUploadFoto({ id: id, data: data });
         }
       },
-    });
-  };
-
-  const onInvalidSubmit = (errors: FieldErrors<AssetFormInputs>) => {
-    Object.entries(errors).forEach(([key, error]) => {
-      console.log(key);
-      if (error?.message) {
-        AlertError(error.message);
-      }
     });
   };
 
@@ -371,8 +436,17 @@ const useAssetManagementHooks = () => {
         field: "keterangan",
       },
       {
-        field: "fotoAsset",
+        field: "poReciept",
+        headerName: "PO Reciept",
         width: 130,
+        valueFormatter: (params: TAssetListCol) =>
+          params.value
+            ? `Rp ${Number(params.value).toLocaleString("id-ID")}`
+            : " ",
+      },
+      {
+        field: "fotoAsset",
+        width: 150,
         headerName: "Foto Asset",
         cellRenderer: (params: ValueGetterParams<AssetFormInputs>) => {
           const imageSrc = params.data?.fotoAsset?.base64;
@@ -554,11 +628,21 @@ const useAssetManagementHooks = () => {
   const statisticsDataTop = useMemo(
     () => [
       {
-        count: isNaN(Number(dataAssetList?.totalItems))
-          ? 0
-          : Number(dataAssetList?.totalItems),
-        label: "Total Asset",
+        count:
+          dataAssetList?.data?.filter(
+            (item: TypeDataAssetList) => item.fotoAsset && item.fotoTandaTerima
+          )?.length || 0,
+        label: "Asset Completed",
         bgColor: "from-[rgba(2,132,199,0.1)]",
+      },
+      {
+        count:
+          dataAssetList?.data?.filter(
+            (item: TypeDataAssetList) =>
+              !item.fotoAsset && !item.fotoTandaTerima
+          )?.length || 0,
+        label: "Asset Incoming",
+        bgColor: "from-[rgba(250,204,21,0.1)]",
       },
       {
         count:
@@ -566,7 +650,7 @@ const useAssetManagementHooks = () => {
             (item: TypeDataAssetList) => item.statusApproval === "approved"
           )?.length || 0,
         label: "Asset Approved",
-        bgColor: "from-[rgba(250,204,21,0.1)]",
+        bgColor: "from-[rgba(99,102,241,0.1)]",
       },
       {
         count:
@@ -577,7 +661,7 @@ const useAssetManagementHooks = () => {
         bgColor: "from-[rgba(22,163,74,0.1)]",
       },
     ],
-    [dataAssetById?.progress]
+    [dataAssetById?.progress, dataAssetList]
   );
 
   const kodePNOptions = [
@@ -640,7 +724,7 @@ const useAssetManagementHooks = () => {
     } else {
       reset({});
     }
-  }, [mode, dataAssetById, id]);
+  }, [mode, dataAssetById]);
 
   return {
     assetListColumnDef,
@@ -677,6 +761,7 @@ const useAssetManagementHooks = () => {
     controlFoto,
     handleSubmitFoto,
     isLoadingUploadFoto,
+    dataGridCompletedAsset,
   };
 };
 

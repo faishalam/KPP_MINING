@@ -11,6 +11,8 @@ import { Controller } from "react-hook-form";
 import { useMemo, useState } from "react";
 import { BlockingLoader } from "@/components/componentsV2/atoms/loader";
 import ModalViewPhoto from "./ModalVIewPhoto";
+import { CInput } from "@/components/componentsV2/atoms";
+import useRootLayoutContext from "@/app/(root)/hooks";
 
 export default function ModalUploader() {
   const {
@@ -22,7 +24,9 @@ export default function ModalUploader() {
     handleSubmit,
     dataAssetById,
     mode,
+    onInvalidSubmit,
   } = useAssetManagement();
+  const { role } = useRootLayoutContext();
   const title = useMemo(() => {
     if (mode === "view") return "View Photo";
     if (mode === "edit") return "Edit Photo";
@@ -57,7 +61,10 @@ export default function ModalUploader() {
                 {title}
               </DialogTitle>
               <div className="flex flex-col gap-3 mt-4">
-                <form onSubmit={handleSubmit(onSubmitFoto)}>
+                <form
+                  onSubmit={handleSubmit(onSubmitFoto, onInvalidSubmit)}
+                  className="flex flex-col"
+                >
                   <div className="w-full flex flex-col sm:grid grid-cols-2 gap-2 sm:gap-x-7 sm:gap-y-3 px-4 py-2">
                     <div
                       className="cursor-pointer"
@@ -73,11 +80,12 @@ export default function ModalUploader() {
                       <Controller
                         name="fotoAsset"
                         control={control}
+                        rules={{ required: "Foto Asset is Required" }}
                         render={({ field: { onChange, value } }) => (
                           <CInputImage
                             id="foto-asset"
                             file={value}
-                            label="Foto Asset"
+                            label="Foto Asset*"
                             disabled={mode === "view"}
                             description="Maksimal 5MB. PNG/JPEG. Rekomendasi ukuran 200x200."
                             className="w-full"
@@ -102,12 +110,13 @@ export default function ModalUploader() {
                       <Controller
                         name="fotoTandaTerima"
                         control={control}
+                        rules={{ required: "Foto Tanda Terima is Required" }}
                         render={({ field: { onChange, value } }) => (
                           <CInputImage
                             id="foto-tanda-terima"
                             file={value}
                             disabled={mode === "view"}
-                            label="Foto Tanda Terima"
+                            label="Foto Tanda Terima*"
                             description="Maksimal 5MB. PNG/JPEG. Rekomendasi ukuran 200x200."
                             className="w-full"
                             onChange={(file) => {
@@ -117,6 +126,44 @@ export default function ModalUploader() {
                         )}
                       />
                     </div>
+                  </div>
+
+                  <div className="px-4 mt-2">
+                    <Controller
+                      name="poReciept"
+                      control={control}
+                      rules={{
+                        required: "PO Reciept is required",
+                      }}
+                      render={({ field }) => {
+                        const formatCurrency = (value: string) => {
+                          const numericValue = value.replace(/\D/g, "");
+                          return numericValue.replace(
+                            /\B(?=(\d{3})+(?!\d))/g,
+                            "."
+                          );
+                        };
+                        const handleChange = (
+                          e: React.ChangeEvent<HTMLInputElement>
+                        ) => {
+                          const rawValue = e.target.value.replace(/\D/g, "");
+                          field.onChange(rawValue);
+                        };
+                        return (
+                          <CInput
+                            label="PO Reciept*"
+                            disabled={mode === "view" || role !== "user_admin"}
+                            className="w-full"
+                            value={formatCurrency(
+                              field.value?.toString() || ""
+                            )}
+                            placeholder="Enter PO reciept"
+                            onChange={handleChange}
+                            autoComplete="off"
+                          />
+                        );
+                      }}
+                    />
                   </div>
 
                   {mode === "view" ? (

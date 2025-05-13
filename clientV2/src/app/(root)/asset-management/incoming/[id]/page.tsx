@@ -35,6 +35,7 @@ export default function HomePage() {
     dataAssetById,
     openModalFoto,
     setOpenModalFoto,
+    isLoadingDataAssetList,
   } = useAssetManagement();
   const { role } = useRootLayoutContext();
   const title = useMemo(() => {
@@ -44,7 +45,10 @@ export default function HomePage() {
   }, [mode]);
   return (
     <>
-      {isLoadingDataAssetById || isLoadingAddAsset || isLoadingEditAsset ? (
+      {isLoadingDataAssetById ||
+      isLoadingAddAsset ||
+      isLoadingEditAsset ||
+      isLoadingDataAssetList ? (
         <BlockingLoader />
       ) : (
         <div className="w-full h-full no-scrollbar">

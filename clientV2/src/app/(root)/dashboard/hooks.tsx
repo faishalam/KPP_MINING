@@ -4,8 +4,7 @@ import { createContext, useContext } from "react";
 const useDashboardHooks = () => {
   const {
     data: dataAssetList,
-    isLoading: isLoadingDataAssetList,
-    isFetching: isFetchingDataAssetList,
+    isLoadingDataAssetList,
   } = useAssetList({
     params: {
       search: undefined,
@@ -13,11 +12,12 @@ const useDashboardHooks = () => {
       limit: 10,
     },
   });
+
+
   return {
     dataAssetList,
-    isLoadingDataAssetList,
-    isFetchingDataAssetList,
-  };
+    isLoadingDataAssetList
+  }
 };
 
 const DashboardContext = createContext<

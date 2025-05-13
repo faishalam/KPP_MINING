@@ -16,9 +16,9 @@ export default function Navbar() {
   const router = useRouter();
 
   const handleLogout = () => {
+    router.push("/login");
     Cookies.remove("Authorization");
     localStorage.clear();
-    router.push("/login");
   };
   return (
     <>

@@ -31,7 +31,6 @@ const useUserAssetList = (props) => {
     queryFn: useUserAssetListFn,
     staleTime: Infinity,
     cacheTime: Infinity,
-    enabled: Boolean((props?.params?.search || !props?.params?.page) && props?.params?.page || props?.params?.limit || props?.params?.enabled ),
     // enabled: Boolean(props?.params?.filter),
   });
 

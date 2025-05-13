@@ -11,7 +11,7 @@ export type FotoAssetFormData = {
 };
 
 export interface TypeDataAssetList {
-  id?: string | null
+  id?: string | null;
   no: number;
   assetNumber: string;
   index: number;
@@ -36,6 +36,9 @@ export interface TypeDataAssetList {
   createdAt: string;
   updatedAt: string;
   keterangan: string;
+  poReciept: number;
+  fotoTandaTerima: TSerializableFile;
+  fotoAsset: TSerializableFile;
   User: {
     username: string;
   };
@@ -49,7 +52,7 @@ export interface AssetResponse {
 }
 
 export interface AssetFormInputs {
-  assetNumber: string
+  assetNumber: string;
   namaAsset: string;
   kodePN: string;
   nilaiAsset: number;
@@ -59,8 +62,9 @@ export interface AssetFormInputs {
   areaKerja: string;
   benefit: string;
   planRealisasi: string | Date;
-  fotoAsset: TSerializableFile
-  fotoTandaTerima: TSerializableFile
+  poReciept: number;
+  fotoAsset: TSerializableFile;
+  fotoTandaTerima: TSerializableFile;
 }
 
 export type TAssetListCol =

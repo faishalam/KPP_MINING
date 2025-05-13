@@ -6,7 +6,7 @@ import IconPencil from "@/assets/svg/icon-pencil.svg";
 import DeleteIcon from "@/assets/svg/delete-icon.svg";
 import IconEye from "@/assets/svg/eye-icon.svg";
 import { FieldErrors, SubmitHandler, useForm } from "react-hook-form";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useModalWarningInfo } from "@/components/componentsV2/atoms/modal-warning";
 import { useQueryClient } from "react-query";
 import useProgressList from "@/api/prgoress/useGetProgressList";
@@ -28,7 +28,6 @@ import useRootLayoutContext from "../../hooks";
 const useProgressAssetManagementHooks = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const pathName = usePathname();
   const modalWarningInfo = useModalWarningInfo();
   const [pagination, setPagination] = useState<{ page: number; limit: number }>(
     { page: 1, limit: 10 }
@@ -46,13 +45,7 @@ const useProgressAssetManagementHooks = () => {
     cutoff_from: string | null;
     cutoff_to: string | null;
   }>({ search: "", department: null, cutoff_from: null, cutoff_to: null });
-  const id = useMemo(() => {
-    const lastPath = pathName.split("/").pop();
-    if (lastPath === "new") {
-      return null;
-    }
-    return lastPath;
-  }, [pathName]);
+  const { id } = useParams();
 
   const {
     register: registerProgress,
@@ -148,12 +141,11 @@ const useProgressAssetManagementHooks = () => {
       },
     });
 
-  const { data: dataProgressById, isLoadingProgressById } =
-    useProgressById({
-      params: {
-        id: id || undefined,
-      },
-    });
+  const { data: dataProgressById, isLoadingProgressById } = useProgressById({
+    params: {
+      id: id || undefined,
+    },
+  });
 
   const { mutate: mutateEditProgress, isLoading: isLoadingMutateEdit } =
     useUpdateProgress({

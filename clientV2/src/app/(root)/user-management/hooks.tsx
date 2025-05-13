@@ -5,7 +5,11 @@ import { saveAs } from "file-saver";
 import DeleteIcon from "@/assets/svg/delete-icon.svg";
 import IconEye from "@/assets/svg/eye-icon.svg";
 import { AlertError, AlertSuccess } from "@/components/alert/AlertToastify";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  useParams,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { useContext, createContext, useState, useMemo, useEffect } from "react";
 import { FieldErrors, SubmitHandler, useForm } from "react-hook-form";
 import useUserList from "@/api/user/useGetUserList";
@@ -47,14 +51,7 @@ const useUserManagementHooks = () => {
     },
   });
   const { role } = useRootLayoutContext();
-  const pathName = usePathname();
-  const id = useMemo(() => {
-    const lastPath = pathName.split("/").pop();
-    if (lastPath === "new") {
-      return null;
-    }
-    return lastPath;
-  }, [pathName]);
+  const { id } = useParams();
   const router = useRouter();
   const [searchUser, setSearchUser] = useState<string>("");
   const searchParams = useSearchParams();
@@ -175,7 +172,7 @@ const useUserManagementHooks = () => {
 
   const onInvalidSubmit = (errors: FieldErrors<InputsRegister>) => {
     Object.entries(errors).forEach(([key, error]) => {
-      console.log(key)
+      console.log(key);
       if (error?.message) {
         AlertError(error.message);
       }

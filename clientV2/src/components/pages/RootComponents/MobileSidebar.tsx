@@ -42,8 +42,15 @@ export default function MobileSidebar() {
             Icon={InquiryIcon}
             selected={
               selectedMenu("/asset-management/incoming") ||
-              selectedMenu("/asset-management/department")
+              selectedMenu("/asset-management/department") ||
+              selectedMenu("/asset-management/completed-asset")
             }
+          />
+          <SubMenuItems
+            title="Completed Asset"
+            selected={selectedMenu("/asset-management/completed-asset")}
+            href="/asset-management/completed-asset"
+            hide={!selectedMenu("/asset-management")}
           />
           <SubMenuItems
             title="Incoming Asset"
@@ -64,7 +71,7 @@ export default function MobileSidebar() {
             selected={selectedMenu("/progress-management")}
           />
           <SubMenuItems
-            title="Capex Incoming"
+            title="Progress Asset"
             selected={selectedMenu("/progress-management/incoming")}
             href="/progress-management/incoming"
             hide={!selectedMenu("/progress-management")}

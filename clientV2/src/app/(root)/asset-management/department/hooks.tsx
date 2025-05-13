@@ -13,7 +13,7 @@ import useUserAssetList from "@/api/asset/useUserAssetList";
 import { AlertError, AlertSuccess } from "@/components/alert/AlertToastify";
 import { ValueGetterParams } from "@ag-grid-community/core";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { createContext, useContext, useMemo, useState } from "react";
 import { useQueryClient } from "react-query";
 import {
@@ -43,14 +43,7 @@ const useAssetOnDepartmentHooks = () => {
     id: string | undefined;
     show: boolean;
   }>({ id: undefined, show: false });
-  const pathName = usePathname();
-  const id = useMemo(() => {
-    const lastPath = pathName.split("/").pop();
-    if (lastPath === "new") {
-      return null;
-    }
-    return lastPath;
-  }, [pathName]);
+  const { id } = useParams();
   const [filter, setFilter] = useState<{
     search: string;
     kodePN: string | null;
@@ -385,6 +378,15 @@ const useAssetOnDepartmentHooks = () => {
         },
       },
       {
+        field: "poReciept",
+        headerName: "PO Reciept",
+        width: 130,
+        valueFormatter: (params: TAssetListCol) =>
+          params.value
+            ? `Rp ${Number(params.value).toLocaleString("id-ID")}`
+            : " ",
+      },
+      {
         field: "fotoAsset",
         width: 130,
         headerName: "Foto Asset",
@@ -463,7 +465,7 @@ const useAssetOnDepartmentHooks = () => {
 
                 // For statuses that need action buttons
                 return (
-                  <div className="flex gap-1">
+                  <div className="flex gap-1 justify-center items-center mt-2">
                     <button
                       className="bg-green-700 hover:bg-green-800 text-white text-xs py-1 px-2 rounded"
                       type="button"

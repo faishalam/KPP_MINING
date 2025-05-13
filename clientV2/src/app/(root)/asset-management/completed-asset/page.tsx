@@ -1,20 +1,14 @@
 "use client";
 import DownloadIcon from "@mui/icons-material/Download";
-import AddIcon from "@mui/icons-material/Add";
-import { useRouter } from "next/navigation";
-import useAssetManagement from "./hooks";
 import { BlockingLoader } from "@/components/componentsV2/atoms/loader";
 import { Button, Typography } from "@mui/material";
 import { CAutoComplete, CInput } from "@/components/componentsV2/atoms";
 import DataGrid from "@/components/componentsV2/molecules/datagrid";
-import useRootLayoutContext from "../../hooks";
+import useAssetManagement from "../incoming/hooks";
 
 export default function AssetManagement() {
-  const router = useRouter();
   const {
     statisticsDataTop,
-    reset,
-    dataGrid,
     kodePNOptions,
     actionPlan,
     filter,
@@ -23,8 +17,8 @@ export default function AssetManagement() {
     isLoadingDataAssetList,
     dataAssetList,
     onDownloadData,
+    dataGridCompletedAsset,
   } = useAssetManagement();
-  const { role } = useRootLayoutContext();
   return (
     <>
       {isLoadingDataAssetList ? (
@@ -33,7 +27,7 @@ export default function AssetManagement() {
         <div className="w-[100%] h-[100%]">
           <div className="w-full flex justify-between items-center">
             <Typography variant="h6" className="!font-bold">
-              Incoming Asset
+              Completed Asset
             </Typography>
             <div className="flex gap-2 items-center">
               <Button
@@ -45,20 +39,6 @@ export default function AssetManagement() {
               >
                 Download
               </Button>
-              {role === "user" && (
-                <Button
-                  onClick={() => {
-                    router.push("/asset-management/incoming/new?mode=add");
-                    reset();
-                  }}
-                  className="flex gap-2 text-white !bg-[#154940] hover:!bg-[#0e342d] !rounded-md h-[40px]"
-                >
-                  <AddIcon className="text-white text-[10px] sm:text-sm" />
-                  <span className="text-white text-[10px] sm:text-sm">
-                    Add Data
-                  </span>
-                </Button>
-              )}
             </div>
           </div>
 
@@ -118,7 +98,10 @@ export default function AssetManagement() {
                 />
               </div>
             </div>
-            <DataGrid columnDefs={assetListColumnDef} rowData={dataGrid} />
+            <DataGrid
+              columnDefs={assetListColumnDef}
+              rowData={dataGridCompletedAsset}
+            />
           </div>
         </div>
       )}
