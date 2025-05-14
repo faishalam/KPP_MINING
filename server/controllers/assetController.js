@@ -20,18 +20,31 @@ cron.schedule(
   () => {
     const getData = async () => {
       try {
+        // 1. find all asset
         const response = await Asset.findAll({
           include: {
             model: User,
             attributes: ["username", "email"],
           },
-          order: [["planRealisasi", "DESC"]],
         });
 
-        if (response.length === 0) return "Asset not found";
+        if (response.length === 0) return console.log("Asset not found");
+        // 2. find asset approved by head
+        const findApprovedAsset = response.filter(
+          (item) => item?.statusApproval?.toLowerCase() === "approved"
+        );
+        // 3. find asset not worked and not canceled (means : find all asset with realisasi status (hold & realisasi waiting))
+        if (findApprovedAsset.length === 0) return "Asset not found";
 
-        response.map((item) => {
-          // reminder h-1
+        const findAssetReminder = findApprovedAsset.filter(
+          (item) =>
+            item?.statusRealisasi?.toLowerCase() !== "worked" &&
+            item?.statusRealisasi?.toLowerCase() !== "canceled"
+        );
+
+        //  4. send eamil
+        findAssetReminder.map((item) => {
+          // 5. reminder h-1
           const nowWIB = moment().tz("Asia/Jakarta").format("YYYY-MM-DD");
           const planRealisasiTime = moment(item.realisasiAsset)
             .subtract(1, "days")
@@ -40,7 +53,7 @@ cron.schedule(
             sendEmail(item.User.dataValues.email, item.namaAsset);
           }
 
-          // reminder h-0
+          // 6. reminder h-0
           const todayRealisasiTime = moment(item.realisasiAsset).format(
             "YYYY-MM-DD"
           );
@@ -51,7 +64,7 @@ cron.schedule(
             sendEmail(item.User.dataValues.email, item.namaAsset);
           }
 
-          // reminder melebih h-0 dan item.action === 'realisasi waiting'
+          // 7. reminder melebih h-0 dan item.action === 'realisasi waiting'
           const pastRealisasiTime = moment(item.realisasiAsset).isBefore(
             nowWIB
           );
