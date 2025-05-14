@@ -295,7 +295,6 @@ class AssetController {
         // assetNumber: assetNumber,
       });
 
-
       const assetNumber = `ASN-${String(newAsset.id).padStart(4, "0")}`;
       await Asset.update({ assetNumber }, { where: { id: newAsset.id } });
       res.status(201).json(newAsset);
