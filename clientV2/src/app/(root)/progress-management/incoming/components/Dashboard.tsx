@@ -89,9 +89,23 @@ export default function Dashboard() {
   }, [dataProgressList]);
 
   const prCurrent = prOutstanding;
-  const prMax = 721000000;
+  const prMax = dataProgressList?.data?.reduce(
+    (acc: number, row: TInputsProgress) => {
+      const num =
+        parseFloat(row.totalPr.toString().replace(/[^0-9.-]+/g, "")) || 0;
+      return acc + num;
+    },
+    0
+  );
   const poCurrent = poOutstanding;
-  const poMax = 905000000;
+  const poMax = dataProgressList?.data?.reduce(
+    (acc: number, row: TInputsProgress) => {
+      const num =
+        parseFloat(row.totalPr.toString().replace(/[^0-9.-]+/g, "")) || 0;
+      return acc + num;
+    },
+    0
+  );
 
   const prPercentage = (prCurrent / prMax) * 100;
   const poPercentage = (poCurrent / poMax) * 100;

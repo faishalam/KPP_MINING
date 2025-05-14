@@ -169,7 +169,7 @@ export default function ProgressAssetPage() {
                   name="totalRecipt"
                   control={controlProgress}
                   rules={{
-                    required: "Total PO Recipt is required",
+                    required: "Total PO Reciept is required",
                   }}
                   render={({ field }) => {
                     const formatCurrency = (value: string) => {
@@ -184,7 +184,7 @@ export default function ProgressAssetPage() {
                     };
                     return (
                       <CInput
-                        label="Total PO Recipt*"
+                        label="Total PO Reciept*"
                         type="text"
                         disabled={mode === "view"}
                         className="w-full"

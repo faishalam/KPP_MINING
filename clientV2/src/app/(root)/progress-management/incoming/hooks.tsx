@@ -301,7 +301,7 @@ const useProgressAssetManagementHooks = () => {
       },
       {
         field: "totalBudget",
-        headerName: "Jumlah Sebesar Total Budget",
+        headerName: "Total Budget",
         width: 200,
         valueFormatter: (params: TMasterProgressCol) =>
           params.value
@@ -310,7 +310,7 @@ const useProgressAssetManagementHooks = () => {
       },
       {
         field: "totalRecipt",
-        headerName: "Jumlah Sebesar Total PO Recipt",
+        headerName: "Total PO Reciept",
         width: 200,
         valueFormatter: (params: TMasterProgressCol) =>
           params.value
@@ -319,7 +319,7 @@ const useProgressAssetManagementHooks = () => {
       },
       {
         field: "totalPr",
-        headerName: "Jumlah Sebesar Total PR/PO",
+        headerName: "Total PR/PO",
         width: 200,
         valueFormatter: (params: TMasterProgressCol) =>
           params.value
@@ -328,7 +328,7 @@ const useProgressAssetManagementHooks = () => {
       },
       {
         field: "balance",
-        headerName: "Jumlah Sebesar End Balance",
+        headerName: "End Balance",
         width: 200,
         valueFormatter: (params: TMasterProgressCol) =>
           params.value
