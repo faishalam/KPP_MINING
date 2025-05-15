@@ -50,7 +50,7 @@ cron.schedule(
             .subtract(1, "days")
             .format("YYYY-MM-DD");
           if (nowWIB == planRealisasiTime) {
-            sendEmail(item.User.dataValues.email, item.namaAsset);
+            sendEmail(item.User.dataValues.email, item);
           }
 
           // 6. reminder h-0
@@ -61,7 +61,7 @@ cron.schedule(
             nowWIB === todayRealisasiTime &&
             item.statusRealisasi === "realisasi waiting"
           ) {
-            sendEmail(item.User.dataValues.email, item.namaAsset);
+            sendEmail(item.User.dataValues.email, item);
           }
 
           // 7. reminder melebih h-0 dan item.action === 'realisasi waiting'
@@ -72,7 +72,7 @@ cron.schedule(
             pastRealisasiTime &&
             item.statusRealisasi === "realisasi waiting"
           ) {
-            sendEmail(item.User.dataValues.email, item.namaAsset);
+            sendEmail(item.User.dataValues.email, item);
           }
         });
       } catch (error) {
