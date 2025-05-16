@@ -64,14 +64,11 @@ cron.schedule(
             sendEmail(item.User.dataValues.email, item);
           }
 
-          // 7. reminder melebih h-0 dan item.action === 'realisasi waiting'
+          // 7. reminder melebih h-0 
           const pastRealisasiTime = moment(item.realisasiAsset).isBefore(
             nowWIB
           );
-          if (
-            pastRealisasiTime &&
-            item.statusRealisasi === "realisasi waiting"
-          ) {
+          if (pastRealisasiTime) {
             sendEmail(item.User.dataValues.email, item);
           }
         });
