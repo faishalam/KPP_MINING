@@ -24,7 +24,7 @@ async function sendEmail(email, data) {
     to: `${email}`,
     subject: "REMINDER YOUR ASSET IS OVERDUE",
     html: `
-       <div style="max-width: 100%; height: 100%; text-align: center;">
+        <div style="max-width: 100%; height: 100%; text-align: center;">
           <table role="presentation" width="800" height="526" style="margin: 0 auto; background-color: #F9FAFB; padding-left: 70px; padding-right: 70px;">
             <tr>
               <td align="start" style="padding: 20px;">
@@ -48,6 +48,11 @@ async function sendEmail(email, data) {
                     </td>
                   </tr>
                 </table>
+                 <div style="margin-top: 30px; text-align: start;">
+                  <a href="https://kpp-asset-management.vercel.app/dashboard" style="display: inline-block; background-color: #2563EB; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                    Visit Website
+                  </a>
+                </div>
                 <p>Terima Kasih,<br/>Admin Asset Management</p>
               </td>
             </tr>
