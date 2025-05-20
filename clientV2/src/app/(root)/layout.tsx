@@ -5,7 +5,7 @@ import Navbar from "@/components/pages/RootComponents/Navbar";
 import MobileSidebar from "@/components/pages/RootComponents/MobileSidebar";
 import DesktopSidebar from "@/components/pages/RootComponents/DesktopSidebar";
 import { RootLayoutProvider } from "./hooks";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function RootLayout({
