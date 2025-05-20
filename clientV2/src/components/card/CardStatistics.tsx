@@ -22,7 +22,7 @@ export default function CardStatistics({ title, icon, total, loading }: CardStat
                         <div className="w-14 h-14 flex items-center justify-center bg-gray-100 rounded-full">
                             {icon}
                         </div>
-                        <p className="text-4xl font-semibold text-[#195c50]">{total}</p>
+                        <p className="text-2xl font-semibold text-[#195c50]">{total ?? "-"}</p>
                     </div>
                 </div>
             )}

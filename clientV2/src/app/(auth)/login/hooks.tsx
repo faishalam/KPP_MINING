@@ -34,6 +34,7 @@ const useAuthHooks = () => {
         expires: 7,
       });
       localStorage.setItem("role", data.role);
+      localStorage.setItem("token", data.access_token);
       router.push("/dashboard");
     },
     onError: (error: string) => {

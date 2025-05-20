@@ -15,7 +15,7 @@ export default function DashboardPage() {
   const { dataAssetList, isLoadingDataAssetList } = useDashboard();
   const totalNilaiAsset = `Rp. ${dataAssetList?.data
     ?.reduce((a: number, b: TypeDataAssetList) => a + b.totalNilaiAsset, 0)
-    .toLocaleString("id-ID")}`;
+    .toLocaleString("id-ID")}`  
   const assetApproved = dataAssetList?.data?.filter(
     (a: TypeDataAssetList) => a.statusApproval === "approved"
   ).length;

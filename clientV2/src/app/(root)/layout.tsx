@@ -5,12 +5,24 @@ import Navbar from "@/components/pages/RootComponents/Navbar";
 import MobileSidebar from "@/components/pages/RootComponents/MobileSidebar";
 import DesktopSidebar from "@/components/pages/RootComponents/DesktopSidebar";
 import { RootLayoutProvider } from "./hooks";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const router = useRouter();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      router.push("/dashboard");
+    } else {
+      router.push("/login");
+    }
+  }, [router]);
+
   return (
     <RootProvider>
       <RootLayoutProvider>
