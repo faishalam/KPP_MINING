@@ -102,14 +102,6 @@ class AssetController {
         offset,
       });
 
-      rows.map((item) =>
-        item.actionPlan === "HIGH PRIORIRY"
-          ? (item.actionPlan = "HIGH PRIORITY")
-          : item.actionPlan
-      );
-
-      rows.map(item => item.remark === 'New Capex' ? item.remark = "new_capex" : item.remark = "carry_over")
-
       const totalPages = Math.ceil(count / limitNum);
 
       res.status(200).json({
