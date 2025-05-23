@@ -500,7 +500,7 @@ const useAssetManagementHooks = () => {
                   alt="view"
                 />
               </div>
-              {role === "user_admin" && (
+              {/* {role === "user_admin" && ( */}
                 <>
                   <div className="cursor-point">
                     <Image
@@ -517,7 +517,7 @@ const useAssetManagementHooks = () => {
                     />
                   </div>
                 </>
-              )}
+              {/* )} */}
             </div>
           );
         },
