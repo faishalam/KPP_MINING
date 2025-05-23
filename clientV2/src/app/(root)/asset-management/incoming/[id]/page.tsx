@@ -36,6 +36,7 @@ export default function HomePage() {
     openModalFoto,
     setOpenModalFoto,
     isLoadingDataAssetList,
+    remarksOptions,
   } = useAssetManagement();
   const { role } = useRootLayoutContext();
   const title = useMemo(() => {
@@ -237,7 +238,7 @@ export default function HomePage() {
                       disabled={mode === "view" || role === "user_admin"}
                       options={actionPlan ?? []}
                       getOptionLabel={(option) => option.label ?? ""}
-                      placeholder="Select role"
+                      placeholder="Select action plan"
                       value={
                         actionPlan.find((opt) => opt.value === field.value) ||
                         null
@@ -307,18 +308,24 @@ export default function HomePage() {
                   name="remark"
                   control={control}
                   rules={{
-                    required: "Remarks is required",
+                    required: "Remark is required",
                   }}
-                  render={({ field: { onChange, value, ref } }) => (
-                    <TextArea
+                  render={({ field }) => (
+                    <CAutoComplete
                       label="Remarks*"
+                      className="w-full"
                       disabled={mode === "view" || role === "user_admin"}
-                      className="!w-full"
-                      placeholder="Enter remarks"
-                      value={value}
-                      onChange={onChange}
-                      inputRef={ref}
-                      autoComplete="off"
+                      options={remarksOptions ?? []}
+                      getOptionLabel={(option) => option.label ?? ""}
+                      placeholder="Select action plan"
+                      value={
+                        remarksOptions.find(
+                          (opt) => opt.value === field.value
+                        ) || null
+                      }
+                      onChange={(_, newValue) => {
+                        field.onChange(newValue?.value || "");
+                      }}
                     />
                   )}
                 />

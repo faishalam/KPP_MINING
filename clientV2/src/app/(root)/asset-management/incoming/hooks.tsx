@@ -676,9 +676,14 @@ const useAssetManagementHooks = () => {
   ];
 
   const actionPlan = [
-    { value: "HIGH PRIORIRY", label: "HIGH PRIORIRY" },
+    { value: "HIGH PRIORITY", label: "HIGH PRIORITY" },
     { value: "CLOSED", label: "CLOSED" },
   ];
+
+  const remarksOptions = [
+    {value: "new_capex", label: "New Capex"},
+    {value: "carry_over", label: "Carry Over"},
+  ]
 
   const onDownloadData = (dataAsset: TypeDataAssetList[]) => {
     try {
@@ -760,6 +765,7 @@ const useAssetManagementHooks = () => {
     handleSubmitFoto,
     isLoadingUploadFoto,
     dataGridCompletedAsset,
+    remarksOptions
   };
 };
 
