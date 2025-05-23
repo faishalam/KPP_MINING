@@ -32,11 +32,11 @@ import {
 } from "../types";
 import { TMasterProgressCol } from "../../progress-management/types";
 import useUploadFoto from "../../../../api/asset/useUploadFoto";
-import useRootLayoutContext from "../../hooks";
+// import useRootLayoutContext from "../../hooks";
 
 const useAssetManagementHooks = () => {
   const { register, handleSubmit, control, reset } = useForm<AssetFormInputs>();
-  const { role } = useRootLayoutContext();
+  // const { role } = useRootLayoutContext();
   const {
     register: registerFoto,
     control: controlFoto,
