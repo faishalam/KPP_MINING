@@ -64,7 +64,7 @@ cron.schedule(
             sendEmail(item.User.dataValues.email, item);
           }
 
-          // 7. reminder melebih h-0 
+          // 7. reminder melebih h-0
           const pastRealisasiTime = moment(item.realisasiAsset).isBefore(
             nowWIB
           );
@@ -101,6 +101,14 @@ class AssetController {
         limit: limitNum,
         offset,
       });
+
+      rows.map((item) =>
+        item.actionPlan === "HIGH PRIORIRY"
+          ? (item.actionPlan = "HIGH PRIORITY")
+          : item.actionPlan
+      );
+
+      rows.map(item => item.remark === 'New Capex' ? item.remark = "new_capex" : item.remark = "carry_over")
 
       const totalPages = Math.ceil(count / limitNum);
 
