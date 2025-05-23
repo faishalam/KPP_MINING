@@ -32,11 +32,11 @@ import {
 } from "../types";
 import { TMasterProgressCol } from "../../progress-management/types";
 import useUploadFoto from "../../../../api/asset/useUploadFoto";
-// import useRootLayoutContext from "../../hooks";
+import useRootLayoutContext from "../../hooks";
 
 const useAssetManagementHooks = () => {
   const { register, handleSubmit, control, reset } = useForm<AssetFormInputs>();
-  // const { role } = useRootLayoutContext();
+  const { role } = useRootLayoutContext();
   const {
     register: registerFoto,
     control: controlFoto,
@@ -500,7 +500,7 @@ const useAssetManagementHooks = () => {
                   alt="view"
                 />
               </div>
-              {/* {role === "user_admin" && ( */}
+              {role === "user_admin" && (
                 <>
                   <div className="cursor-point">
                     <Image
@@ -517,7 +517,7 @@ const useAssetManagementHooks = () => {
                     />
                   </div>
                 </>
-              {/* )} */}
+              )}
             </div>
           );
         },
@@ -681,9 +681,9 @@ const useAssetManagementHooks = () => {
   ];
 
   const remarksOptions = [
-    {value: "new_capex", label: "New Capex"},
-    {value: "carry_over", label: "Carry Over"},
-  ]
+    { value: "NEW CAPEX", label: "NEW CAPEX" },
+    { value: "CARRY OVER", label: "CARRY OVER" },
+  ];
 
   const onDownloadData = (dataAsset: TypeDataAssetList[]) => {
     try {
@@ -765,7 +765,7 @@ const useAssetManagementHooks = () => {
     handleSubmitFoto,
     isLoadingUploadFoto,
     dataGridCompletedAsset,
-    remarksOptions
+    remarksOptions,
   };
 };
 
