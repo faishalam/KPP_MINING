@@ -48,7 +48,8 @@ const useAssetOnDepartmentHooks = () => {
     search: string;
     kodePN: string | null;
     actionPlan: string | null;
-  }>({ search: "", kodePN: null, actionPlan: null });
+    remarks: string | null;
+  }>({ search: "", kodePN: null, actionPlan: null, remarks: null });
   const {
     data: dataUserAssetList,
     isLoading: isLoadingDataUserAssetList,
@@ -112,12 +113,15 @@ const useAssetOnDepartmentHooks = () => {
           search9 ||
           search10;
 
+        const byRemarks = filter?.remarks
+          ? x.remark.toLowerCase() === filter?.remarks.toLowerCase()
+          : true;
         const byKodePN = filter.kodePN ? x.kodePN === filter.kodePN : true;
         const byActionPlan = filter.actionPlan
           ? x.actionPlan === filter.actionPlan
           : true;
 
-        return search && byKodePN && byActionPlan;
+        return search && byKodePN && byActionPlan && byRemarks;
       }
     );
     return dataFilter;
@@ -693,7 +697,13 @@ const useAssetOnDepartmentHooks = () => {
       console.log(error);
     }
   };
+
+  const remarksOptions = [
+    { value: "NEW CAPEX", label: "NEW CAPEX" },
+    { value: "CARRY OVER", label: "CARRY OVER" },
+  ];
   return {
+    remarksOptions,
     statisticsDataTop,
     onDownloadData,
     kodePNOptions,

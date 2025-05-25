@@ -50,7 +50,8 @@ const useAssetManagementHooks = () => {
     search: string;
     kodePN: string | null;
     actionPlan: string | null;
-  }>({ search: "", kodePN: null, actionPlan: null });
+    remarks: string | null;
+  }>({ search: "", kodePN: null, actionPlan: null, remarks: null });
   const queryClient = useQueryClient();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -120,12 +121,15 @@ const useAssetManagementHooks = () => {
         search10;
       // search10;
 
+      const byRemarks = filter?.remarks
+        ? x.remark.toLowerCase() === filter.remarks?.toLowerCase()
+        : true;
       const byKodePN = filter.kodePN ? x.kodePN === filter.kodePN : true;
       const byActionPlan = filter.actionPlan
         ? x.actionPlan === filter.actionPlan
         : true;
 
-      return search && byKodePN && byActionPlan;
+      return search && byKodePN && byActionPlan && byRemarks;
     });
     return dataFilter;
   }, [dataAssetList, filter]);

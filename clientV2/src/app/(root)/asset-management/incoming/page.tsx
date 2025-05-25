@@ -23,6 +23,7 @@ export default function AssetManagement() {
     isLoadingDataAssetList,
     dataAssetList,
     onDownloadData,
+    remarksOptions
   } = useAssetManagement();
   const { role } = useRootLayoutContext();
   return (
@@ -115,6 +116,21 @@ export default function AssetManagement() {
                   }}
                   getOptionLabel={(option) => option.label}
                   placeholder="Action Plan"
+                />
+                <CAutoComplete
+                  options={remarksOptions}
+                  className="w-full"
+                  getOptionKey={(option) => option.value}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.value}>
+                      {option.label}
+                    </li>
+                  )}
+                  onChange={(_, value) => {
+                    setFilter({ ...filter, remarks: value?.value });
+                  }}
+                  getOptionLabel={(option) => option.label}
+                  placeholder="Remarks"
                 />
               </div>
             </div>

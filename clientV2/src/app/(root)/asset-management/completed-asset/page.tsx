@@ -18,6 +18,7 @@ export default function AssetManagement() {
     dataAssetList,
     onDownloadData,
     dataGridCompletedAsset,
+    remarksOptions,
   } = useAssetManagement();
   return (
     <>
@@ -96,6 +97,21 @@ export default function AssetManagement() {
                   getOptionLabel={(option) => option.label}
                   placeholder="Action Plan"
                 />
+                <CAutoComplete
+                  options={remarksOptions}
+                  className="w-full"
+                  getOptionKey={(option) => option.value}
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.value}>
+                      {option.label}
+                    </li>
+                  )}
+                  onChange={(_, value) => {
+                    setFilter({ ...filter, remarks: value?.value });
+                  }}
+                  getOptionLabel={(option) => option.label}
+                  placeholder="Remarks"
+                />  
               </div>
             </div>
             <DataGrid
