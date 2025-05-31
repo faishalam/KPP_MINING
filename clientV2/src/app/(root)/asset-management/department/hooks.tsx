@@ -58,7 +58,7 @@ const useAssetOnDepartmentHooks = () => {
     params: {
       search: undefined,
       page: 1,
-      limit: 13,
+      limit: 99999,
       enabled: false,
       filter: role || null,
     },

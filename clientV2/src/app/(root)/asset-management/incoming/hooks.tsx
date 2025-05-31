@@ -45,7 +45,7 @@ const useAssetManagementHooks = () => {
   } = useForm<FotoAssetFormData>();
   const [openModalFoto, setOpenModalFoto] = useState<boolean>(false);
   const modalWarningInfo = useModalWarningInfo();
-  const [pagination, setPagination] = useState({ page: 1, limit: 13 });
+  const [pagination, setPagination] = useState({ page: 1, limit: 99999 });
   const [filter, setFilter] = useState<{
     search: string;
     kodePN: string | null;
