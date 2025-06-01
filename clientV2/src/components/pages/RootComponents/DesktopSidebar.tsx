@@ -73,6 +73,12 @@ const Sidebar: React.FC = () => {
             Icon={InquiryIcon}
             selected={selectedMenu("/user-management")}
           />
+          <MenuItems
+            title="Guide App"
+            link="/https://drive.google.com/file/d/1huymRHH4R1qN4vVhEFd4I3VleMz57BFm/view?usp=sharing"
+            Icon={InquiryIcon}
+            selected={selectedMenu("/user-management")}
+          />
         </div>
       </>
     );
@@ -105,6 +111,7 @@ type TMenuItemProps = {
   title: string;
   Icon: React.FC<{ fill?: boolean }>;
   href?: string;
+  link?: string;
 };
 
 const MenuItems: React.FC<TMenuItemProps> = ({
@@ -112,18 +119,58 @@ const MenuItems: React.FC<TMenuItemProps> = ({
   title,
   Icon,
   href,
+  link,
 }) => {
+  function normalizeLink(link: string) {
+    try {
+      if (link.startsWith("http://") || link.startsWith("https://")) {
+        return link;
+      }
+      const found = link.match(/https?:\/.*$/);
+      if (found) {
+        return found[0]
+          .replace(/^https:\//, "https://")
+          .replace(/^http:\//, "http://");
+      }
+
+      return "#";
+    } catch (e) {
+      console.log(e);
+      return "#";
+    }
+  }
+  let raw;
+
+  if (link) {
+    raw = normalizeLink(link);
+  }
+
   return (
-    <CLink href={href ? href : ""} prefetch>
-      <div
-        className={`flex hover:bg-[#207262] rounded-sm p-3 gap-2 items-center cursor-pointer ${
-          selected ? "bg-[#207262]" : ""
-        }`}
-      >
-        <Icon fill={selected} />
-        <small className="font-bold text-white">{title}</small>
-      </div>
-    </CLink>
+    <>
+      {link ? (
+        <a href={raw} target="_blank" rel="noopener noreferrer">
+          <div
+            className={`flex hover:bg-[#207262] rounded-sm p-3 gap-2 items-center cursor-pointer ${
+              selected ? "bg-[#207262]" : ""
+            }`}
+          >
+            <Icon fill={selected} />
+            <small className="font-bold text-white">{title}</small>
+          </div>
+        </a>
+      ) : (
+        <CLink href={href ? href : ""} prefetch>
+          <div
+            className={`flex hover:bg-[#207262] rounded-sm p-3 gap-2 items-center cursor-pointer ${
+              selected ? "bg-[#207262]" : ""
+            }`}
+          >
+            <Icon fill={selected} />
+            <small className="font-bold text-white">{title}</small>
+          </div>
+        </CLink>
+      )}
+    </>
   );
 };
 type TSubMenuProps = {
